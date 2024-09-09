@@ -16,4 +16,6 @@ public interface ICategoriaService {
     public Categoria guardar(Categoria model);
 
     public void eliminar(Categoria model);
+
+    public void recuperar(Categoria model);
 }

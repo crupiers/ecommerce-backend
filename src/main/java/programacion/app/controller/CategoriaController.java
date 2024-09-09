@@ -10,13 +10,14 @@ import programacion.app.DTO.CategoriaDTO;
 import programacion.app.Mapper.CategoriaMapper;
 import programacion.app.exception.RecursoNoEncontradoExcepcion;
 import programacion.app.model.Categoria;
+import programacion.app.model.Marca;
 import programacion.app.service.ICategoriaService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("eCommerce")
-@CrossOrigin(value=" http://localhost:5173")
+@RequestMapping("/eCommerce")
+@CrossOrigin(value=" http://localhost:8080")
 
 public class CategoriaController {
 
@@ -24,7 +25,7 @@ public class CategoriaController {
     @Autowired
     private ICategoriaService modelService;
 
-    @GetMapping({"/Categorias"})
+    @GetMapping({"/Categoria"})
     public List<CategoriaDTO> getAll() {
         logger.info("entra y trae todas las Categorias");
         return modelService.listar();
@@ -41,11 +42,10 @@ public class CategoriaController {
         CategoriaDTO modelDTO = CategoriaMapper.toDTO(model);
         return ResponseEntity.ok(modelDTO);
     }
-
-
     
     @PostMapping("/Categoria")
     public CategoriaDTO guardar(@RequestBody CategoriaDTO model){
+
         return modelService.guardar(model);
     }
 
@@ -53,6 +53,19 @@ public class CategoriaController {
     public CategoriaDTO actualizar(@RequestBody CategoriaDTO model){
 
         return modelService.guardar(model);
+    }
+
+    @PutMapping("/Categoria/{id}")
+    public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
+        Categoria model = modelService.buscarPorId(id);
+        if (model == null) {
+            throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
+        }
+
+        model.recuperar(); // Cambia el estado a COMUN
+        modelService.guardar(model); // Guarda el modelo actualizado
+
+        return ResponseEntity.ok().build(); // Respuesta vacía con estado 200 OK
     }
 
     @DeleteMapping("/Categoria/{id}")

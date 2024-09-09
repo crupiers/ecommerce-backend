@@ -16,4 +16,6 @@ public interface IMarcaService {
     public Marca guardar(Marca model);
 
     public void eliminar(Marca model);
+
+    public void recuperar(Marca model);
 }
