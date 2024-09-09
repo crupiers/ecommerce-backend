@@ -5,11 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import programacion.ejemplo.DTO.CategoriaDTO;
-import programacion.ejemplo.Mapper.CategoriaMapper;
-import programacion.ejemplo.exception.RecursoNoEncontradoExcepcion;
-import programacion.ejemplo.service.ICategoriaService;
-import programacion.ejemplo.model.Categoria;
+import programacion.eCommerceApp.DTO.CategoriaDTO;
+import programacion.eCommerceApp.Mapper.CategoriaMapper;
+import programacion.eCommerceApp.exception.RecursoNoEncontradoExcepcion;
+import programacion.eCommerceApp.service.ICategoriaService;
+import programacion.eCommerceApp.model.Categoria;
 
 import java.util.List;
 

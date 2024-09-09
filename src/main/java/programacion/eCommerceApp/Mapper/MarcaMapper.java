@@ -1,7 +1,8 @@
 package programacion.eCommerceApp.Mapper;
 
-import programacion.ejemplo.DTO.MarcaDTO;
-import programacion.ejemplo.model.Marca;
+
+import programacion.eCommerceApp.DTO.MarcaDTO;
+import programacion.eCommerceApp.model.Marca;
 
 public class MarcaMapper {
     public static MarcaDTO toDTO(Marca model) {

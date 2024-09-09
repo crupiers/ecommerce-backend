@@ -1,7 +1,7 @@
 package programacion.eCommerceApp.service;
 
-import programacion.ejemplo.DTO.CategoriaDTO;
-import programacion.ejemplo.model.Categoria;
+import programacion.eCommerceApp.DTO.CategoriaDTO;
+import programacion.eCommerceApp.model.Categoria;
 import java.util.List;
 
 public interface ICategoriaService {

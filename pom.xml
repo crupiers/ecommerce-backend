@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>programacion</groupId>
-	<artifactId>ejemplo</artifactId>
+	<artifactId>eCommerceApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ejemplo</name>
-	<description>Ejemplo</description>
+	<name>eCommerceApp</name>
+	<description>eCommerceApp for TPI</description>
 	<url/>
 	<licenses>
 		<license/>

@@ -1,7 +1,7 @@
 package programacion.eCommerceApp.service;
 
-import programacion.ejemplo.DTO.MarcaDTO;
-import programacion.ejemplo.model.Marca;
+import programacion.eCommerceApp.DTO.MarcaDTO;
+import programacion.eCommerceApp.model.Marca;
 
 import java.util.List;
 
