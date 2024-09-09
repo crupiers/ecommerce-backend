@@ -1,8 +1,8 @@
-package programacion.app.repository;
+package programacion.eCommerceApp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import programacion.app.model.Marca;
+import programacion.eCommerceApp.model.Marca;
 
 import java.util.List;
 import java.util.Optional;

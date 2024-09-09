@@ -1,12 +1,12 @@
-package programacion.app.service;
+package programacion.eCommerceApp.service;
 
 import org.springframework.stereotype.Service;
 
-import programacion.app.DTO.MarcaDTO;
-import programacion.app.Mapper.MarcaMapper;
-import programacion.app.model.Categoria;
-import programacion.app.model.Marca;
-import programacion.app.repository.IMarcaRepository;
+import programacion.eCommerceApp.DTO.MarcaDTO;
+import programacion.eCommerceApp.Mapper.MarcaMapper;
+import programacion.eCommerceApp.model.Categoria;
+import programacion.eCommerceApp.model.Marca;
+import programacion.eCommerceApp.repository.IMarcaRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

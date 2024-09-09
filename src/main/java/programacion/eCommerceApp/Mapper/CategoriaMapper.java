@@ -1,7 +1,7 @@
-package programacion.app.Mapper;
+package programacion.eCommerceApp.Mapper;
 
-import programacion.app.DTO.CategoriaDTO;
-import programacion.app.model.Categoria;
+import programacion.eCommerceApp.DTO.CategoriaDTO;
+import programacion.eCommerceApp.model.Categoria;
 
 public class CategoriaMapper {
     

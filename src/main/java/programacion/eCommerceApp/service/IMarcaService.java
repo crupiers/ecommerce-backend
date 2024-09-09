@@ -1,9 +1,9 @@
-package programacion.app.service;
+package programacion.eCommerceApp.service;
 
 import java.util.List;
 
-import programacion.app.DTO.MarcaDTO;
-import programacion.app.model.Marca;
+import programacion.eCommerceApp.DTO.MarcaDTO;
+import programacion.eCommerceApp.model.Marca;
 
 public interface IMarcaService {
 

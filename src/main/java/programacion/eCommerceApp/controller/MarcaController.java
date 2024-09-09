@@ -1,4 +1,4 @@
-package programacion.app.controller;
+package programacion.eCommerceApp.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import programacion.app.DTO.CategoriaDTO;
-import programacion.app.Mapper.CategoriaMapper;
-import programacion.app.exception.RecursoNoEncontradoExcepcion;
-import programacion.app.model.Categoria;
-import programacion.app.model.Marca;
-import programacion.app.service.ICategoriaService;
+import programacion.eCommerceApp.DTO.MarcaDTO;
+import programacion.eCommerceApp.Mapper.MarcaMapper;
+import programacion.eCommerceApp.exception.RecursoNoEncontradoExcepcion;
+import programacion.eCommerceApp.model.Marca;
+import programacion.eCommerceApp.service.IMarcaService;
 
 import java.util.List;
 
@@ -19,45 +18,45 @@ import java.util.List;
 @RequestMapping("/eCommerce")
 @CrossOrigin(value=" http://localhost:8080")
 
-public class CategoriaController {
+public class MarcaController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CategoriaController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MarcaController.class);
     @Autowired
-    private ICategoriaService modelService;
+    private IMarcaService modelService;
 
-    @GetMapping({"/Categoria"})
-    public List<CategoriaDTO> getAll() {
-        logger.info("entra y trae todas las Categorias");
+    @GetMapping({"/marca"})
+    public List<MarcaDTO> getAll() {
+        logger.info("entra y trae todas las marcas");
         return modelService.listar();
 
     }
 
-    @GetMapping("/Categoria/{id}")
-    public ResponseEntity<CategoriaDTO> getPorId(@PathVariable Integer id){
-        Categoria model = modelService.buscarPorId(id);
+    @GetMapping("/marca/{id}")
+    public ResponseEntity<MarcaDTO> getPorId(@PathVariable Integer id){
+        Marca model = modelService.buscarPorId(id);
 
         if(model == null){
             throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
         }
-        CategoriaDTO modelDTO = CategoriaMapper.toDTO(model);
+        MarcaDTO modelDTO = MarcaMapper.toDTO(model);
         return ResponseEntity.ok(modelDTO);
     }
+
+
     
-    @PostMapping("/Categoria")
-    public CategoriaDTO guardar(@RequestBody CategoriaDTO model){
-
+    @PostMapping("/marca")
+    public MarcaDTO guardar(@RequestBody MarcaDTO model){
         return modelService.guardar(model);
     }
 
-    @PutMapping("/Categoria")
-    public CategoriaDTO actualizar(@RequestBody CategoriaDTO model){
+    @PutMapping("/marca")
+    public MarcaDTO actualizar(@RequestBody MarcaDTO model){
 
         return modelService.guardar(model);
     }
-
-    @PutMapping("/Categoria/{id}")
+    @PutMapping("/marca/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
-        Categoria model = modelService.buscarPorId(id);
+        Marca model = modelService.buscarPorId(id);
         if (model == null) {
             throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
         }
@@ -68,16 +67,19 @@ public class CategoriaController {
         return ResponseEntity.ok().build(); // Respuesta vacía con estado 200 OK
     }
 
-    @DeleteMapping("/Categoria/{id}")
+
+
+
+    @DeleteMapping("/marca/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
 
 
-        Categoria model = modelService.buscarPorId(id);
+        Marca model = modelService.buscarPorId(id);
         if (model == null){
             throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
         }
 
-        model.eliminar();
+        model.asEliminar();
         modelService.eliminar(model);
         return ResponseEntity.ok().build();
     }

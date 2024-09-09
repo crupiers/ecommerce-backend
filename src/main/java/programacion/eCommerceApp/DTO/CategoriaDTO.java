@@ -1,4 +1,4 @@
-package programacion.app.DTO;
+package programacion.eCommerceApp.DTO;
 
 
 public class CategoriaDTO {
