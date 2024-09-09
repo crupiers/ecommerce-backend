@@ -1,4 +1,4 @@
-package programacion.ejemplo.Mapper;
+package programacion.eCommerceApp.Mapper;
 
 import programacion.ejemplo.DTO.CategoriaDTO;
 import programacion.ejemplo.model.Categoria;

@@ -1,4 +1,4 @@
-package programacion.ejemplo.service;
+package programacion.eCommerceApp.service;
 
 import org.springframework.stereotype.Service;
 import programacion.ejemplo.DTO.MarcaDTO;

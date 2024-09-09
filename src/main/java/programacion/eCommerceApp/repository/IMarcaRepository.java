@@ -1,4 +1,4 @@
-package programacion.ejemplo.repository;
+package programacion.eCommerceApp.repository;
 
 import programacion.ejemplo.model.Marca;
 import org.springframework.data.jpa.repository.JpaRepository;

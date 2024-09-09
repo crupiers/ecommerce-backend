@@ -1,4 +1,4 @@
-package programacion.ejemplo.controller;
+package programacion.eCommerceApp.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

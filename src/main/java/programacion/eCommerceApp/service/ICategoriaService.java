@@ -1,4 +1,4 @@
-package programacion.ejemplo.service;
+package programacion.eCommerceApp.service;
 
 import programacion.ejemplo.DTO.CategoriaDTO;
 import programacion.ejemplo.model.Categoria;

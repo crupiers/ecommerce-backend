@@ -1,4 +1,4 @@
-package programacion.ejemplo;
+package programacion.eCommerceApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

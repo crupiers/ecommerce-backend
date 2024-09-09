@@ -1,4 +1,4 @@
-package programacion.ejemplo.DTO;
+package programacion.eCommerceApp.DTO;
 
 import lombok.Data;
 //hola
