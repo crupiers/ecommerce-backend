@@ -11,20 +11,19 @@ import lombok.ToString;
 @Entity
 @Data
 @ToString
-public class Marca {
+public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String denominacion;
-    private String observaciones;
+    private String nombre;
     @NotNull
     private int estado;
-         public static final int COMUN=0;
+        public static final int COMUN=0;
         public static final int ELIMINADO=1;
 
-        public void asEliminar() {
+        public void eliminar() {
              this.setEstado(1);
        }
 

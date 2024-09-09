@@ -1,0 +1,35 @@
+version: '3.8'  # Versión de Docker Compose
+services:
+  pa_db:
+    container_name: pa_db
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      # MYSQL_USER_FILE: /run/secrets/db_user
+      # MYSQL_PASSWORD_FILE: /run/secrets/db_password
+    # secrets:
+      # - db_root_password
+      # - db_password
+      # - db_user
+
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql #  - Uno o el otro -> /c/Users/ignac/OneDrive/frvm.utn.edu.ar/AAUniversidad/4to/Segundo_Cuatrimestre/Prog_Avanzada/VolumesDB:/var/lib/mysql
+      
+    restart: no
+    networks:
+      - red-pa
+networks:
+  red-pa:
+    driver: bridge
+
+# secrets:
+#   db_root_password:
+#     file: db_root_password.txt
+  # db_password:
+  #   file: db_password.txt
+  # db_user:
+  #   file: db_user.txt
+volumes:
+    db_data:

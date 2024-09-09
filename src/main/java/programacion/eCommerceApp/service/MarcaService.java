@@ -7,7 +7,7 @@ import programacion.ejemplo.model.Marca;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import programacion.ejemplo.repository.MarcaRepository;
+import programacion.ejemplo.repository.IMarcaRepository;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class MarcaService implements IMarcaService {
     private static final Logger logger = LoggerFactory.getLogger(MarcaService.class);
     @Autowired
-    private MarcaRepository modelRepository;
+    private IMarcaRepository modelRepository;
 
     @Override
     public List<MarcaDTO> listar() {
@@ -43,7 +43,7 @@ public class MarcaService implements IMarcaService {
     @Override
     public void eliminar(Marca model) {
 
-        model.asEliminar();
+        model.eliminar();
         modelRepository.save(model);
     }
 }

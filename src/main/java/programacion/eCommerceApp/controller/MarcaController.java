@@ -23,7 +23,7 @@ public class MarcaController {
     @Autowired
     private IMarcaService modelService;
 
-    @GetMapping({"/marcas"})
+    @GetMapping({"/categorias"})
     public List<MarcaDTO> getAll() {
         logger.info("entra y trae todas las marcas");
         return modelService.listar();
@@ -63,7 +63,7 @@ public class MarcaController {
             throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
         }
 
-        model.asEliminar();
+        model.eliminar();
         modelService.eliminar(model);
         return ResponseEntity.ok().build();
     }
