@@ -1,9 +1,9 @@
-package programacion.eCommerceApp.service;
+package programacion.ejemplo.service;
+
+import programacion.ejemplo.DTO.MarcaDTO;
+import programacion.ejemplo.model.Marca;
 
 import java.util.List;
-
-import programacion.eCommerceApp.DTO.MarcaDTO;
-import programacion.eCommerceApp.model.Marca;
 
 public interface IMarcaService {
 
@@ -16,6 +16,4 @@ public interface IMarcaService {
     public Marca guardar(Marca model);
 
     public void eliminar(Marca model);
-
-    public void recuperar(Marca model);
 }

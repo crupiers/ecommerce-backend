@@ -1,8 +1,7 @@
-package programacion.eCommerceApp.Mapper;
+package programacion.ejemplo.Mapper;
 
-
-import programacion.eCommerceApp.DTO.MarcaDTO;
-import programacion.eCommerceApp.model.Marca;
+import programacion.ejemplo.DTO.MarcaDTO;
+import programacion.ejemplo.model.Marca;
 
 public class MarcaMapper {
     public static MarcaDTO toDTO(Marca model) {
@@ -15,11 +14,12 @@ public class MarcaMapper {
     }
 
     public static Marca toEntity(MarcaDTO dto) {
-        return Marca.builder()
-                .id(dto.getId())
-                .denominacion(dto.getDenominacion())
-                .observaciones(dto.getObservaciones())
-                .estado(dto.getEstado()).build();
+        Marca model = new Marca();
+        model.setId(dto.getId());
+        model.setDenominacion(dto.getDenominacion());
+        model.setObservaciones(dto.getObservaciones());
+        model.setEstado(dto.getEstado());
+        return model;
     }
 
 }

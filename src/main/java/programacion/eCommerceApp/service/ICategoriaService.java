@@ -1,8 +1,9 @@
 package programacion.eCommerceApp.service;
 
+import java.util.List;
+
 import programacion.eCommerceApp.DTO.CategoriaDTO;
 import programacion.eCommerceApp.model.Categoria;
-import java.util.List;
 
 public interface ICategoriaService {
 
@@ -15,4 +16,6 @@ public interface ICategoriaService {
     public Categoria guardar(Categoria model);
 
     public void eliminar(Categoria model);
+
+    public void recuperar(Categoria model);
 }

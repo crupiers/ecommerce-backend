@@ -1,22 +1,21 @@
-package programacion.eCommerceApp.controller;
+package programacion.ejemplo.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import programacion.eCommerceApp.DTO.MarcaDTO;
-import programacion.eCommerceApp.Mapper.MarcaMapper;
-import programacion.eCommerceApp.exception.RecursoNoEncontradoExcepcion;
-import programacion.eCommerceApp.model.Marca;
-import programacion.eCommerceApp.service.IMarcaService;
+import programacion.ejemplo.DTO.MarcaDTO;
+import programacion.ejemplo.Mapper.MarcaMapper;
+import programacion.ejemplo.exception.RecursoNoEncontradoExcepcion;
+import programacion.ejemplo.service.IMarcaService;
+import programacion.ejemplo.model.Marca;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/eCommerce")
-@CrossOrigin(value=" http://localhost:8080")
+@RequestMapping("ejemplo")
+@CrossOrigin(value=" http://localhost:5173")
 
 public class MarcaController {
 
@@ -24,7 +23,7 @@ public class MarcaController {
     @Autowired
     private IMarcaService modelService;
 
-    @GetMapping({"/marca"})
+    @GetMapping({"/marcas"})
     public List<MarcaDTO> getAll() {
         logger.info("entra y trae todas las marcas");
         return modelService.listar();
@@ -54,21 +53,6 @@ public class MarcaController {
 
         return modelService.guardar(model);
     }
-    @PutMapping("/marca/{id}")
-    public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
-        Marca model = modelService.buscarPorId(id);
-        if (model == null) {
-            throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
-        }
-
-        model.recuperar(); // Cambia el estado a COMUN
-        modelService.guardar(model); // Guarda el modelo actualizado
-
-        return ResponseEntity.ok().build(); // Respuesta vacía con estado 200 OK
-    }
-
-
-
 
     @DeleteMapping("/marca/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
@@ -79,7 +63,7 @@ public class MarcaController {
             throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
         }
 
-        model.eliminar();
+        model.asEliminar();
         modelService.eliminar(model);
         return ResponseEntity.ok().build();
     }

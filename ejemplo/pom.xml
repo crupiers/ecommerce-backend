@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>programacion</groupId>
-	<artifactId>eCommerceApp</artifactId>
+	<artifactId>ejemplo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>eCommerceApp</name>
-	<description>eCommerceApp for TPI</description>
+	<name>ejemplo</name>
+	<description>Ejemplo</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -47,8 +47,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.34</version>
-			<scope>provided</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

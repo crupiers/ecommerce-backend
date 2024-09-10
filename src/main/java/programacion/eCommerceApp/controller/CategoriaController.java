@@ -5,17 +5,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import programacion.eCommerceApp.DTO.CategoriaDTO;
 import programacion.eCommerceApp.Mapper.CategoriaMapper;
 import programacion.eCommerceApp.exception.RecursoNoEncontradoExcepcion;
-import programacion.eCommerceApp.service.ICategoriaService;
 import programacion.eCommerceApp.model.Categoria;
+import programacion.eCommerceApp.model.Marca;
+import programacion.eCommerceApp.service.ICategoriaService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("eCommerce")
-@CrossOrigin(value=" http://localhost:5173")
+@RequestMapping("/eCommerce")
+@CrossOrigin(value=" http://localhost:8080")
 
 public class CategoriaController {
 
@@ -23,14 +25,14 @@ public class CategoriaController {
     @Autowired
     private ICategoriaService modelService;
 
-    @GetMapping({"/Categorias"})
+    @GetMapping("/categoria")
     public List<CategoriaDTO> getAll() {
         logger.info("entra y trae todas las Categorias");
         return modelService.listar();
 
     }
 
-    @GetMapping("/Categoria/{id}")
+    @GetMapping("/categoria/{id}")
     public ResponseEntity<CategoriaDTO> getPorId(@PathVariable Integer id){
         Categoria model = modelService.buscarPorId(id);
 
@@ -41,20 +43,32 @@ public class CategoriaController {
         return ResponseEntity.ok(modelDTO);
     }
 
-
-    
-    @PostMapping("/Categoria")
+    @PostMapping("/categoria")
     public CategoriaDTO guardar(@RequestBody CategoriaDTO model){
+
         return modelService.guardar(model);
     }
 
-    @PutMapping("/Categoria")
+    @PutMapping("/categoria")
     public CategoriaDTO actualizar(@RequestBody CategoriaDTO model){
 
         return modelService.guardar(model);
     }
 
-    @DeleteMapping("/Categoria/{id}")
+    @PutMapping("/categoria/{id}")
+    public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
+        Categoria model = modelService.buscarPorId(id);
+        if (model == null) {
+            throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
+        }
+
+        model.recuperar(); // Cambia el estado a COMUN
+        modelService.guardar(model); // Guarda el modelo actualizado
+
+        return ResponseEntity.ok().build(); // Respuesta vacía con estado 200 OK
+    }
+
+    @DeleteMapping("/categoria/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
 
 

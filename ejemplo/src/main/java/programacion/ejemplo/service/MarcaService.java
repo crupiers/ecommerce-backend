@@ -1,26 +1,22 @@
-package programacion.eCommerceApp.service;
+package programacion.ejemplo.service;
 
 import org.springframework.stereotype.Service;
-
-import programacion.eCommerceApp.DTO.MarcaDTO;
-import programacion.eCommerceApp.Mapper.MarcaMapper;
-import programacion.eCommerceApp.model.Categoria;
-import programacion.eCommerceApp.model.Marca;
-import programacion.eCommerceApp.repository.IMarcaRepository;
-
+import programacion.ejemplo.DTO.MarcaDTO;
+import programacion.ejemplo.Mapper.MarcaMapper;
+import programacion.ejemplo.model.Marca;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import programacion.ejemplo.repository.MarcaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 
 public class MarcaService implements IMarcaService {
     private static final Logger logger = LoggerFactory.getLogger(MarcaService.class);
     @Autowired
-    private IMarcaRepository modelRepository;
+    private MarcaRepository modelRepository;
 
     @Override
     public List<MarcaDTO> listar() {
@@ -36,13 +32,6 @@ public class MarcaService implements IMarcaService {
 
     @Override
     public MarcaDTO guardar(MarcaDTO modelDTO) {
-        Optional<Marca> marcaExistente = modelRepository.findByDenominacion(modelDTO.getDenominacion());
-
-        if (marcaExistente.isPresent()) {
-            System.out.println("----------------MARCA EXISTENTE---------------");
-            throw new IllegalArgumentException("La marca ya está registrada.");
-        }
-
         Marca model = MarcaMapper.toEntity(modelDTO);
         return MarcaMapper.toDTO(modelRepository.save(model));
     }
@@ -54,13 +43,7 @@ public class MarcaService implements IMarcaService {
     @Override
     public void eliminar(Marca model) {
 
-        model.eliminar();
-        modelRepository.save(model);
-    }
-
-    @Override
-    public void recuperar(Marca model) {
-        model.recuperar();
+        model.asEliminar();
         modelRepository.save(model);
     }
 }
