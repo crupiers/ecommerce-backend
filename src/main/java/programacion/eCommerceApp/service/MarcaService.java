@@ -39,7 +39,7 @@ public class MarcaService implements IMarcaService {
         Optional<Marca> marcaExistente = modelRepository.findByDenominacion(modelDTO.getDenominacion());
 
         if (marcaExistente.isPresent()) {
-            System.out.println("MARCA EXISTENTE-------------------------------");
+            System.out.println("----------------MARCA EXISTENTE---------------");
             throw new IllegalArgumentException("La marca ya está registrada.");
         }
 

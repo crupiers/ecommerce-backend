@@ -25,14 +25,14 @@ public class CategoriaController {
     @Autowired
     private ICategoriaService modelService;
 
-    @GetMapping({"/Categoria"})
+    @GetMapping("/categoria")
     public List<CategoriaDTO> getAll() {
         logger.info("entra y trae todas las Categorias");
         return modelService.listar();
 
     }
 
-    @GetMapping("/Categoria/{id}")
+    @GetMapping("/categoria/{id}")
     public ResponseEntity<CategoriaDTO> getPorId(@PathVariable Integer id){
         Categoria model = modelService.buscarPorId(id);
 
@@ -43,19 +43,19 @@ public class CategoriaController {
         return ResponseEntity.ok(modelDTO);
     }
     
-    @PostMapping("/Categoria")
+    @PostMapping("/categoria")
     public CategoriaDTO guardar(@RequestBody CategoriaDTO model){
 
         return modelService.guardar(model);
     }
 
-    @PutMapping("/Categoria")
+    @PutMapping("/categoria")
     public CategoriaDTO actualizar(@RequestBody CategoriaDTO model){
 
         return modelService.guardar(model);
     }
 
-    @PutMapping("/Categoria/{id}")
+    @PutMapping("/categoria/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
         Categoria model = modelService.buscarPorId(id);
         if (model == null) {
@@ -68,7 +68,7 @@ public class CategoriaController {
         return ResponseEntity.ok().build(); // Respuesta vacía con estado 200 OK
     }
 
-    @DeleteMapping("/Categoria/{id}")
+    @DeleteMapping("/categoria/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
 
 

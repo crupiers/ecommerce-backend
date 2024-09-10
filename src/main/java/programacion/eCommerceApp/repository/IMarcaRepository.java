@@ -12,4 +12,3 @@ public interface IMarcaRepository extends JpaRepository  <Marca,Integer>{
     List<Marca> findByEstado(int estado);
     Optional<Marca> findByDenominacion(String denominacion);
 }
-

@@ -14,12 +14,10 @@ public class MarcaMapper {
     }
 
     public static Marca toEntity(MarcaDTO dto) {
-        Marca model = new Marca();
-        model.setId(dto.getId());
-        model.setDenominacion(dto.getDenominacion());
-        model.setObservaciones(dto.getObservaciones());
-        model.setEstado(dto.getEstado());
-        return model;
+        return Marca.builder()
+                .id(dto.getId())
+                .denominacion(dto.getDenominacion())
+                .observaciones(dto.getObservaciones())
+                .estado(dto.getEstado()).build();
     }
-
 }
