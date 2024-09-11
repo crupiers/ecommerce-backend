@@ -4,13 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Data
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Categoria {
 
     @Id
@@ -18,49 +19,15 @@ public class Categoria {
     private Integer id;
 
     private String nombre;
-    @NotNull
-    private int estado;
-        public static final int COMUN=0;
-        public static final int ELIMINADO=1;
+    @Builder.Default
+    private int estado = 0;
 
-        public void eliminar() {
-             this.setEstado(1);
+    public static final int COMUN=0;
+    public static final int ELIMINADO=1;
+
+    public void eliminar() {
+             this.setEstado(ELIMINADO);
        }
-       public void recuperar(){
-            this.setEstado(0);
-       }
+    public void recuperar() { this.setEstado(COMUN); }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    @NotNull
-    public int getEstado() {
-        return estado;
-    }
-
-    public void setEstado(@NotNull int estado) {
-        this.estado = estado;
-    }
-
-    public Categoria() {
-    }
-
-    public Categoria(Integer id, String nombre, int estado) {
-        this.id = id;
-        this.nombre = nombre;
-        this.estado = estado;
-    }
 }

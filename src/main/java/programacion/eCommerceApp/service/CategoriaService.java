@@ -2,8 +2,9 @@ package programacion.eCommerceApp.service;
 
 import org.springframework.stereotype.Service;
 
-import programacion.eCommerceApp.DTO.CategoriaDTO;
-import programacion.eCommerceApp.Mapper.CategoriaMapper;
+import programacion.eCommerceApp.controller.request.NewCategoriaRequest;
+import programacion.eCommerceApp.controller.response.CategoriaResponse;
+import programacion.eCommerceApp.mapper.CategoriaMapper;
 import programacion.eCommerceApp.model.Categoria;
 import programacion.eCommerceApp.repository.ICategoriaRepository;
 
@@ -22,32 +23,30 @@ public class CategoriaService implements ICategoriaService {
     private ICategoriaRepository modelRepository;
 
     @Override
-    public List<CategoriaDTO> listar() {
-        List<Categoria> Categorias = modelRepository.findByEstado(Categoria.COMUN);
-        return Categorias.stream().map(CategoriaMapper::toDTO).toList();
+    public List<CategoriaResponse> listar() {
+        List<Categoria> categorias = modelRepository.findByEstado(Categoria.COMUN);
+        return categorias.stream().map(CategoriaMapper::toCategoriaResponse).toList();
     }
 
     @Override
     public Categoria buscarPorId(Integer id) {
-
         return modelRepository.findById(id).orElse(null);
     }
 
     @Override
-    public CategoriaDTO guardar(CategoriaDTO modelDTO) {
-        Optional<Categoria> categoriaExistente = modelRepository.findByNombre(modelDTO.getNombre());
+    public CategoriaResponse crear(NewCategoriaRequest newCategoriaRequest) {
+        Categoria model = CategoriaMapper.toEntity(newCategoriaRequest);
+        Optional<Categoria> categoriaExistente = modelRepository.findByNombre(model.getNombre());
 
         if (categoriaExistente.isPresent()) {
-            System.out.println("CATEGORIA EXISTENTE");
             throw new IllegalArgumentException("La categoría ya está registrada.");
         }
 
-        Categoria model = CategoriaMapper.toEntity(modelDTO);
-        return CategoriaMapper.toDTO(modelRepository.save(model));
+        return CategoriaMapper.toCategoriaResponse(modelRepository.save(model));
     }
+
     @Override
     public Categoria guardar(Categoria model) {
-
         return modelRepository.save(model);
     }
 

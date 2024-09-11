@@ -1,13 +1,13 @@
-package programacion.ejemplo;
+package programacion.eCommerceApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EjemploApplication {
+public class eCommerceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EjemploApplication.class, args);
+		SpringApplication.run(eCommerceApplication.class, args);
 	}
 
 }

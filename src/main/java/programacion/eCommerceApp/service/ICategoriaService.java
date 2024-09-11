@@ -2,20 +2,21 @@ package programacion.eCommerceApp.service;
 
 import java.util.List;
 
-import programacion.eCommerceApp.DTO.CategoriaDTO;
+import programacion.eCommerceApp.controller.request.NewCategoriaRequest;
+import programacion.eCommerceApp.controller.response.CategoriaResponse;
 import programacion.eCommerceApp.model.Categoria;
 
 public interface ICategoriaService {
 
-    public List<CategoriaDTO> listar();
+    List<CategoriaResponse> listar();
 
-    public Categoria buscarPorId(Integer id);
+    Categoria buscarPorId(Integer id);
 
-    public CategoriaDTO guardar(CategoriaDTO model);
+    CategoriaResponse crear(NewCategoriaRequest newCategoriaRequest);
 
-    public Categoria guardar(Categoria model);
+    Categoria guardar(Categoria model);
 
-    public void eliminar(Categoria model);
+    void eliminar(Categoria model);
 
-    public void recuperar(Categoria model);
+    void recuperar(Categoria model);
 }

@@ -1,10 +1,9 @@
 package programacion.eCommerceApp.service;
 
 import org.springframework.stereotype.Service;
-
-import programacion.eCommerceApp.DTO.MarcaDTO;
-import programacion.eCommerceApp.Mapper.MarcaMapper;
-import programacion.eCommerceApp.model.Categoria;
+import programacion.eCommerceApp.controller.request.NewMarcaRequest;
+import programacion.eCommerceApp.controller.response.MarcaResponse;
+import programacion.eCommerceApp.mapper.MarcaMapper;
 import programacion.eCommerceApp.model.Marca;
 import programacion.eCommerceApp.repository.IMarcaRepository;
 
@@ -23,9 +22,9 @@ public class MarcaService implements IMarcaService {
     private IMarcaRepository modelRepository;
 
     @Override
-    public List<MarcaDTO> listar() {
+    public List<MarcaResponse> listar() {
         List<Marca> marcas = modelRepository.findByEstado(Marca.COMUN);
-        return marcas.stream().map(MarcaMapper::toDTO).toList();
+        return marcas.stream().map(MarcaMapper::toMarcaResponse).toList();
     }
 
     @Override
@@ -35,17 +34,17 @@ public class MarcaService implements IMarcaService {
     }
 
     @Override
-    public MarcaDTO guardar(MarcaDTO modelDTO) {
-        Optional<Marca> marcaExistente = modelRepository.findByDenominacion(modelDTO.getDenominacion());
+    public MarcaResponse guardar(NewMarcaRequest newMarcaRequest) {
+        Marca model = MarcaMapper.toEntity(newMarcaRequest);
+        Optional<Marca> marcaExistente = modelRepository.findByDenominacion(model.getDenominacion());
 
         if (marcaExistente.isPresent()) {
-            System.out.println("----------------MARCA EXISTENTE---------------");
             throw new IllegalArgumentException("La marca ya está registrada.");
         }
 
-        Marca model = MarcaMapper.toEntity(modelDTO);
-        return MarcaMapper.toDTO(modelRepository.save(model));
+        return MarcaMapper.toMarcaResponse(modelRepository.save(model));
     }
+
     @Override
     public Marca guardar(Marca model) {
         return modelRepository.save(model);

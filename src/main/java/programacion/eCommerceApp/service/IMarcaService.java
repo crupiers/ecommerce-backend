@@ -1,21 +1,21 @@
 package programacion.eCommerceApp.service;
 
 import java.util.List;
-
-import programacion.eCommerceApp.DTO.MarcaDTO;
+import programacion.eCommerceApp.controller.request.NewMarcaRequest;
+import programacion.eCommerceApp.controller.response.MarcaResponse;
 import programacion.eCommerceApp.model.Marca;
 
 public interface IMarcaService {
 
-    public List<MarcaDTO> listar();
+    List<MarcaResponse> listar();
 
-    public Marca buscarPorId(Integer id);
+    Marca buscarPorId(Integer id);
 
-    public MarcaDTO guardar(MarcaDTO model);
+    Marca guardar(Marca marca);
 
-    public Marca guardar(Marca model);
+    MarcaResponse guardar(NewMarcaRequest newMarcaRequest);
 
-    public void eliminar(Marca model);
+    void eliminar(Marca model);
 
-    public void recuperar(Marca model);
+    void recuperar(Marca model);
 }
