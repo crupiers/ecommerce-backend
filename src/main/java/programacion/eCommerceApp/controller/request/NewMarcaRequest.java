@@ -1,13 +1,13 @@
 package programacion.eCommerceApp.controller.request;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public record NewMarcaRequest(
 
-    @NotNull(message = "La denominación de la marca no puede ser nula")
+    @NotBlank(message = "La denominación de la marca no puede estar vacio")
     String denominacion,
 
-    @NotNull(message = "La observación de la marca no puede ser nula")
+    @NotBlank(message = "La observación de la marca no puede estar vacio")
     String observaciones
 
 ) { }
