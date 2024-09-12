@@ -7,7 +7,7 @@ import programacion.eCommerceApp.model.Tamaño;
 public class TamañoMapper {
 
     public static TamañoResponse toTamañoResponse(Tamaño tamaño) {
-        return new TamañoResponse(tamaño.getId(),tamaño.getDenominacion(), tamaño.getEstado());
+        return new TamañoResponse(tamaño.getId(),tamaño.getDenominacion(),tamaño.isEstado());
     }
 
     public static Tamaño toEntity (NewTamañoRequest newTamañoRequest) {

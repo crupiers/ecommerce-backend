@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface ITamañoRepository extends JpaRepository<Tamaño, Integer> {
-    List<Tamaño> findByEstado(int estado);
+    List<Tamaño> findByEstado(boolean estado);
     Optional<Tamaño> findByDenominacion(String denominacion);
 }

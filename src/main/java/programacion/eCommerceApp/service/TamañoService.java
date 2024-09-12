@@ -30,7 +30,7 @@ public class TamañoService implements ITamañoService {
 
     @Override
     public List<TamañoResponse> listar() {
-        List<Tamaño> tamaños = modelRepository.findByEstado(Tamaño.COMUN);
+        List<Tamaño> tamaños = modelRepository.findByEstado(true);
         return tamaños.stream().map(TamañoMapper::toTamañoResponse).toList();
     }
 
