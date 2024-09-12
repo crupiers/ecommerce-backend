@@ -61,26 +61,23 @@ public class CategoriaController {
     @PutMapping("/categoria/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
         Categoria model = modelService.buscarPorId(id);
+
         if (model == null) {
             throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
         }
 
-        model.recuperar(); // Cambia el estado a COMUN
-        modelService.guardar(model); // Guarda el modelo actualizado
-
-        return ResponseEntity.ok().build(); // Respuesta vacía con estado 200 OK
+        modelService.recuperar(model);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/categoria/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
-
-
         Categoria model = modelService.buscarPorId(id);
+
         if (model == null){
             throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
         }
 
-        model.eliminar();
         modelService.eliminar(model);
         return ResponseEntity.ok().build();
     }

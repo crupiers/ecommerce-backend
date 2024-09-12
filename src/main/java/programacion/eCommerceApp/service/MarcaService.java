@@ -6,18 +6,13 @@ import programacion.eCommerceApp.controller.response.MarcaResponse;
 import programacion.eCommerceApp.mapper.MarcaMapper;
 import programacion.eCommerceApp.model.Marca;
 import programacion.eCommerceApp.repository.IMarcaRepository;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class MarcaService implements IMarcaService {
-    private static final Logger logger = LoggerFactory.getLogger(MarcaService.class);
+
     @Autowired
     private IMarcaRepository modelRepository;
 
@@ -29,12 +24,11 @@ public class MarcaService implements IMarcaService {
 
     @Override
     public Marca buscarPorId(Integer id) {
-
         return modelRepository.findById(id).orElse(null);
     }
 
     @Override
-    public MarcaResponse guardar(NewMarcaRequest newMarcaRequest) {
+    public MarcaResponse crear(NewMarcaRequest newMarcaRequest) {
         Marca model = MarcaMapper.toEntity(newMarcaRequest);
         Optional<Marca> marcaExistente = modelRepository.findByDenominacion(model.getDenominacion());
 
@@ -46,13 +40,7 @@ public class MarcaService implements IMarcaService {
     }
 
     @Override
-    public Marca guardar(Marca model) {
-        return modelRepository.save(model);
-    }
-
-    @Override
     public void eliminar(Marca model) {
-
         model.eliminar();
         modelRepository.save(model);
     }

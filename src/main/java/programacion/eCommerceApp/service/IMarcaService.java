@@ -11,11 +11,10 @@ public interface IMarcaService {
 
     Marca buscarPorId(Integer id);
 
-    Marca guardar(Marca marca);
-
-    MarcaResponse guardar(NewMarcaRequest newMarcaRequest);
+    MarcaResponse crear(NewMarcaRequest newMarcaRequest);
 
     void eliminar(Marca model);
 
     void recuperar(Marca model);
+
 }

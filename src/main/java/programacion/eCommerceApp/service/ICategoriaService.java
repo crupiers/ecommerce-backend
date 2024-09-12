@@ -14,9 +14,8 @@ public interface ICategoriaService {
 
     CategoriaResponse crear(NewCategoriaRequest newCategoriaRequest);
 
-    Categoria guardar(Categoria model);
-
     void eliminar(Categoria model);
 
     void recuperar(Categoria model);
+
 }
