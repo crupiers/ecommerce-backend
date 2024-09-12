@@ -32,7 +32,7 @@ public class ColorService implements IColorService {
         //busco los colores que deben ser visibles
         //debo usar el repository pues este me traduce lo que necesito a secuencias sql
         //guardo los objetos colores en una lista
-        List<Color> colores = modelRepository.findByVisible(true);
+        List<Color> colores = modelRepository.findByEstado(true);
         /**
          * stream() me devuelve un objeto "Stream" de la clase "Color"
          * un stream puede verse como un flujo de datos
