@@ -21,11 +21,8 @@ public class Tamaño {
     private String denominacion;
 
     @Builder.Default
-    private int estado = 0;
-    public static final int COMUN = 0;
-    public static final int ELIMINADO = 1;
+    public boolean estado = true;
 
-    public void eliminar() { this.setEstado(ELIMINADO); }
-    public void recuperar() { this.setEstado(COMUN); }
-
+    public void eliminar() { this.estado=false; }
+    public void recuperar() { this.estado=true; }
 }
