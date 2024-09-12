@@ -19,7 +19,7 @@ import java.util.Optional;
 public class MarcaService implements IMarcaService {
     private static final Logger logger = LoggerFactory.getLogger(MarcaService.class);
     @Autowired
-    private IMarcaRepository modelRepository;
+    private IMarcaRepository modelRepository; //el repository no es instanciado nunca
 
     @Override
     public List<MarcaResponse> listar() {
