@@ -16,14 +16,15 @@ public class Color {
     @Id //hago el nombre del color como primary key, no necesariamente el id es un número
     private String nombre;
     @Builder.Default
-    private boolean estado = true; //por defecto aparece el color visible
+    private int estado = 0; //por defecto aparece el color visible
 
-    public void eliminar() {
-        this.estado=false;
-    }
+    public static final int COMUN=0;
+    public static final int ELIMINADO = 1;
+
+    public void eliminar(){this.setEstado(ELIMINADO);}
 
     public void recuperar(){
-        this.estado=true;
+        this.setEstado((COMUN));
     }
 
 }

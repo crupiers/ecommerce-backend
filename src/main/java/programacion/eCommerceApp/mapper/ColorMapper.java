@@ -8,7 +8,7 @@ public class ColorMapper {
 
     public static ColorResponse toColorResponse(Color color){
         //creo la respuesta con los datos necesarios
-        return new ColorResponse(color.getNombre(), color.isEstado());
+        return new ColorResponse(color.getNombre(), color.getEstado());
     }
 
     public static Color toEntity(NewColorRequest newColorRequest){
