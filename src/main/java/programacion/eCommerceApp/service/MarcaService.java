@@ -14,7 +14,7 @@ import java.util.Optional;
 public class MarcaService implements IMarcaService {
 
     @Autowired
-    private IMarcaRepository modelRepository;
+    private IMarcaRepository modelRepository; //el repository no es instanciado nunca
 
     @Override
     public List<MarcaResponse> listar() {
