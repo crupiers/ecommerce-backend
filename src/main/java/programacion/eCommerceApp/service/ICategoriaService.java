@@ -18,4 +18,6 @@ public interface ICategoriaService {
 
     void recuperar(Categoria model);
 
+    Categoria buscarPorIdSinFiltrarEstado(Integer id);
+
 }

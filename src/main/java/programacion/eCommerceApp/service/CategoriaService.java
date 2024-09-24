@@ -24,7 +24,8 @@ public class CategoriaService implements ICategoriaService {
 
     @Override
     public Categoria buscarPorId(Integer id) {
-        return modelRepository.findById(id).orElse(null);
+
+        return modelRepository.findByIdAndEstado(id,0).orElse(null);
     }
 
     @Override
@@ -49,5 +50,9 @@ public class CategoriaService implements ICategoriaService {
     public void recuperar(Categoria model) {
         model.recuperar();
         modelRepository.save(model);
+    }
+    @Override
+    public Categoria buscarPorIdSinFiltrarEstado(Integer id) {
+        return modelRepository.findById(id).orElse(null);
     }
 }

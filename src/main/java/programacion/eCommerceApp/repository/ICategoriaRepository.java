@@ -9,5 +9,6 @@ public interface ICategoriaRepository extends JpaRepository <Categoria,Integer>{
 
     List<Categoria> findByEstado(int estado);
     Optional<Categoria> findByNombre(String nombre);
+    Optional<Categoria> findByIdAndEstado(Integer id, int estado);
 }
 

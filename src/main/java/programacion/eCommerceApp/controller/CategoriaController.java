@@ -60,7 +60,7 @@ public class CategoriaController {
 
     @PutMapping("/categoria/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
-        Categoria model = modelService.buscarPorId(id);
+        Categoria model = modelService.buscarPorIdSinFiltrarEstado(id);
 
         if (model == null) {
             throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
