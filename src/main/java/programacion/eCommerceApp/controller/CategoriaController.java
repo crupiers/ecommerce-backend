@@ -8,10 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewCategoriaRequest;
 import programacion.eCommerceApp.controller.response.CategoriaResponse;
 import programacion.eCommerceApp.mapper.CategoriaMapper;
-import programacion.eCommerceApp.exception.RecursoNoEncontradoExcepcion;
 import programacion.eCommerceApp.model.Categoria;
 import programacion.eCommerceApp.service.ICategoriaService;
 
@@ -39,7 +39,7 @@ public class CategoriaController {
         Categoria model = modelService.buscarPorId(id);
 
         if(model == null){
-            throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
 
         CategoriaResponse categoriaResponse = CategoriaMapper.toCategoriaResponse(model);
@@ -63,7 +63,7 @@ public class CategoriaController {
         Categoria model = modelService.buscarPorId(id);
 
         if (model == null) {
-            throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
 
         modelService.recuperar(model); // Guarda el modelo actualizado
@@ -76,7 +76,7 @@ public class CategoriaController {
         Categoria model = modelService.buscarPorId(id);
 
         if (model == null){
-            throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
 
         modelService.eliminar(model);

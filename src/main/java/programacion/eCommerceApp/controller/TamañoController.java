@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewTamañoRequest;
-import programacion.eCommerceApp.controller.response.MarcaResponse;
 import programacion.eCommerceApp.controller.response.TamañoResponse;
-import programacion.eCommerceApp.exception.RecursoNoEncontradoExcepcion;
 import programacion.eCommerceApp.mapper.TamañoMapper;
 import programacion.eCommerceApp.model.Tamaño;
 import programacion.eCommerceApp.service.ITamañoService;
@@ -44,7 +43,7 @@ public class TamañoController {
         Tamaño model = modelService.buscarPorId(id);
 
         if (model == null) {
-           throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
 
         TamañoResponse tamañoResponse = TamañoMapper.toTamañoResponse(model);
@@ -61,7 +60,7 @@ public class TamañoController {
         Tamaño model = modelService.buscarPorId(id);
 
         if (model == null) {
-            throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
 
         modelService.recuperar(model);
@@ -73,7 +72,7 @@ public class TamañoController {
         Tamaño model = modelService.buscarPorId(id);
 
         if (model == null) {
-            throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
 
         modelService.eliminar(model);

@@ -4,13 +4,14 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewMarcaRequest;
 import programacion.eCommerceApp.controller.response.MarcaResponse;
 import programacion.eCommerceApp.mapper.MarcaMapper;
-import programacion.eCommerceApp.exception.RecursoNoEncontradoExcepcion;
 import programacion.eCommerceApp.model.Marca;
 import programacion.eCommerceApp.service.IMarcaService;
 
@@ -38,7 +39,7 @@ public class MarcaController {
         Marca model = modelService.buscarPorId(id);
 
         if(model == null){
-            throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
         MarcaResponse marcaResponse = MarcaMapper.toMarcaResponse(model);
         return ResponseEntity.ok(marcaResponse);
@@ -58,7 +59,7 @@ public class MarcaController {
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
         Marca model = modelService.buscarPorId(id);
         if (model == null) {
-            throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
 
         modelService.recuperar(model); // Guarda el modelo actualizado
@@ -71,7 +72,7 @@ public class MarcaController {
 
         Marca model = modelService.buscarPorId(id);
         if (model == null){
-            throw new RecursoNoEncontradoExcepcion("El id recibido no existe: " + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
 
         modelService.eliminar(model);

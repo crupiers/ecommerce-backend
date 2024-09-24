@@ -4,11 +4,12 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewColorRequest;
 import programacion.eCommerceApp.controller.response.ColorResponse;
-import programacion.eCommerceApp.exception.RecursoNoEncontradoExcepcion;
 import programacion.eCommerceApp.mapper.ColorMapper;
 import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.service.IColorService;
@@ -51,7 +52,7 @@ public class ColorController {
         if(model==null){
             //si no se encuentra el color se manda una excepcion
             //usamos nuestra excepcion personalizada
-            throw new RecursoNoEncontradoExcepcion("NO SE ENCONTRÓ EL COLOR: "+nombre);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL COLOR: "+nombre);
         }
         //creo una respuesta en base al color tomado de la bbdd
         ColorResponse colorResponse = ColorMapper.toColorResponse(model);
@@ -81,7 +82,7 @@ public class ColorController {
         if(model==null){
             //en caso de que se quiera recuperar un color borrado que en realidad nunca fue registrado
             //lanzamos excepcion
-            throw new RecursoNoEncontradoExcepcion("EL COLOR '"+nombre + "' NUNCA FUE REGISTRADO NI BORRADO ANTERIORMENTE");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EL COLOR '"+nombre + "' NUNCA FUE REGISTRADO NI BORRADO ANTERIORMENTE");
         }
         //si encuentro el color que quiero recuperar
         modelService.recuperar(model); //llamo al servicio para que se encargue de recuperarlo
@@ -94,7 +95,7 @@ public class ColorController {
     public ResponseEntity<Void> eliminar(@PathVariable String nombre){
         Color model = modelService.buscarPorNombre(nombre);
         if(model==null){
-            throw new RecursoNoEncontradoExcepcion("EL COLOR '"+nombre+"' NO EXISTE Y NO PUEDE SER BORRADO");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EL COLOR '"+nombre+"' NO EXISTE Y NO PUEDE SER BORRADO");
         }
         modelService.eliminar(model);
         return ResponseEntity.ok().build();
