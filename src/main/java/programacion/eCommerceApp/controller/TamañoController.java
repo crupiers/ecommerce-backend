@@ -39,7 +39,7 @@ public class TamañoController {
         return modelService.listar();
     }
 
-    @GetMapping("/tamaño/{id}")
+    @GetMapping("/tamaño/recuperar/{id}")
     public ResponseEntity<TamañoResponse> buscarPorId(@PathVariable Integer id) {
         Tamaño model = modelService.buscarPorId(id);
 

@@ -54,7 +54,7 @@ public class MarcaController {
         return modelService.crear(newMarcaRequest);
     }
 
-    @PutMapping("/marca/{id}")
+    @PutMapping("/marca/recuperar/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
         Marca model = modelService.buscarPorId(id);
         if (model == null) {

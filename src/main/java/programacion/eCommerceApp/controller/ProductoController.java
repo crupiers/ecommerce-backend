@@ -53,7 +53,7 @@ public class ProductoController {
         return modelService.crear(newProductoRequest);
     }
 
-    @PutMapping("/producto/{id}")
+    @PutMapping("/producto/recuperar/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
         Producto model = modelService.buscarPorId(id);
 

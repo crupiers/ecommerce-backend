@@ -70,7 +70,7 @@ public class ColorController {
         return modelService.guardar(newColorRequest);
     }
 
-    @PutMapping("/color/{nombre}") //mapeamos el "PUT" para volver a recuperar un color eliminado
+    @PutMapping("/color/recuperar/{nombre}") //mapeamos el "PUT" para volver a recuperar un color eliminado
     //se utiliza un elemento "Void" como respuesta ya que no se envía ninguna otra info
     //más que realizar la accion de recuperado
     //El "PUT" lo usamos para actualizar, como no tiene sentido actualizar un registro
