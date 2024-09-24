@@ -48,7 +48,7 @@ public class ColorController {
     public ResponseEntity<ColorResponse> getPorNombre(@PathVariable String nombre){
         //usamos el servicio para encontrar un color según su nombre
         Color model = modelService.buscarPorNombre(nombre);
-        if(model==null){
+        if(model==null || model.getEstado() ==1){
             //si no se encuentra el color se manda una excepcion
             //usamos nuestra excepcion personalizada
             throw new RecursoNoEncontradoExcepcion("NO SE ENCONTRÓ EL COLOR: "+nombre);
