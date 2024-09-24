@@ -41,7 +41,7 @@ public class ProductoController {
     public ResponseEntity<ProductoResponse> buscarPorId(@PathVariable Integer id){
         Producto model = modelService.buscarPorId(id);
 
-        if(model == null){
+        if(model == null || model.getEstado() == 1){
             throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
         }
         ProductoResponse productoResponse = ProductoMapper.toProductoResponse(model);
