@@ -4,11 +4,12 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
-import programacion.eCommerceApp.exception.RecursoNoEncontradoExcepcion;
 import programacion.eCommerceApp.mapper.ProductoMapper;
 import programacion.eCommerceApp.model.Producto;
 import programacion.eCommerceApp.service.IProductoService;
@@ -42,7 +43,7 @@ public class ProductoController {
         Producto model = modelService.buscarPorId(id);
 
         if(model == null || model.getEstado() == 1){
-            throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
         ProductoResponse productoResponse = ProductoMapper.toProductoResponse(model);
         return ResponseEntity.ok(productoResponse);
@@ -58,7 +59,7 @@ public class ProductoController {
         Producto model = modelService.buscarPorId(id);
 
         if(model == null){
-            throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
         modelService.recuperar(model);
         return ResponseEntity.ok().build();
@@ -69,7 +70,7 @@ public class ProductoController {
         Producto model = modelService.buscarPorId(id);
 
         if (model == null){
-            throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
         modelService.eliminar(model);
         return ResponseEntity.ok().build();
