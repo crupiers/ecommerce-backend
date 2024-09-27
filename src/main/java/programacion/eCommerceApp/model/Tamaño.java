@@ -18,7 +18,7 @@ public class Tamaño {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String denominacion;
+    private String denominacion, observaciones;
 
     @Builder.Default
     public boolean estado = true;

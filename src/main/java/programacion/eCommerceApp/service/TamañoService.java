@@ -20,11 +20,15 @@ public class TamañoService implements ITamañoService {
     public TamañoResponse crear(NewTamañoRequest newTamañoRequest) {
         Tamaño model = TamañoMapper.toEntity(newTamañoRequest);
         Optional<Tamaño> tamañoExistente = modelRepository.findByDenominacion(model.getDenominacion());
+        Optional<Tamaño> observacionesExistente = modelRepository.findByObservaciones(model.getObservaciones());
 
         if (tamañoExistente.isPresent()) {
             throw new IllegalArgumentException("El tamaño ya está registrado.");
         }
 
+        if (observacionesExistente.isPresent()) {
+            throw new IllegalArgumentException("Las observaciones ya están registradas.");
+        }
         return TamañoMapper.toTamañoResponse(modelRepository.save(model));
     }
 

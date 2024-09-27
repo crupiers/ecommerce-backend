@@ -7,12 +7,13 @@ import programacion.eCommerceApp.model.Tamaño;
 public class TamañoMapper {
 
     public static TamañoResponse toTamañoResponse(Tamaño tamaño) {
-        return new TamañoResponse(tamaño.getId(),tamaño.getDenominacion(),tamaño.isEstado());
+        return new TamañoResponse(tamaño.getId(),tamaño.getDenominacion(),tamaño.getObservaciones(),tamaño.isEstado());
     }
 
     public static Tamaño toEntity (NewTamañoRequest newTamañoRequest) {
         return Tamaño.builder()
                 .denominacion(newTamañoRequest.denominacion())
+                .observaciones(newTamañoRequest.observaciones())
                 .build();
     }
 
