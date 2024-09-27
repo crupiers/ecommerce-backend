@@ -25,7 +25,7 @@ public class CategoriaService implements ICategoriaService {
     @Override
     public Categoria buscarPorId(Integer id) {
 
-        return modelRepository.findByIdAndEstado(id,0).orElse(null);
+        return modelRepository.findById(id).orElse(null);
     }
 
     @Override
