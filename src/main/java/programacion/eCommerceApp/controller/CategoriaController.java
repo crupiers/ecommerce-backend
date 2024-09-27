@@ -58,7 +58,7 @@ public class CategoriaController {
         return modelService.crear(newCategoriaRequest);
     }
 
-    @PutMapping("/categoria/{id}")
+    @PutMapping("/categoria/recuperar/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
         Categoria model = modelService.buscarPorId(id);
 
