@@ -43,7 +43,7 @@ public class TamañoController {
     public ResponseEntity<TamañoResponse> buscarPorId(@PathVariable Integer id) {
         Tamaño model = modelService.buscarPorId(id);
 
-        if (model == null) {
+        if (model == null || model.isEstado() == false) {
            throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
         }
 

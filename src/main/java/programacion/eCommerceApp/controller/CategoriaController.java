@@ -38,7 +38,7 @@ public class CategoriaController {
     public ResponseEntity<CategoriaResponse> getPorId(@PathVariable Integer id){
         Categoria model = modelService.buscarPorId(id);
 
-        if(model == null){
+        if(model == null || model.getEstado() == 1){
             throw new RecursoNoEncontradoExcepcion("No se encontro el id: " + id);
         }
 
