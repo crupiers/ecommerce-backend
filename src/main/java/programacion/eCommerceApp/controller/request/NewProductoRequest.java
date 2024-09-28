@@ -20,7 +20,7 @@ public record NewProductoRequest(
         String nombreColor,
 
         @NotNull(message = "El ID del tamaño no puede ser nulo")
-        Integer tamañoId,
+        Integer tamanioId,
 
         @NotNull(message = "El ID de la categoría no puede ser nulo")
         Integer categoriaId,

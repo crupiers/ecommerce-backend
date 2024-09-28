@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 @ToString
 @Data
-public class Tamaño {
+public class Tamanio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

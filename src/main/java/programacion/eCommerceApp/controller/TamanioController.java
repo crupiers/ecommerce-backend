@@ -8,56 +8,56 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import programacion.eCommerceApp.controller.request.NewTamañoRequest;
-import programacion.eCommerceApp.controller.response.TamañoResponse;
-import programacion.eCommerceApp.mapper.TamañoMapper;
-import programacion.eCommerceApp.model.Tamaño;
-import programacion.eCommerceApp.service.ITamañoService;
+import programacion.eCommerceApp.controller.request.NewTamanioRequest;
+import programacion.eCommerceApp.controller.response.TamanioResponse;
+import programacion.eCommerceApp.mapper.TamanioMapper;
+import programacion.eCommerceApp.model.Tamanio;
+import programacion.eCommerceApp.service.ITamanioService;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin(value="http://localhost:8080")
 @RequestMapping("/eCommerce")
-public class TamañoController {
+public class TamanioController {
 
-    private static final Logger logger = LoggerFactory.getLogger(TamañoController.class);
+    private static final Logger logger = LoggerFactory.getLogger(TamanioController.class);
 
     @Autowired
-    private ITamañoService modelService;
+    private ITamanioService modelService;
 
-    @PostMapping("/tamaño")
+    @PostMapping("/tamanio")
     @ResponseStatus(HttpStatus.CREATED)
-    public TamañoResponse crear(@RequestBody @Valid NewTamañoRequest newTamañoRequest) {
-        return modelService.crear(newTamañoRequest);
+    public TamanioResponse crear(@RequestBody @Valid NewTamanioRequest newTamanioRequest) {
+        return modelService.crear(newTamanioRequest);
     }
 
-    @GetMapping("/tamaño")
-    public List<TamañoResponse> getAll() {
+    @GetMapping("/tamanio")
+    public List<TamanioResponse> getAll() {
         logger.info("Entra y trae todos los tamaños.");
         return modelService.listar();
     }
 
-    @GetMapping("/tamaño/recuperar/{id}")
-    public ResponseEntity<TamañoResponse> buscarPorId(@PathVariable Integer id) {
-        Tamaño model = modelService.buscarPorId(id);
+    @GetMapping("/tamanio/recuperar/{id}")
+    public ResponseEntity<TamanioResponse> buscarPorId(@PathVariable Integer id) {
+        Tamanio model = modelService.buscarPorId(id);
 
         if (model == null || model.isEstado() == false) {
            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
 
-        TamañoResponse tamañoResponse = TamañoMapper.toTamañoResponse(model);
-        return ResponseEntity.ok(tamañoResponse);
+        TamanioResponse tamanioResponse = TamanioMapper.toTamanioResponse(model);
+        return ResponseEntity.ok(tamanioResponse);
     }
 
-    @PutMapping("/tamaño")
-    public TamañoResponse actualizar(@RequestBody @Valid NewTamañoRequest newTamañoRequest) {
-        return modelService.crear(newTamañoRequest);
+    @PutMapping("/tamanio")
+    public TamanioResponse actualizar(@RequestBody @Valid NewTamanioRequest newTamanioRequest) {
+        return modelService.crear(newTamanioRequest);
     }
 
-    @PutMapping("/tamaño/{id}")
+    @PutMapping("/tamanio/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
-        Tamaño model = modelService.buscarPorId(id);
+        Tamanio model = modelService.buscarPorId(id);
 
         if (model == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
@@ -67,9 +67,9 @@ public class TamañoController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/tamaño/{id}")
+    @DeleteMapping("/tamanio/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
-        Tamaño model = modelService.buscarPorId(id);
+        Tamanio model = modelService.buscarPorId(id);
 
         if (model == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);

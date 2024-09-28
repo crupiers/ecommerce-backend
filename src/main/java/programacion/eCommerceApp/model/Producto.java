@@ -32,8 +32,8 @@ public class Producto {
     private Color color;
 
     @ManyToOne
-    @JoinColumn(name = "idTamaño")
-    private Tamaño tamaño;
+    @JoinColumn(name = "idTamanio")
+    private Tamanio tamanio;
 
     @ManyToOne
     @JoinColumn(name = "idCategoria")

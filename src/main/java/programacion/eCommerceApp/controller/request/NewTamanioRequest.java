@@ -3,7 +3,7 @@ package programacion.eCommerceApp.controller.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public record NewTamañoRequest (
+public record NewTamanioRequest(
 
     @NotBlank(message = "La denominación de la marca no puede estar vacio")
     @Pattern(regexp = "^[A-Za-z\s]+$", message = "La denominación solo debe contener letras y espacios")

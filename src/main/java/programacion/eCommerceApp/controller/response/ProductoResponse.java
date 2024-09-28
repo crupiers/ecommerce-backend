@@ -7,7 +7,7 @@ public record ProductoResponse(
         Integer stock,
         Integer codigoBarra,
         Double precio,
-        String denominacionTamaño,
+        String denominacionTamanio,
         String denominacionMarca,
         String nombreCategoria) {
 

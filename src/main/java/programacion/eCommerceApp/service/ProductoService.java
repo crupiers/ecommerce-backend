@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
 import programacion.eCommerceApp.mapper.ProductoMapper;
-import programacion.eCommerceApp.mapper.TamañoMapper;
 import programacion.eCommerceApp.model.*;
 import programacion.eCommerceApp.repository.*;
 
@@ -22,7 +21,7 @@ public class ProductoService implements IProductoService{
     private IColorRepository colorRepository;
 
     @Autowired
-    private ITamañoRepository tamañoRepository;
+    private ITamanioRepository tamanioRepository;
 
     @Autowired
     private IMarcaRepository marcaRepository;
@@ -33,8 +32,8 @@ public class ProductoService implements IProductoService{
     @Override
     public ProductoResponse crear(NewProductoRequest newProductoRequest){
 
-        Tamaño tamaño = tamañoRepository.findById(newProductoRequest.tamañoId())
-                .orElseThrow(() -> new IllegalArgumentException("Tamaño no encontrado con ID: " + newProductoRequest.tamañoId()));
+        Tamanio tamanio = tamanioRepository.findById(newProductoRequest.tamanioId())
+                .orElseThrow(() -> new IllegalArgumentException("Tamaño no encontrado con ID: " + newProductoRequest.tamanioId()));
 
         Color color = colorRepository.findById(newProductoRequest.nombreColor())
                 .orElseThrow(() -> new IllegalArgumentException("Color no encontrado con ID: " + newProductoRequest.nombreColor()));
@@ -50,7 +49,7 @@ public class ProductoService implements IProductoService{
         if(productoExistente.isPresent()){
             throw new IllegalArgumentException("Producto ya registrado");
         }
-        Producto model = ProductoMapper.toEntity(newProductoRequest, color, tamaño, categoria, marca);
+        Producto model = ProductoMapper.toEntity(newProductoRequest, color, tamanio, categoria, marca);
 
         return ProductoMapper.toProductoResponse(modelRepository.save(model));
 

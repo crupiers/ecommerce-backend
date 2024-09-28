@@ -13,15 +13,15 @@ public class ProductoMapper {
                 producto.getStock(),
                 producto.getCodigoBarra(),
                 producto.getPrecio(),
-                producto.getTamaño().getDenominacion(),
+                producto.getTamanio().getDenominacion(),
                 producto.getMarca().getDenominacion(),
                 producto.getCategoria().getNombre());
     }
-    public static Producto toEntity(NewProductoRequest newProductoRequest, Color color, Tamaño tamaño, Categoria categoria, Marca marca) {
+    public static Producto toEntity(NewProductoRequest newProductoRequest, Color color, Tamanio tamanio, Categoria categoria, Marca marca) {
         return Producto.builder()
                 .nombre(newProductoRequest.nombre())
                 .color(color) // Entidad Color
-                .tamaño(tamaño) // Entidad Tamaño
+                .tamanio(tamanio) // Entidad Tamaño
                 .categoria(categoria) // Entidad Categoria
                 .marca(marca) // Entidad Marca
                 .precio(newProductoRequest.precio())
