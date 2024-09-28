@@ -33,3 +33,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# IGNORO LA RUTA DONDE GUARDO LA BASE DE DATOS (de fross)
+db/
