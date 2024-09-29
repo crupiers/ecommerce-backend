@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ProductoController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MarcaController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductoController.class);
 
     @Autowired
     private IProductoService modelService;
