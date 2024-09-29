@@ -14,7 +14,7 @@ public interface IColorService {
 
     //guardamos la entidad, pero aplicando request y response
     ColorResponse crear(NewColorRequest newColorRequest);
-
+    ColorResponse actualizar(NewColorRequest newColorRequest, Integer id);
     //metodos que aplica la clase del modelo y que son accesibles
     void eliminar(Color model);
     void recuperar (Color model);

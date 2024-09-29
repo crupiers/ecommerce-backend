@@ -66,6 +66,19 @@ public class ColorService implements IColorService {
     }
 
     @Override
+    public ColorResponse actualizar(NewColorRequest newColorRequest, Integer id){
+        Color model = ColorMapper.toEntity(newColorRequest);
+        Optional<Color> colorOptional = modelRepository.findById(id);
+        if(colorOptional.isPresent()){
+            Color color = colorOptional.get();
+            color.setNombre(model.getNombre());
+            return ColorMapper.toColorResponse(modelRepository.save(color));
+        }else {
+            throw new IllegalArgumentException("EL COLOR CON ID '"+id+"' NO EXISTE");
+        }
+    }
+
+    @Override
     public void eliminar(Color model) {
         //llamamos al metodo de la clase "Color" para que se "elimine"
         //esto cambia el estado del objeto

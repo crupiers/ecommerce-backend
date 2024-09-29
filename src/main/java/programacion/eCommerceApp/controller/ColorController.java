@@ -72,8 +72,10 @@ public class ColorController {
         return modelService.crear(newColorRequest);
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping("/color/actualizar/{id}")
     public ColorResponse actualizar(@RequestBody @Valid NewColorRequest newColorRequest, @PathVariable Integer id){
-        return null;
+        return modelService.actualizar(newColorRequest, id);
     }
 
     @PutMapping("/color/recuperar/{id}") //mapeamos el "PUT" para volver a recuperar un color eliminado
