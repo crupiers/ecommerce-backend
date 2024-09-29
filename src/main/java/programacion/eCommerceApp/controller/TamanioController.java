@@ -51,14 +51,15 @@ public class TamanioController {
         return ResponseEntity.ok(tamanioResponse);
     }
 
-    @PutMapping("/tamanio")
-    public TamanioResponse actualizar(@RequestBody @Valid NewTamanioRequest newTamanioRequest) {
-        return modelService.crear(newTamanioRequest);
+    @PutMapping("/tamanio/actualizar/{id}")
+    public TamanioResponse actualizar(@RequestBody @Valid NewTamanioRequest newTamanioRequest,  @PathVariable Integer id) {
+        return modelService.actualizar(newTamanioRequest , id);
     }
 
-    @PutMapping("/tamanio/{id}")
+    @PutMapping("/tamanio/recuperar/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
         Tamanio model = modelService.buscarPorId(id);
+
 
         if (model == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);

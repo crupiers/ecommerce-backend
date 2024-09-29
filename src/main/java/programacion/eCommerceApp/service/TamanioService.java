@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import programacion.eCommerceApp.controller.request.NewTamanioRequest;
 import programacion.eCommerceApp.controller.response.TamanioResponse;
+import programacion.eCommerceApp.mapper.MarcaMapper;
 import programacion.eCommerceApp.mapper.TamanioMapper;
 import programacion.eCommerceApp.model.Tamanio;
 import programacion.eCommerceApp.repository.ITamanioRepository;
@@ -19,15 +20,19 @@ public class TamanioService implements ITamanioService {
     @Override
     public TamanioResponse crear(NewTamanioRequest newTamanioRequest) {
         Tamanio model = TamanioMapper.toEntity(newTamanioRequest);
-        Optional<Tamanio> tamanioExistente = modelRepository.findByDenominacion(model.getDenominacion());
-        Optional<Tamanio> observacionesExistente = modelRepository.findByObservaciones(model.getObservaciones());
+        Optional<Tamanio> tamanioOptional = modelRepository.findByDenominacion(model.getDenominacion());
 
-        if (tamanioExistente.isPresent()) {
-            throw new IllegalArgumentException("El tamaño ya está registrado.");
-        }
+        if (tamanioOptional.isPresent()) {
+            Tamanio tamanioExistente = tamanioOptional.get();
+            if (tamanioExistente.getEstado() == 1) {
+                tamanioExistente.recuperar();
+                tamanioExistente.setDenominacion(model.getDenominacion());
+                tamanioExistente.setObservaciones(model.getObservaciones());
 
-        if (observacionesExistente.isPresent()) {
-            throw new IllegalArgumentException("Las observaciones ya están registradas.");
+                return TamanioMapper.toTamanioResponse(modelRepository.save(tamanioExistente));
+            } else {
+                throw new IllegalArgumentException("El tamaño ya existe");
+            }
         }
         return TamanioMapper.toTamanioResponse(modelRepository.save(model));
     }
@@ -53,5 +58,21 @@ public class TamanioService implements ITamanioService {
     public void eliminar(Tamanio model) {
         model.eliminar();
         modelRepository.save(model);
+    }
+
+    @Override
+    public TamanioResponse actualizar(NewTamanioRequest newTamanioRequest, Integer id) {
+        Tamanio model = TamanioMapper.toEntity(newTamanioRequest);
+        Optional<Tamanio> tamanioOptional=modelRepository.findById(id);
+
+        if(tamanioOptional.isPresent()){
+            Tamanio tamanio = tamanioOptional.get();
+            tamanio.setDenominacion(model.getDenominacion());
+            tamanio.setObservaciones(model.getObservaciones());
+            return TamanioMapper.toTamanioResponse(modelRepository.save(tamanio));
+        }
+        else{
+            throw new IllegalArgumentException("El tamaño no existe.");
+        }
     }
 }
