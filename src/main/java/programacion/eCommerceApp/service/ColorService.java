@@ -47,14 +47,7 @@ public class ColorService implements IColorService {
     }
 
     @Override
-    public Color guardar(Color color) {
-        //guardo el color mediante el repository (que usa jpa, es decir, traduce a sql mi objeto "Color")
-        //mediante sql se actualiza el objeto (el registro del mismo)
-        return modelRepository.save(color);
-    }
-
-    @Override
-    public ColorResponse guardar(NewColorRequest newColorRequest) {
+    public ColorResponse crear(NewColorRequest newColorRequest) {
         Color model = ColorMapper.toEntity(newColorRequest); //de peticion a color
         //"Optional" es una clase que me indica si un objeto fue encontrado o no
         //indica si es nulo o no es nulo, es decir, está presente jejeXD

@@ -61,14 +61,19 @@ public class ColorController {
         return ResponseEntity.ok(colorResponse);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/color") //uso de la instruccion "POST"
     /**
      * "@RequestBody" es una anotacion que sirve para tomar el texto o los datos que se muestran
      * en pantalla de la clase "NewColorRequest"
      * Es decir que lo que ingresamos como JSON es validado con "@Valid" para utilizarse por la request
      */
-    public ColorResponse guardar(@RequestBody @Valid NewColorRequest newColorRequest){
-        return modelService.guardar(newColorRequest);
+    public ColorResponse crear(@RequestBody @Valid NewColorRequest newColorRequest){
+        return modelService.crear(newColorRequest);
+    }
+
+    public ColorResponse actualizar(@RequestBody @Valid NewColorRequest newColorRequest, @PathVariable Integer id){
+        return null;
     }
 
     @PutMapping("/color/recuperar/{id}") //mapeamos el "PUT" para volver a recuperar un color eliminado

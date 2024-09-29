@@ -12,10 +12,8 @@ public interface IColorService {
     List<ColorResponse> listar(); //listo de forma automática todos los colores no borrados
     Color buscarPorId(Integer id);
 
-    //guardamos una entidad
-    Color guardar(Color color);
     //guardamos la entidad, pero aplicando request y response
-    ColorResponse guardar(NewColorRequest newColorRequest);
+    ColorResponse crear(NewColorRequest newColorRequest);
 
     //metodos que aplica la clase del modelo y que son accesibles
     void eliminar(Color model);
