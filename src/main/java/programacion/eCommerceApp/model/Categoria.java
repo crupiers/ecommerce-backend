@@ -17,12 +17,9 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String nombre;
-
     @Builder.Default
     private int estado = 0;
-
     public static final int COMUN = 0;
     public static final int ELIMINADO = 1;
 

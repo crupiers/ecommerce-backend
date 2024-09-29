@@ -35,10 +35,10 @@ public class CategoriaController {
     }
 
     @GetMapping("/categoria/{id}")
-    public ResponseEntity<CategoriaResponse> getPorId(@PathVariable Integer id){
+    public ResponseEntity<CategoriaResponse> buscarPorId(@PathVariable Integer id){
         Categoria model = modelService.buscarPorId(id);
 
-        if(model == null || model.getEstado() == 1){
+        if(model == null || model.getEstado() == Categoria.ELIMINADO){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
 

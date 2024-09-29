@@ -35,10 +35,10 @@ public class MarcaController {
     }
 
     @GetMapping("/marca/{id}")
-    public ResponseEntity<MarcaResponse> getPorId(@PathVariable Integer id){
+    public ResponseEntity<MarcaResponse> buscarPorId(@PathVariable Integer id){
         Marca model = modelService.buscarPorId(id);
 
-        if(model == null || model.getEstado() == 1){
+        if(model == null || model.getEstado() == Marca.ELIMINADO){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
         MarcaResponse marcaResponse = MarcaMapper.toMarcaResponse(model);

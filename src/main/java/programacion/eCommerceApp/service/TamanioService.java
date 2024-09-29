@@ -34,7 +34,7 @@ public class TamanioService implements ITamanioService {
 
     @Override
     public List<TamanioResponse> listar() {
-        List<Tamanio> tamanios = modelRepository.findByEstado(true);
+        List<Tamanio> tamanios = modelRepository.findByEstado(Tamanio.COMUN);
         return tamanios.stream().map(TamanioMapper::toTamanioResponse).toList();
     }
 

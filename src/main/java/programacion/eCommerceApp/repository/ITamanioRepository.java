@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface ITamanioRepository extends JpaRepository<Tamanio, Integer> {
-    List<Tamanio> findByEstado(boolean estado);
+    List<Tamanio> findByEstado(int estado);
     Optional<Tamanio> findByDenominacion(String denominacion);
     Optional<Tamanio> findByObservaciones(String observaciones);
 }

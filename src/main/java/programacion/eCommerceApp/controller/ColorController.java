@@ -46,10 +46,10 @@ public class ColorController {
     //para ello debe de entender o recibir las respuestas de colores "ColorResponse"
     //tambien, como nuestra primary key es el nombre de color, este será el parametro ingresado
     //con "@PathVariable" estamos tomando el "{nombre}" de la URL, tomamos el valor que se ingresa por él
-    public ResponseEntity<ColorResponse> getPorNombre(@PathVariable String nombre){
+    public ResponseEntity<ColorResponse> buscarPorNombre(@PathVariable String nombre){
         //usamos el servicio para encontrar un color según su nombre
         Color model = modelService.buscarPorNombre(nombre);
-        if(model==null || model.getEstado() ==1){
+        if(model==null || model.getEstado() == Color.ELIMINADO){
             //si no se encuentra el color se manda una excepcion
             //usamos nuestra excepcion personalizada
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL COLOR: "+nombre);

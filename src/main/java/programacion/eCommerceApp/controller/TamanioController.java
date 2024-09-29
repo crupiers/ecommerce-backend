@@ -42,7 +42,8 @@ public class TamanioController {
     public ResponseEntity<TamanioResponse> buscarPorId(@PathVariable Integer id) {
         Tamanio model = modelService.buscarPorId(id);
 
-        if (model == null || model.isEstado() == false) {
+        //uso la constante "ELIMINADO" para comparar y no el valor
+        if (model == null || model.getEstado() == Tamanio.ELIMINADO) {
            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
 

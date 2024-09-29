@@ -21,12 +21,10 @@ public class Marca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String denominacion;
     private String observaciones;
     @Builder.Default
     private int estado = 0;
-
     public static final int COMUN = 0;
     public static final int ELIMINADO = 1;
 
