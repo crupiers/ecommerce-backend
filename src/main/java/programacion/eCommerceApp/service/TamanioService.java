@@ -24,7 +24,7 @@ public class TamanioService implements ITamanioService {
 
         if (tamanioOptional.isPresent()) {
             Tamanio tamanioExistente = tamanioOptional.get();
-            if (tamanioExistente.getEstado() == 1) {
+            if (tamanioExistente.getEstado() == Tamanio.ELIMINADO) {
                 tamanioExistente.recuperar();
                 tamanioExistente.setDenominacion(model.getDenominacion());
                 tamanioExistente.setObservaciones(model.getObservaciones());

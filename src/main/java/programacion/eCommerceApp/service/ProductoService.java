@@ -51,7 +51,7 @@ public class ProductoService implements IProductoService{
 
         if(productoOptional.isPresent()){
             Producto productoExistente = productoOptional.get();
-            if (productoExistente.getEstado() == 1) {
+            if (productoExistente.getEstado() == Producto.ELIMINADO) {
                 productoExistente.recuperar();
                 productoExistente.setNombre(model.getNombre());
                 productoExistente.setStock(model.getStock());

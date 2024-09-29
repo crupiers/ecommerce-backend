@@ -36,7 +36,7 @@ public class MarcaService implements IMarcaService {
 
         if (marcaOptional.isPresent()) {
             Marca marcaExistente = marcaOptional.get();
-            if(marcaExistente.getEstado() == 1){
+            if(marcaExistente.getEstado() == Marca.ELIMINADO){
                 marcaExistente.recuperar();
                 marcaExistente.setDenominacion(model.getDenominacion());
                 marcaExistente.setObservaciones(model.getObservaciones());

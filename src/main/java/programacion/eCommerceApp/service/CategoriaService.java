@@ -37,7 +37,7 @@ public class CategoriaService implements ICategoriaService {
 
         if (categoriaOptional.isPresent()) {
             Categoria categoriaExistente = categoriaOptional.get();
-            if(categoriaExistente.getEstado() == 1){
+            if(categoriaExistente.getEstado() == Categoria.ELIMINADO){
                 categoriaExistente.recuperar();
 
                 categoriaExistente.setNombre(model.getNombre());
