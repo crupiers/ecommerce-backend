@@ -53,11 +53,18 @@ public class ColorService implements IColorService {
         //indica si es nulo o no es nulo, es decir, está presente jejeXD
         //usamos "model" ya que debemos convertir la peticion en objeto para poder buscarla
         //recordemos que nuestro id es el nombre del color y no un número
-        Optional<Color> colorExistente = modelRepository.findByNombre(model.getNombre());
-        if(colorExistente.isPresent()){
+        Optional<Color> colorOptional = modelRepository.findByNombre(model.getNombre());
+        if(colorOptional.isPresent()){
+            Color colorExistente = colorOptional.get();
+            if(colorExistente.getEstado()==Color.ELIMINADO){
+                colorExistente.recuperar();
+                colorExistente.setNombre(model.getNombre());
+                return ColorMapper.toColorResponse(modelRepository.save(colorExistente));
+            }else {
+                throw new IllegalArgumentException("EL COLOR YA ESTÁ REGISTRADO");
+            }
             //si el color existe, es decir que encontramos por id el color según el nombre que se pide
             //lanzamos una excepción
-            throw new IllegalArgumentException("EL COLOR YA ESTÁ REGISTRADO");
         }
         //si no se lanza la excepción la función sigue y devuelve una respuesta
         //"modelRepository.save(model)" lo que hace es guardar el color que se ingresó en la bbdd
