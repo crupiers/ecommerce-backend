@@ -1,7 +1,5 @@
 package programacion.eCommerceApp.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import programacion.eCommerceApp.controller.request.NewColorRequest;
@@ -18,8 +16,6 @@ import java.util.Optional;
 public class ColorService implements IColorService {
     //al implementar la interfaz, se tiene que declarar y programar todos lo metodos de la interfaz
 
-    //el logger me deja ver mensajes que quiero mostrar
-    private static final Logger logger = LoggerFactory.getLogger(ColorService.class);
     //el service usa el repository, mientras que el controller usa el service (esta clase)
     @Autowired
     private IColorRepository modelRepository;
