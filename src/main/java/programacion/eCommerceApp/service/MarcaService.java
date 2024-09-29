@@ -3,7 +3,9 @@ package programacion.eCommerceApp.service;
 import org.springframework.stereotype.Service;
 import programacion.eCommerceApp.controller.request.NewMarcaRequest;
 import programacion.eCommerceApp.controller.response.MarcaResponse;
+import programacion.eCommerceApp.mapper.CategoriaMapper;
 import programacion.eCommerceApp.mapper.MarcaMapper;
+import programacion.eCommerceApp.model.Categoria;
 import programacion.eCommerceApp.model.Marca;
 import programacion.eCommerceApp.repository.IMarcaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +32,20 @@ public class MarcaService implements IMarcaService {
     @Override
     public MarcaResponse crear(NewMarcaRequest newMarcaRequest) {
         Marca model = MarcaMapper.toEntity(newMarcaRequest);
-        Optional<Marca> marcaExistente = modelRepository.findByDenominacion(model.getDenominacion());
+        Optional<Marca> marcaOptional = modelRepository.findByDenominacion(model.getDenominacion());
 
-        if (marcaExistente.isPresent()) {
-            throw new IllegalArgumentException("La marca ya está registrada.");
+        if (marcaOptional.isPresent()) {
+            Marca marcaExistente = marcaOptional.get();
+            if(marcaExistente.getEstado() == 1){
+                marcaExistente.recuperar();
+                marcaExistente.setDenominacion(model.getDenominacion());
+                marcaExistente.setObservaciones(model.getObservaciones());
+
+                return MarcaMapper.toMarcaResponse(modelRepository.save(marcaExistente));
+            }else{
+                throw new IllegalArgumentException("La marca ya existe");
+            }
         }
-
         return MarcaMapper.toMarcaResponse(modelRepository.save(model));
     }
 
@@ -49,5 +59,20 @@ public class MarcaService implements IMarcaService {
     public void recuperar(Marca model) {
         model.recuperar();
         modelRepository.save(model);
+    }
+
+    @Override
+    public MarcaResponse actualizar(NewMarcaRequest newMarcaRequest, Integer id) {
+        Marca model = MarcaMapper.toEntity(newMarcaRequest);
+        Optional<Marca> marcaOptional = modelRepository.findById(id);
+
+        if(marcaOptional.isPresent()){
+            Marca marca = marcaOptional.get();
+            marca.setDenominacion(model.getDenominacion());
+            marca.setObservaciones(model.getObservaciones());
+            return MarcaMapper.toMarcaResponse(modelRepository.save(marca));
+        }else{
+            throw new IllegalArgumentException("La marca no existe.");
+        }
     }
 }

@@ -1,6 +1,8 @@
 package programacion.eCommerceApp.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewCategoriaRequest;
 import programacion.eCommerceApp.controller.response.CategoriaResponse;
 import programacion.eCommerceApp.mapper.CategoriaMapper;
@@ -31,13 +33,36 @@ public class CategoriaService implements ICategoriaService {
     @Override
     public CategoriaResponse crear(NewCategoriaRequest newCategoriaRequest) {
         Categoria model = CategoriaMapper.toEntity(newCategoriaRequest);
-        Optional<Categoria> categoriaExistente = modelRepository.findByNombre(model.getNombre());
+        Optional<Categoria> categoriaOptional = modelRepository.findByNombre(model.getNombre());
 
-        if (categoriaExistente.isPresent()) {
-            throw new IllegalArgumentException("La categoría ya está registrada.");
+        if (categoriaOptional.isPresent()) {
+            Categoria categoriaExistente = categoriaOptional.get();
+            if(categoriaExistente.getEstado() == 1){
+                categoriaExistente.recuperar();
+
+                categoriaExistente.setNombre(model.getNombre());
+                return CategoriaMapper.toCategoriaResponse(modelRepository.save(categoriaExistente));
+            }else{
+                throw new IllegalArgumentException("La categoría ya existe");
+            }
+        }
+        return CategoriaMapper.toCategoriaResponse(modelRepository.save(model));
+
+    }
+
+    @Override
+    public CategoriaResponse actualizar(NewCategoriaRequest newCategoriaRequest, Integer id) {
+        Categoria model = CategoriaMapper.toEntity(newCategoriaRequest);
+        Optional<Categoria> categoriaOptional = modelRepository.findById(id); //busco en base al id de la ruta
+
+        if (categoriaOptional.isPresent()){
+            Categoria categoria = categoriaOptional.get();
+            categoria.setNombre(model.getNombre());
+            return CategoriaMapper.toCategoriaResponse(modelRepository.save(categoria));
+        }else {
+            throw new IllegalArgumentException("La categoría no existe.");
         }
 
-        return CategoriaMapper.toCategoriaResponse(modelRepository.save(model));
     }
 
     @Override
