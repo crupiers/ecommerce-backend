@@ -23,7 +23,7 @@ public class Producto {
     public static final int COMUN = 0;
     public static final int ELIMINADO = 1;
     @ManyToOne
-    @JoinColumn(name = "nombreColor")
+    @JoinColumn(name = "idColor")
     private Color color;
     @ManyToOne
     @JoinColumn(name = "idTamanio")

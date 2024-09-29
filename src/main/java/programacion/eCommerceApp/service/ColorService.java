@@ -44,10 +44,10 @@ public class ColorService implements IColorService {
     }
 
     @Override
-    public Color buscarPorNombre(String nombre) {
+    public Color buscarPorId(Integer id) {
         //como el nombre es mi id, tengo que pasarlo como tal
         //si no encuentro, paso un objeto nulo
-        return modelRepository.findById(nombre).orElse(null);
+        return modelRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ColorService implements IColorService {
         //indica si es nulo o no es nulo, es decir, está presente jejeXD
         //usamos "model" ya que debemos convertir la peticion en objeto para poder buscarla
         //recordemos que nuestro id es el nombre del color y no un número
-        Optional<Color> colorExistente = modelRepository.findById(model.getNombre());
+        Optional<Color> colorExistente = modelRepository.findByNombre(model.getNombre());
         if(colorExistente.isPresent()){
             //si el color existe, es decir que encontramos por id el color según el nombre que se pide
             //lanzamos una excepción

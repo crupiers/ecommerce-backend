@@ -41,18 +41,18 @@ public class ColorController {
         return modelService.listar();
     }
 
-    @GetMapping("/color/{nombre}") //busco el color por su nombre
+    @GetMapping("/color/{id}") //busco el color por su nombre
     //la clase "ResponseEntity" permite devolver un mensaje HTTP, de confirmación por ejemplo
     //para ello debe de entender o recibir las respuestas de colores "ColorResponse"
     //tambien, como nuestra primary key es el nombre de color, este será el parametro ingresado
     //con "@PathVariable" estamos tomando el "{nombre}" de la URL, tomamos el valor que se ingresa por él
-    public ResponseEntity<ColorResponse> buscarPorNombre(@PathVariable String nombre){
+    public ResponseEntity<ColorResponse> buscarPorId(@PathVariable Integer id){
         //usamos el servicio para encontrar un color según su nombre
-        Color model = modelService.buscarPorNombre(nombre);
+        Color model = modelService.buscarPorId(id);
         if(model==null || model.getEstado() == Color.ELIMINADO){
             //si no se encuentra el color se manda una excepcion
             //usamos nuestra excepcion personalizada
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL COLOR: "+nombre);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL COLOR: "+id);
         }
         //creo una respuesta en base al color tomado de la bbdd
         ColorResponse colorResponse = ColorMapper.toColorResponse(model);
@@ -71,18 +71,18 @@ public class ColorController {
         return modelService.guardar(newColorRequest);
     }
 
-    @PutMapping("/color/recuperar/{nombre}") //mapeamos el "PUT" para volver a recuperar un color eliminado
+    @PutMapping("/color/recuperar/{id}") //mapeamos el "PUT" para volver a recuperar un color eliminado
     //se utiliza un elemento "Void" como respuesta ya que no se envía ninguna otra info
     //más que realizar la accion de recuperado
     //El "PUT" lo usamos para actualizar, como no tiene sentido actualizar un registro
     //que sólo tiene nombre y estado, el put es usado para recuperar un color el cual sabemos su nombre
     //(que es el id)
-    public ResponseEntity<Void> recuperar(@PathVariable String nombre){
-        Color model = modelService.buscarPorNombre(nombre);
+    public ResponseEntity<Void> recuperar(@PathVariable Integer id){
+        Color model = modelService.buscarPorId(id);
         if(model==null){
             //en caso de que se quiera recuperar un color borrado que en realidad nunca fue registrado
             //lanzamos excepcion
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EL COLOR '"+nombre + "' NUNCA FUE REGISTRADO NI BORRADO ANTERIORMENTE");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EL COLOR '"+id+ "' NUNCA FUE REGISTRADO NI BORRADO ANTERIORMENTE");
         }
         //si encuentro el color que quiero recuperar
         modelService.recuperar(model); //llamo al servicio para que se encargue de recuperarlo
@@ -91,11 +91,11 @@ public class ColorController {
         return ResponseEntity.ok().build(); //construyo una entidad de respuesta vacía (por eso "Void" es el generico "T")
     }
 
-    @DeleteMapping("/color/{nombre}") //mapeo el "DELETE" del postman para que realice esta funcion de eliminado logico
-    public ResponseEntity<Void> eliminar(@PathVariable String nombre){
-        Color model = modelService.buscarPorNombre(nombre);
+    @DeleteMapping("/color/{id}") //mapeo el "DELETE" del postman para que realice esta funcion de eliminado logico
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id){
+        Color model = modelService.buscarPorId(id);
         if(model==null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EL COLOR '"+nombre+"' NO EXISTE Y NO PUEDE SER BORRADO");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EL COLOR '"+id+"' NO EXISTE Y NO PUEDE SER BORRADO");
         }
         modelService.eliminar(model);
         return ResponseEntity.ok().build();

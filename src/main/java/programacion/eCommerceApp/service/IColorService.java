@@ -10,7 +10,7 @@ import java.util.List;
 public interface IColorService {
 
     List<ColorResponse> listar(); //listo de forma automática todos los colores no borrados
-    Color buscarPorNombre(String nombre);
+    Color buscarPorId(Integer id);
 
     //guardamos una entidad
     Color guardar(Color color);

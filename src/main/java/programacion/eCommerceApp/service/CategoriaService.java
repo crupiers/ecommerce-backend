@@ -51,8 +51,4 @@ public class CategoriaService implements ICategoriaService {
         model.recuperar();
         modelRepository.save(model);
     }
-    @Override
-    public Categoria buscarPorIdSinFiltrarEstado(Integer id) {
-        return modelRepository.findById(id).orElse(null);
-    }
 }

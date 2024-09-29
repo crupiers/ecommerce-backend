@@ -17,7 +17,4 @@ public interface ICategoriaService {
     void eliminar(Categoria model);
 
     void recuperar(Categoria model);
-
-    Categoria buscarPorIdSinFiltrarEstado(Integer id);
-
 }

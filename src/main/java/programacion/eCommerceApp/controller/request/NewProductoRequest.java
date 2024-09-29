@@ -16,8 +16,8 @@ public record NewProductoRequest(
         @NotNull(message = "El precio no puede ser nulo")
         Double precio,
 
-        @NotNull(message = "El nombre del color no puede ser nulo")
-        String nombreColor,
+        @NotNull(message = "El ID del color no puede ser nulo")
+        Integer colorId,
 
         @NotNull(message = "El ID del tamaño no puede ser nulo")
         Integer tamanioId,

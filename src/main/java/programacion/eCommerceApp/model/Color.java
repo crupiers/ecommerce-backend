@@ -2,6 +2,8 @@ package programacion.eCommerceApp.model;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -13,7 +15,9 @@ import lombok.*;
 @NoArgsConstructor
 public class Color {
 
-    @Id //hago el nombre del color como primary key, no necesariamente el id es un número
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //genera números automáticamente
+    private Integer id;
     private String nombre;
     @Builder.Default
     private int estado = 0;

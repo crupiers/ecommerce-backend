@@ -35,8 +35,8 @@ public class ProductoService implements IProductoService{
         Tamanio tamanio = tamanioRepository.findById(newProductoRequest.tamanioId())
                 .orElseThrow(() -> new IllegalArgumentException("Tamaño no encontrado con ID: " + newProductoRequest.tamanioId()));
 
-        Color color = colorRepository.findById(newProductoRequest.nombreColor())
-                .orElseThrow(() -> new IllegalArgumentException("Color no encontrado con ID: " + newProductoRequest.nombreColor()));
+        Color color = colorRepository.findById(newProductoRequest.colorId())
+                .orElseThrow(() -> new IllegalArgumentException("Color no encontrado con ID: " + newProductoRequest.colorId()));
 
         Categoria categoria = categoriaRepository.findById(newProductoRequest.categoriaId())
                 .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada con ID: " + newProductoRequest.categoriaId()));
