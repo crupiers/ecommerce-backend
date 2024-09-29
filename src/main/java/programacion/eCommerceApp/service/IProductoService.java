@@ -16,4 +16,6 @@ public interface IProductoService {
     void recuperar (Producto producto);
 
     void eliminar (Producto producto);
+
+    ProductoResponse actualizar (NewProductoRequest newProductoRequest , Integer id);
 }

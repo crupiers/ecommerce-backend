@@ -50,9 +50,9 @@ public class MarcaController {
         return modelService.crear(newMarcaRequest);
     }
 
-    @PutMapping("/marca")
-    public MarcaResponse actualizar(@RequestBody @Valid NewMarcaRequest newMarcaRequest){
-        return modelService.crear(newMarcaRequest);
+    @PutMapping("/marca/actualizar/{id}")
+    public MarcaResponse actualizar(@RequestBody @Valid NewMarcaRequest newMarcaRequest, @PathVariable Integer id){
+        return modelService.actualizar(newMarcaRequest, id);
     }
 
     @PutMapping("/marca/recuperar/{id}")

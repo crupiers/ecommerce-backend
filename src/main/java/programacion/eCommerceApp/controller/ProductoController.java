@@ -49,9 +49,9 @@ public class ProductoController {
         return ResponseEntity.ok(productoResponse);
     }
 
-    @PutMapping("/producto")
-    public ProductoResponse actualizar(@RequestBody @Valid NewProductoRequest newProductoRequest){
-        return modelService.crear(newProductoRequest);
+    @PutMapping("/producto/actualizar/{id}")
+    public ProductoResponse actualizar(@RequestBody @Valid NewProductoRequest newProductoRequest , Integer id){
+        return modelService.actualizar(newProductoRequest , id);
     }
 
     @PutMapping("/producto/recuperar/{id}")

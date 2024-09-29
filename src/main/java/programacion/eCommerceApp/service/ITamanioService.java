@@ -17,4 +17,6 @@ public interface ITamanioService {
 
     void eliminar (Tamanio tamanio);
 
+    TamanioResponse actualizar(NewTamanioRequest newTamanioRequest, Integer id);
+
 }

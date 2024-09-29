@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
 import programacion.eCommerceApp.mapper.ProductoMapper;
+import programacion.eCommerceApp.mapper.TamanioMapper;
 import programacion.eCommerceApp.model.*;
 import programacion.eCommerceApp.repository.*;
 
@@ -44,17 +45,67 @@ public class ProductoService implements IProductoService{
         Marca marca = marcaRepository.findById(newProductoRequest.marcaId())
                 .orElseThrow(() -> new IllegalArgumentException("Marca no encontrada con ID: " + newProductoRequest.marcaId()));
 
-        Optional<Producto> productoExistente = modelRepository.findByNombre(newProductoRequest.nombre());
-
-        if(productoExistente.isPresent()){
-            throw new IllegalArgumentException("Producto ya registrado");
-        }
         Producto model = ProductoMapper.toEntity(newProductoRequest, color, tamanio, categoria, marca);
 
+        Optional<Producto> productoOptional = modelRepository.findByNombre(newProductoRequest.nombre());
+
+        if(productoOptional.isPresent()){
+            Producto productoExistente = productoOptional.get();
+            if (productoExistente.getEstado() == Producto.ELIMINADO) {
+                productoExistente.recuperar();
+                productoExistente.setNombre(model.getNombre());
+                productoExistente.setStock(model.getStock());
+                productoExistente.setCodigoBarra(model.getCodigoBarra());
+                productoExistente.setPrecio(model.getPrecio());
+                productoExistente.setColor(model.getColor());
+                productoExistente.setTamanio(model.getTamanio());
+                productoExistente.setCategoria(model.getCategoria());
+                productoExistente.setMarca(model.getMarca());
+
+                return ProductoMapper.toProductoResponse(modelRepository.save(productoExistente));
+            } else {
+                throw new IllegalArgumentException("El producto ya existe");
+            }
+        }
         return ProductoMapper.toProductoResponse(modelRepository.save(model));
-
-
     }
+
+    @Override
+    public ProductoResponse actualizar(NewProductoRequest newProductoRequest , Integer id){
+        Tamanio tamanio = tamanioRepository.findById(newProductoRequest.tamanioId())
+                .orElseThrow(() -> new IllegalArgumentException("Tamaño no encontrado con ID: " + newProductoRequest.tamanioId()));
+
+        Color color = colorRepository.findById(newProductoRequest.colorId())
+                .orElseThrow(() -> new IllegalArgumentException("Color no encontrado con ID: " + newProductoRequest.colorId()));
+
+        Categoria categoria = categoriaRepository.findById(newProductoRequest.categoriaId())
+                .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada con ID: " + newProductoRequest.categoriaId()));
+
+        Marca marca = marcaRepository.findById(newProductoRequest.marcaId())
+                .orElseThrow(() -> new IllegalArgumentException("Marca no encontrada con ID: " + newProductoRequest.marcaId()));
+
+        Producto model = ProductoMapper.toEntity(newProductoRequest, color, tamanio, categoria, marca);
+
+        Optional<Producto> productoOptional = modelRepository.findByNombre(model.getNombre());
+
+        if (productoOptional.isPresent()) {
+            Producto productoExistente = productoOptional.get();
+            productoExistente.setNombre(model.getNombre());
+            productoExistente.setStock(model.getStock());
+            productoExistente.setCodigoBarra(model.getCodigoBarra());
+            productoExistente.setPrecio(model.getPrecio());
+            productoExistente.setColor(model.getColor());
+            productoExistente.setTamanio(model.getTamanio());
+            productoExistente.setCategoria(model.getCategoria());
+            productoExistente.setMarca(model.getMarca());
+
+            return ProductoMapper.toProductoResponse(modelRepository.save(productoExistente));
+        }
+        else {
+            throw new IllegalArgumentException("Producto no existe");
+        }
+    }
+
 
     @Override
     public List<ProductoResponse> listar() {

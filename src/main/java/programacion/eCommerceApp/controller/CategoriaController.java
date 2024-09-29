@@ -53,9 +53,9 @@ public class CategoriaController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PutMapping("/categoria")
-    public CategoriaResponse actualizar(@RequestBody @Valid NewCategoriaRequest newCategoriaRequest){
-        return modelService.crear(newCategoriaRequest);
+    @PutMapping("/categoria/actualizar/{id}")
+    public CategoriaResponse actualizar(@RequestBody @Valid NewCategoriaRequest newCategoriaRequest, @PathVariable Integer id){
+        return modelService.actualizar(newCategoriaRequest, id);
     }
 
     @PutMapping("/categoria/recuperar/{id}")

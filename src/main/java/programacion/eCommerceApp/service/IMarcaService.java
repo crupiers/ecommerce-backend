@@ -17,4 +17,5 @@ public interface IMarcaService {
 
     void recuperar(Marca model);
 
+    MarcaResponse actualizar(NewMarcaRequest newMarcaRequest, Integer id);
 }
