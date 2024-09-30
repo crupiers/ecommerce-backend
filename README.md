@@ -1,7 +1,5 @@
 # Índice
 
-# Índice
-
 <details>
   <summary>Controller</summary>
 
