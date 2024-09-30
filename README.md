@@ -32,7 +32,7 @@
 <details>
   <summary>Servicio</summary>
   
-3. [Servicio](#servicio---ecommerce-app)
+3. [Service](#service---ecommerce-app)
   
   - [Anotaciones Utilizadas](#anotaciones-utilizadas-1)
   - [Dependencias](#dependencias)
@@ -47,15 +47,6 @@
 </details>
 
 ---
-
-# Índice
-
-1. [Controller](#controller---ecommerce-app)
-2. [Servicio](#servicio---ecommerce-app)
-3. [Entity](#entity---ecommerce-app)
-
----
-
 # Controller - eCommerce App
 
 La clase gestiona operaciones relacionadas con la entidad `{entity}`, tales como listar, buscar, crear, actualizar, eliminar y recuperar.
