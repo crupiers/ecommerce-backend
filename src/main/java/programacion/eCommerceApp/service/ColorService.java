@@ -33,11 +33,19 @@ public class ColorService implements IColorService {
     @Override
     public ColorResponse crear(NewColorRequest newColorRequest) {
         Color model = ColorMapper.toEntity(newColorRequest); //de peticion a color
-        Optional<Color> colorExistente = modelRepository.findByNombre(model.getNombre());
-        if(colorExistente.isPresent()){
+        Optional<Color> colorOptional = modelRepository.findByNombre(model.getNombre());
 
-            throw new IllegalArgumentException("EL COLOR YA ESTÁ REGISTRADO");
+        if(colorOptional.isPresent()){
+            Color colorExistente = colorOptional.get();
+            if(colorExistente.getEstado()==Color.ELIMINADO){
+                colorExistente.recuperar();
+                colorExistente.setNombre(model.getNombre());
+                return ColorMapper.toColorResponse(modelRepository.save(colorExistente));
+            }else {
+                throw new IllegalArgumentException("EL COLOR CON NOMBRE '"+newColorRequest.nombre()+"' YA EXISTE");
+            }
         }
+
         return ColorMapper.toColorResponse(modelRepository.save(model));
     }
 
