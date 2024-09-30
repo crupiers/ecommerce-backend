@@ -18,9 +18,21 @@
 </details>
 
 <details>
+  <summary>Entity</summary>
+  
+2. [Entity](#entity---ecommerce-app)
+
+  - [Métodos](#métodos)
+    - [Eliminar](#eliminar)
+    - [Recuperar](#recuperar)
+  - [Anotaciones](#anotaciones)
+  - [Notas importantes](#notas-importantes)
+
+</details>
+<details>
   <summary>Servicio</summary>
   
-2. [Servicio](#servicio---ecommerce-app)
+3. [Servicio](#servicio---ecommerce-app)
   
   - [Anotaciones Utilizadas](#anotaciones-utilizadas-1)
   - [Dependencias](#dependencias)
@@ -34,18 +46,13 @@
 
 </details>
 
-<details>
-  <summary>Entity</summary>
-  
+---
+
+# Índice
+
+1. [Controller](#controller---ecommerce-app)
+2. [Servicio](#servicio---ecommerce-app)
 3. [Entity](#entity---ecommerce-app)
-
-  - [Métodos](#métodos)
-    - [Eliminar](#eliminar)
-    - [Recuperar](#recuperar)
-  - [Anotaciones](#anotaciones)
-  - [Notas importantes](#notas-importantes)
-
-</details>
 
 ---
 
@@ -115,8 +122,44 @@ Permite eliminar lógicamente un {entity} existente. Si el {entity} no existe, s
 - **I{entity}Service**: El servicio encargado de la lógica de negocio relacionada con la entidad `{entity}`. Las dependencias de este servicio son inyectadas automáticamente mediante `@Autowired`.
 - **{entity}Mapper**: Utilizado para mapear la entidad `{entity}` a `{entity}Response` y evitar exponer la entidad completa.
 
+---
+# Entity - eCommerce App
 
-# Servicio - eCommerce App
+Esta clase representa la entidad `{entity}` en la aplicación eCommerce desarrollada con Spring Boot. La entidad `{entity}` es gestionada en la base de datos y contiene información como el `nombre`, el `estado` y su `id`. Además, utiliza varias etiquetas de Lombok y JPA para simplificar la creación y manipulación de objetos de esta clase.
+
+## Métodos
+
+### `eliminar()`
+Este método cambia el estado del `{entity}` a `ELIMINADO`. Cuando se llama a este método, se marca la entidad como eliminada lógicamente, cambiando el valor del campo `estado` a `1`.
+
+### `recuperar()`
+Este método cambia el estado del `{entity}` a `COMUN`, indicando que ha sido recuperado de su estado eliminado. El campo `estado` vuelve a tomar el valor `0` cuando se llama a este método.
+
+## Anotaciones
+
+La clase `{entity}` incluye varias anotaciones para simplificar el desarrollo:
+
+- **@Entity**: Indica que esta clase es una entidad de JPA, lo que significa que será registrada como una tabla en la base de datos.
+  
+- **@Data**: Anotación de Lombok que genera automáticamente getters, setters, `hashCode`, `equals` y `toString` para los atributos de la clase.
+  
+- **@Builder**: Permite implementar el patrón de diseño Builder para crear objetos `{entity}`. Esta anotación facilita la construcción de instancias de la clase sin tener que usar un constructor completo.
+
+- **@ToString**: Genera un método `toString` que devuelve una representación en cadena de los atributos del objeto `{entity}`.
+
+- **@AllArgsConstructor**: Genera un constructor que acepta todos los campos de la clase como parámetros.
+
+- **@NoArgsConstructor**: Genera un constructor sin parámetros.
+
+## Notas importantes
+
+- **Estado por defecto**: El campo `estado` tiene un valor por defecto de `0`, que corresponde al estado común de la entidad `{entity}`.
+- **Manejo del estado**: La entidad maneja dos posibles estados: `COMUN` (valor `0`) y `ELIMINADO` (valor `1`). Estos estados se utilizan para realizar eliminaciones lógicas sin eliminar el registro de la base de datos.
+- **Uso de Lombok**: Se utilizan varias anotaciones de Lombok (`@Data`, `@Builder`, `@ToString`, entre otras) para simplificar la escritura del código, reduciendo la cantidad de código repetitivo en la clase.
+
+---
+
+# Service - eCommerce App
 
 Esta clase representa el servicio `{entity}Service`, que implementa la interfaz `I{entity}Service` en la aplicación eCommerce desarrollada con Spring Boot. Esta clase se encarga de la lógica de negocio relacionada con la entidad `{entity}`, gestionando operaciones como listar, buscar, crear, actualizar, eliminar y recuperar `{entity}`.
 
@@ -157,41 +200,4 @@ Permite la creación de un nuevo `{entity}`.
   - Verifica si el `{entity}` ya existe en la base de datos. Si existe, lanza una excepción.
   - Si no existe, guarda el nuevo `{entity}` en la base de datos y devuelve un `{entity}Response`.
 - **Parámetro**: `new{entity}Request` – Un objeto que contiene la información del nuevo `{entity}`.
-- **Retorno**: `{entity}Response` con los datos del `{entity}` creado.
-
-### 4. Actualizar un {entity} existente
-#### `{entity}Response actualizar(New{entity}Request new{entity}Request, Integer id)`
-Actualiza un `{entity}` existente utilizando su ID.
-
-- **Descripción**: 
-  - Convierte el objeto `New{entity}Request` a una entidad `{entity}`.
-  - Busca el `{entity}` por su ID. Si no se encuentra, lanza una excepción.
-  - Actualiza los datos del `{entity}` y guarda los cambios en la base de datos.
-- **Parámetros**: 
-  - `new{entity}Request` – Un objeto que contiene los nuevos datos del `{entity}`.
-  - `id` (Integer) – El identificador del `{entity}` a actualizar.
-- **Retorno**: `{entity}Response` con los datos actualizados del `{entity}`.
-
-### 5. Eliminar un {entity}
-#### `void eliminar({entity} model)`
-Elimina lógicamente un `{entity}` existente.
-
-- **Descripción**: 
-  - Cambia el estado del `{entity}` a `ELIMINADO` utilizando el método `eliminar()`.
-  - Actualiza el registro de la entidad en la base de datos.
-- **Parámetro**: `model` – La instancia del `{entity}` que se desea eliminar.
-
-### 6. Recuperar un {entity} eliminado
-#### `void recuperar({entity} model)`
-Recupera un `{entity}` que ha sido eliminado lógicamente.
-
-- **Descripción**: 
-  - Cambia el estado del `{entity}` a `COMUN` utilizando el método `recuperar()`.
-  - Actualiza el registro de la entidad en la base de datos.
-- **Parámetro**: `model` – La instancia del `{entity}` que se desea recuperar.
-
-## Notas importantes
-
-- **Implementación de la interfaz**: Esta clase establece un contrato que debe ser cumplido por cualquier clase que implemente el servicio para la entidad `{entity}`. Asegura que se implementen los métodos necesarios para la gestión de datos de `{entity}`.
-- **Uso de Optional**: Se utiliza la clase `Optional` para manejar la posibilidad de que un `{entity}` no se encuentre en la base de datos, lo que permite un manejo más seguro de valores nulos.
-- **Manejo de excepciones**: La clase lanza excepciones específicas cuando se intenta crear un `{entity}` que ya existe o al intentar actualizar un `{
+- **Retorno**: `{entity}Response
