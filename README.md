@@ -3,6 +3,7 @@
 <details>
   <summary>Controller</summary>
 
+1. [Controller](#controller---ecommerce-app)
   - [Anotaciones Utilizadas](#anotaciones-utilizadas)
   - [Endpoints disponibles](#endpoints-disponibles)
     - [Obtener todos los {entity}](#1-obtener-todos-los-entity)
@@ -17,7 +18,7 @@
 
 <details>
   <summary>Servicio</summary>
-
+2. [Servicio](#servicio---ecommerce-app)
   - [Anotaciones Utilizadas](#anotaciones-utilizadas-1)
   - [Dependencias](#dependencias)
   - [Métodos disponibles](#métodos-disponibles)
@@ -32,7 +33,7 @@
 
 <details>
   <summary>Entity</summary>
-
+3. [Entity](#entity---ecommerce-app)
   - [Métodos](#métodos)
     - [Eliminar](#eliminar)
     - [Recuperar](#recuperar)
