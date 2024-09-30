@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
 import programacion.eCommerceApp.mapper.ProductoMapper;
-import programacion.eCommerceApp.mapper.TamanioMapper;
 import programacion.eCommerceApp.model.*;
 import programacion.eCommerceApp.repository.*;
 
