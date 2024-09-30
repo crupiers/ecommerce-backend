@@ -1,40 +1,47 @@
 # Índice
 
-1. [Controller](#controller---ecommerce-app)
-   - [Anotaciones Utilizadas](#anotaciones-utilizadas)
-   - [Endpoints disponibles](#endpoints-disponibles)
-     - [Obtener todos los {entity}](#1-obtener-todos-los-entity)
-     - [Buscar {entity} por ID](#2-buscar-entity-por-id)
-     - [Crear un nuevo {entity}](#3-crear-un-nuevo-entity)
-     - [Actualizar un {entity} existente](#4-actualizar-un-entity-existente)
-     - [Recuperar un {entity} eliminado](#5-recuperar-un-entity-eliminado)
-     - [Eliminar un {entity}](#6-eliminar-un-entity)
-   - [Dependencias de la clase](#dependencias-de-la-clase)
-
-2. [Servicio](#servicio---ecommerce-app)
-   - [Anotaciones Utilizadas](#anotaciones-utilizadas-1)
-   - [Dependencias](#dependencias)
-   - [Métodos disponibles](#métodos-disponibles)
-     - [Listar todos los {entity}](#1-listar-todos-los-entity)
-     - [Buscar {entity} por ID](#2-buscar-entity-por-id-1)
-     - [Crear un nuevo {entity}](#3-crear-un-nuevo-entity-1)
-     - [Actualizar un {entity} existente](#4-actualizar-un-entity-existente-1)
-     - [Eliminar un {entity}](#5-eliminar-un-entity-1)
-     - [Recuperar un {entity} eliminado](#6-recuperar-un-entity-eliminado-1)
-
-3. [Entity](#entity---ecommerce-app)
-   - [Métodos](#métodos)
-     - [Eliminar](#eliminar)
-     - [Recuperar](#recuperar)
-   - [Anotaciones](#anotaciones)
-   - [Notas importantes](#notas-importantes)
-
----
 # Índice
 
-1. [Controller](#controller---ecommerce-app)
-2. [Servicio](#servicio---ecommerce-app)
-3. [Entity](#entity---ecommerce-app)
+<details>
+  <summary>Controller</summary>
+
+  - [Anotaciones Utilizadas](#anotaciones-utilizadas)
+  - [Endpoints disponibles](#endpoints-disponibles)
+    - [Obtener todos los {entity}](#1-obtener-todos-los-entity)
+    - [Buscar {entity} por ID](#2-buscar-entity-por-id)
+    - [Crear un nuevo {entity}](#3-crear-un-nuevo-entity)
+    - [Actualizar un {entity} existente](#4-actualizar-un-entity-existente)
+    - [Recuperar un {entity} eliminado](#5-recuperar-un-entity-eliminado)
+    - [Eliminar un {entity}](#6-eliminar-un-entity)
+  - [Dependencias de la clase](#dependencias-de-la-clase)
+
+</details>
+
+<details>
+  <summary>Servicio</summary>
+
+  - [Anotaciones Utilizadas](#anotaciones-utilizadas-1)
+  - [Dependencias](#dependencias)
+  - [Métodos disponibles](#métodos-disponibles)
+    - [Listar todos los {entity}](#1-listar-todos-los-entity)
+    - [Buscar {entity} por ID](#2-buscar-entity-por-id-1)
+    - [Crear un nuevo {entity}](#3-crear-un-nuevo-entity-1)
+    - [Actualizar un {entity} existente](#4-actualizar-un-entity-existente-1)
+    - [Eliminar un {entity}](#5-eliminar-un-entity-1)
+    - [Recuperar un {entity} eliminado](#6-recuperar-un-entity-eliminado-1)
+
+</details>
+
+<details>
+  <summary>Entity</summary>
+
+  - [Métodos](#métodos)
+    - [Eliminar](#eliminar)
+    - [Recuperar](#recuperar)
+  - [Anotaciones](#anotaciones)
+  - [Notas importantes](#notas-importantes)
+
+</details>
 
 ---
 
