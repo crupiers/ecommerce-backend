@@ -56,13 +56,14 @@ public class CategoriaService implements ICategoriaService {
         Optional<Categoria> categoriaOptional = modelRepository.findById(id); //busco en base al id de la ruta
 
         if (categoriaOptional.isPresent()){
+            if(categoriaOptional.get().getEstado()==Categoria.ELIMINADO){
+                throw new IllegalArgumentException("LA CATEGORÍA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADA");
+            }
             Categoria categoria = categoriaOptional.get();
             categoria.setNombre(model.getNombre());
             return CategoriaMapper.toCategoriaResponse(modelRepository.save(categoria));
-        }else {
-            throw new IllegalArgumentException("La categoría no existe.");
         }
-
+            throw new IllegalArgumentException("LA CATEGORÍA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
 
     @Override

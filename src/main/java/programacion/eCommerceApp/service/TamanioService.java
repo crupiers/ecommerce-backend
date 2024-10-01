@@ -65,13 +65,14 @@ public class TamanioService implements ITamanioService {
         Optional<Tamanio> tamanioOptional=modelRepository.findById(id);
 
         if(tamanioOptional.isPresent()){
+            if(tamanioOptional.get().getEstado()==Tamanio.ELIMINADO){
+                throw new IllegalArgumentException("EL TAMAÑO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
+            }
             Tamanio tamanio = tamanioOptional.get();
             tamanio.setDenominacion(model.getDenominacion());
             tamanio.setObservaciones(model.getObservaciones());
             return TamanioMapper.toTamanioResponse(modelRepository.save(tamanio));
         }
-        else{
-            throw new IllegalArgumentException("El tamaño no existe.");
-        }
+        throw new IllegalArgumentException("EL TAMAÑO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
 }

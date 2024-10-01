@@ -63,14 +63,15 @@ public class MarcaService implements IMarcaService {
     public MarcaResponse actualizar(NewMarcaRequest newMarcaRequest, Integer id) {
         Marca model = MarcaMapper.toEntity(newMarcaRequest);
         Optional<Marca> marcaOptional = modelRepository.findById(id);
-
         if(marcaOptional.isPresent()){
+            if(marcaOptional.get().getEstado()==Marca.ELIMINADO){
+                throw new IllegalArgumentException("LA MARCA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADA");
+            }
             Marca marca = marcaOptional.get();
             marca.setDenominacion(model.getDenominacion());
             marca.setObservaciones(model.getObservaciones());
             return MarcaMapper.toMarcaResponse(modelRepository.save(marca));
-        }else{
-            throw new IllegalArgumentException("La marca no existe.");
         }
+        throw new IllegalArgumentException("LA MARCA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
 }

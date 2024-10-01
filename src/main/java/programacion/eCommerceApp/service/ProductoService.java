@@ -88,6 +88,9 @@ public class ProductoService implements IProductoService{
         Optional<Producto> productoOptional = modelRepository.findByNombre(model.getNombre());
 
         if (productoOptional.isPresent()) {
+            if(productoOptional.get().getEstado()==Producto.ELIMINADO){
+                throw new IllegalArgumentException("EL PRODUCTO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
+            }
             Producto productoExistente = productoOptional.get();
             productoExistente.setNombre(model.getNombre());
             productoExistente.setStock(model.getStock());
@@ -100,9 +103,7 @@ public class ProductoService implements IProductoService{
 
             return ProductoMapper.toProductoResponse(modelRepository.save(productoExistente));
         }
-        else {
-            throw new IllegalArgumentException("Producto no existe");
-        }
+        throw new IllegalArgumentException("EL PRODUCTO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
 
 
