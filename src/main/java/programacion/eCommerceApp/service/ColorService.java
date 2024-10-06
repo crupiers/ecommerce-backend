@@ -31,6 +31,11 @@ public class ColorService implements IColorService {
     }
 
     @Override
+    public Color buscarPorNombre(String nombre) {
+        return modelRepository.findByNombre(nombre).orElse(null);
+    }
+
+    @Override
     public ColorResponse crear(NewColorRequest newColorRequest) {
         Color model = ColorMapper.toEntity(newColorRequest); //de peticion a color
         Optional<Color> colorOptional = modelRepository.findByNombre(model.getNombre());
