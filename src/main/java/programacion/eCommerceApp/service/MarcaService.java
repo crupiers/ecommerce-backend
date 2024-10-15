@@ -30,14 +30,14 @@ public class MarcaService implements IMarcaService {
     @Override
     public MarcaResponse crear(NewMarcaRequest newMarcaRequest) {
         Marca model = MarcaMapper.toEntity(newMarcaRequest);
-        Optional<Marca> marcaOptional = modelRepository.findByDenominacion(model.getDenominacion());
+        Optional<Marca> marcaOptional = modelRepository.findByNombre(model.getNombre());
 
         if (marcaOptional.isPresent()) {
             Marca marcaExistente = marcaOptional.get();
             if(marcaExistente.getEstado() == Marca.ELIMINADO){
                 marcaExistente.recuperar();
-                marcaExistente.setDenominacion(model.getDenominacion());
-                marcaExistente.setObservaciones(model.getObservaciones());
+                marcaExistente.setNombre(model.getNombre());
+                marcaExistente.setDescripcion(model.getDescripcion());
 
                 return MarcaMapper.toMarcaResponse(modelRepository.save(marcaExistente));
             }else{
@@ -68,8 +68,8 @@ public class MarcaService implements IMarcaService {
                 throw new IllegalArgumentException("LA MARCA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADA");
             }
             Marca marca = marcaOptional.get();
-            marca.setDenominacion(model.getDenominacion());
-            marca.setObservaciones(model.getObservaciones());
+            marca.setNombre(model.getNombre());
+            marca.setDescripcion(model.getDescripcion());
             return MarcaMapper.toMarcaResponse(modelRepository.save(marca));
         }
         throw new IllegalArgumentException("LA MARCA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");

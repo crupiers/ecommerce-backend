@@ -9,7 +9,7 @@ public record NewTamanioRequest(
     @Pattern(regexp = "^[A-Za-z\s]+$", message = "La denominación solo debe contener letras y espacios")
     String denominacion,
 
-    @NotBlank(message = "Las observaciones de la marca no pueden estar vacias")
+    @NotBlank(message = "Las descripcion de la marca no pueden estar vacias")
     String observaciones
 
 ) { }
