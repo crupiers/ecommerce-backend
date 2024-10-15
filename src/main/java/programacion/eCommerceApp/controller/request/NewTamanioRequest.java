@@ -5,11 +5,11 @@ import jakarta.validation.constraints.Pattern;
 
 public record NewTamanioRequest(
 
-    @NotBlank(message = "La denominación de la marca no puede estar vacio")
-    @Pattern(regexp = "^[A-Za-z\s]+$", message = "La denominación solo debe contener letras y espacios")
-    String denominacion,
+    @NotBlank(message = "EL NOMBRE DEL TAMAÑO PUEDE ESTAR VACÍO")
+    @Pattern(regexp = "^[A-Za-z\s]+$", message = "EL NOMBRE SÓLO PUEDE TENER LETRAS Y ESPACIOS")
+    String nombre,
 
-    @NotBlank(message = "Las descripcion de la marca no pueden estar vacias")
-    String observaciones
+    @NotBlank(message = "LA DESCRIPCIÓN DEL TAMAÑO NO PUEDE ESTAR VACÍA")
+    String descripcion
 
 ) { }

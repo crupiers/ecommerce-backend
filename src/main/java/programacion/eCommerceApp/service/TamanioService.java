@@ -19,14 +19,14 @@ public class TamanioService implements ITamanioService {
     @Override
     public TamanioResponse crear(NewTamanioRequest newTamanioRequest) {
         Tamanio model = TamanioMapper.toEntity(newTamanioRequest);
-        Optional<Tamanio> tamanioOptional = modelRepository.findByDenominacion(model.getDenominacion());
+        Optional<Tamanio> tamanioOptional = modelRepository.findByNombre(model.getNombre());
 
         if (tamanioOptional.isPresent()) {
             Tamanio tamanioExistente = tamanioOptional.get();
             if (tamanioExistente.getEstado() == Tamanio.ELIMINADO) {
                 tamanioExistente.recuperar();
-                tamanioExistente.setDenominacion(model.getDenominacion());
-                tamanioExistente.setObservaciones(model.getObservaciones());
+                tamanioExistente.setNombre(model.getNombre());
+                tamanioExistente.setDescripcion(model.getDescripcion());
 
                 return TamanioMapper.toTamanioResponse(modelRepository.save(tamanioExistente));
             } else {
@@ -69,8 +69,8 @@ public class TamanioService implements ITamanioService {
                 throw new IllegalArgumentException("EL TAMAÑO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
             }
             Tamanio tamanio = tamanioOptional.get();
-            tamanio.setDenominacion(model.getDenominacion());
-            tamanio.setObservaciones(model.getObservaciones());
+            tamanio.setNombre(model.getNombre());
+            tamanio.setDescripcion(model.getDescripcion());
             return TamanioMapper.toTamanioResponse(modelRepository.save(tamanio));
         }
         throw new IllegalArgumentException("EL TAMAÑO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");

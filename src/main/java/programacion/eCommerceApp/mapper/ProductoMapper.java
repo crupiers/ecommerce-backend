@@ -13,7 +13,7 @@ public class ProductoMapper {
                 producto.getStock(),
                 producto.getCodigoBarra(),
                 producto.getPrecio(),
-                producto.getTamanio().getDenominacion(),
+                producto.getTamanio().getNombre(),
                 producto.getMarca().getNombre(),
                 producto.getCategoria().getNombre());
     }
