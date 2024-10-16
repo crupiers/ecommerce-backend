@@ -13,6 +13,7 @@ import programacion.eCommerceApp.controller.request.NewCategoriaRequest;
 import programacion.eCommerceApp.controller.response.CategoriaResponse;
 import programacion.eCommerceApp.mapper.CategoriaMapper;
 import programacion.eCommerceApp.model.Categoria;
+import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.service.ICategoriaService;
 
 import java.util.List;
@@ -78,8 +79,14 @@ public class CategoriaController {
         if (model == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
         }
-
         modelService.eliminar(model);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/categoria/existe/{nombre}")
+    public Categoria buscarPorNombre(@PathVariable String nombre){
+        Categoria model = modelService.buscarPorNombre(nombre);
+        return model;
+    }
+
 }

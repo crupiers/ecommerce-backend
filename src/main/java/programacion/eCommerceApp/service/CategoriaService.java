@@ -7,6 +7,7 @@ import programacion.eCommerceApp.controller.request.NewCategoriaRequest;
 import programacion.eCommerceApp.controller.response.CategoriaResponse;
 import programacion.eCommerceApp.mapper.CategoriaMapper;
 import programacion.eCommerceApp.model.Categoria;
+import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.repository.ICategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -26,9 +27,14 @@ public class CategoriaService implements ICategoriaService {
 
     @Override
     public Categoria buscarPorId(Integer id) {
-
         return modelRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public Categoria buscarPorNombre(String nombre) {
+        return modelRepository.findByNombre(nombre).orElse(null);
+    }
+
 
     @Override
     public CategoriaResponse crear(NewCategoriaRequest newCategoriaRequest) {
