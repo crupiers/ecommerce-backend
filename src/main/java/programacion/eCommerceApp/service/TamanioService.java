@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import programacion.eCommerceApp.controller.request.NewTamanioRequest;
 import programacion.eCommerceApp.controller.response.TamanioResponse;
 import programacion.eCommerceApp.mapper.TamanioMapper;
+import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.model.Tamanio;
 import programacion.eCommerceApp.repository.ITamanioRepository;
 import java.util.List;
@@ -57,6 +58,10 @@ public class TamanioService implements ITamanioService {
     public void eliminar(Tamanio model) {
         model.eliminar();
         modelRepository.save(model);
+    }
+
+    public Tamanio buscarPorDenominacion(String denominacion) {
+        return modelRepository.findByDenominacion(denominacion).orElse(null);
     }
 
     @Override

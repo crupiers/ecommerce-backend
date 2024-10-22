@@ -74,4 +74,9 @@ public class MarcaService implements IMarcaService {
         }
         throw new IllegalArgumentException("LA MARCA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
+
+    @Override
+    public Marca buscarPorDenominacion(String denominacion) {
+        return null;
+    }
 }

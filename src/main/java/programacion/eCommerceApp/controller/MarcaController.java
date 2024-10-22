@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewMarcaRequest;
 import programacion.eCommerceApp.controller.response.MarcaResponse;
 import programacion.eCommerceApp.mapper.MarcaMapper;
+import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.model.Marca;
 import programacion.eCommerceApp.service.IMarcaService;
 
@@ -77,5 +78,11 @@ public class MarcaController {
 
         modelService.eliminar(model);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/marca/existe/{denominacion}")
+    public Marca buscarPorDenominacion(@PathVariable String denominacion){
+        Marca model = modelService.buscarPorDenominacion(denominacion);
+        return model;
     }
 }

@@ -3,6 +3,7 @@ package programacion.eCommerceApp.service;
 import java.util.List;
 import programacion.eCommerceApp.controller.request.NewMarcaRequest;
 import programacion.eCommerceApp.controller.response.MarcaResponse;
+import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.model.Marca;
 
 public interface IMarcaService {
@@ -18,4 +19,6 @@ public interface IMarcaService {
     void recuperar(Marca model);
 
     MarcaResponse actualizar(NewMarcaRequest newMarcaRequest, Integer id);
+
+    Marca buscarPorDenominacion(String denominacion);
 }

@@ -2,6 +2,7 @@ package programacion.eCommerceApp.service;
 
 import programacion.eCommerceApp.controller.request.NewTamanioRequest;
 import programacion.eCommerceApp.controller.response.TamanioResponse;
+import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.model.Tamanio;
 import java.util.List;
 
@@ -19,4 +20,5 @@ public interface ITamanioService {
 
     TamanioResponse actualizar(NewTamanioRequest newTamanioRequest, Integer id);
 
+    Tamanio buscarPorDenominacion(String denominacion);
 }

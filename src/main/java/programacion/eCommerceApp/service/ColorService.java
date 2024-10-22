@@ -20,13 +20,11 @@ public class ColorService implements IColorService {
     @Override
     public List<ColorResponse> listar() {
         List<Color> colores = modelRepository.findByEstado(Color.COMUN);
-        
         return colores.stream().map(ColorMapper::toColorResponse).toList();
     }
 
     @Override
     public Color buscarPorId(Integer id) {
-
         return modelRepository.findById(id).orElse(null);
     }
 
@@ -50,7 +48,6 @@ public class ColorService implements IColorService {
                 throw new IllegalArgumentException("EL COLOR CON NOMBRE '"+newColorRequest.nombre()+"' YA EXISTE");
             }
         }
-
         return ColorMapper.toColorResponse(modelRepository.save(model));
     }
 

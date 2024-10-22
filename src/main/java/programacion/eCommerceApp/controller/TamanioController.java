@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewTamanioRequest;
 import programacion.eCommerceApp.controller.response.TamanioResponse;
 import programacion.eCommerceApp.mapper.TamanioMapper;
+import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.model.Tamanio;
 import programacion.eCommerceApp.service.ITamanioService;
 
@@ -79,5 +80,11 @@ public class TamanioController {
 
         modelService.eliminar(model);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/tamanio/existe/{denominacion}")
+    public Tamanio buscarPorDenominacion(@PathVariable String denominacion) {
+        Tamanio model = modelService.buscarPorDenominacion(denominacion);
+        return model;
     }
 }
