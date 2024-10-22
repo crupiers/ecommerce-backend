@@ -21,8 +21,8 @@ public class Marca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String denominacion;
-    private String observaciones;
+    private String nombre;
+    private String descripcion;
     @Builder.Default
     private int estado = 0;
     public static final int COMUN = 0;

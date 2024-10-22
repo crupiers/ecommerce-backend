@@ -2,7 +2,7 @@ package programacion.eCommerceApp.controller.response;
 
 public record MarcaResponse(
         Integer id,
-        String denominacion,
-        String observaciones,
+        String nombre,
+        String descripcion,
         int estado
 ) {}

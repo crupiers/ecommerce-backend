@@ -7,13 +7,13 @@ import programacion.eCommerceApp.model.Tamanio;
 public class TamanioMapper {
 
     public static TamanioResponse toTamanioResponse(Tamanio tamanio) {
-        return new TamanioResponse(tamanio.getId(), tamanio.getDenominacion(), tamanio.getObservaciones(), tamanio.getEstado());
+        return new TamanioResponse(tamanio.getId(), tamanio.getNombre(), tamanio.getDescripcion(), tamanio.getEstado());
     }
 
     public static Tamanio toEntity (NewTamanioRequest newTamanioRequest) {
         return Tamanio.builder()
-                .denominacion(newTamanioRequest.denominacion())
-                .observaciones(newTamanioRequest.observaciones())
+                .nombre(newTamanioRequest.nombre())
+                .descripcion(newTamanioRequest.descripcion())
                 .build();
     }
 

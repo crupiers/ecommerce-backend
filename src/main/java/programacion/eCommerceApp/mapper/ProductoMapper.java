@@ -13,8 +13,8 @@ public class ProductoMapper {
                 producto.getStock(),
                 producto.getCodigoBarra(),
                 producto.getPrecio(),
-                producto.getTamanio().getDenominacion(),
-                producto.getMarca().getDenominacion(),
+                producto.getTamanio().getNombre(),
+                producto.getMarca().getNombre(),
                 producto.getCategoria().getNombre());
     }
     public static Producto toEntity(NewProductoRequest newProductoRequest, Color color, Tamanio tamanio, Categoria categoria, Marca marca) {

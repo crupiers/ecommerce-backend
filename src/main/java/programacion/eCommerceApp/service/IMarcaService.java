@@ -9,15 +9,10 @@ import programacion.eCommerceApp.model.Marca;
 public interface IMarcaService {
 
     List<MarcaResponse> listar();
-
     Marca buscarPorId(Integer id);
-
     MarcaResponse crear(NewMarcaRequest newMarcaRequest);
-
     void eliminar(Marca model);
-
     void recuperar(Marca model);
-
     MarcaResponse actualizar(NewMarcaRequest newMarcaRequest, Integer id);
 
     Marca buscarPorDenominacion(String denominacion);

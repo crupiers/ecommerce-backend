@@ -6,11 +6,11 @@ import programacion.eCommerceApp.model.Marca;
 
 public class MarcaMapper {
     public static MarcaResponse toMarcaResponse(Marca marca) {
-        return new MarcaResponse(marca.getId(), marca.getDenominacion(), marca.getObservaciones(), marca.getEstado());
+        return new MarcaResponse(marca.getId(), marca.getNombre(), marca.getDescripcion(), marca.getEstado());
     }
 
     public static Marca toEntity(NewMarcaRequest newMarcaRequest) {
-        return Marca.builder().denominacion(newMarcaRequest.denominacion()).observaciones(newMarcaRequest.observaciones()).build();
+        return Marca.builder().nombre(newMarcaRequest.nombre()).descripcion(newMarcaRequest.descripcion()).build();
     }
 
 }
