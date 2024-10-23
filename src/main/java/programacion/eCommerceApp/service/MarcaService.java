@@ -76,7 +76,7 @@ public class MarcaService implements IMarcaService {
     }
 
     @Override
-    public Marca buscarPorDenominacion(String denominacion) {
-        return null;
+    public Marca buscarPorNombre(String nombre) {
+        return modelRepository.findByNombre(nombre).orElse(null);
     }
 }

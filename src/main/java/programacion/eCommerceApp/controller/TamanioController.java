@@ -82,9 +82,9 @@ public class TamanioController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/tamanio/existe/{denominacion}")
-    public Tamanio buscarPorDenominacion(@PathVariable String denominacion) {
-        Tamanio model = modelService.buscarPorDenominacion(denominacion);
+    @GetMapping("/tamanio/existe/{nombre}")
+    public Tamanio buscarPorNombre(@PathVariable String nombre) {
+        Tamanio model = modelService.buscarPorNombre(nombre);
         return model;
     }
 }

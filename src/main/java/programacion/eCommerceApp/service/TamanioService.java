@@ -60,8 +60,8 @@ public class TamanioService implements ITamanioService {
         modelRepository.save(model);
     }
 
-    public Tamanio buscarPorDenominacion(String denominacion) {
-        return modelRepository.findByDenominacion(denominacion).orElse(null);
+    public Tamanio buscarPorNombre(String nombre) {
+        return modelRepository.findByNombre(nombre).orElse(null);
     }
 
     @Override
