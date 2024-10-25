@@ -18,6 +18,7 @@ public class CategoriaService implements ICategoriaService {
 
     @Autowired
     private ICategoriaRepository modelRepository;
+    private static final String mensajeIdNoEncontrado="NO SE ENCONTRÓ LA CATEGORÍA CON ID: ";
 
     @Override
     public List<CategoriaResponse> listar() {
@@ -29,7 +30,7 @@ public class CategoriaService implements ICategoriaService {
     public ResponseEntity<CategoriaResponse> buscarPorId(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
         if(model == null || model.getEstado() == Categoria.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ LA CATEGORÍA CON ID: '"+id+"'");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         CategoriaResponse categoriaResponse = CategoriaMapper.toCategoriaResponse(model);
         return ResponseEntity.ok(categoriaResponse);
@@ -48,7 +49,7 @@ public class CategoriaService implements ICategoriaService {
                 categoriaExistente.setNombre(model.getNombre());
                 return CategoriaMapper.toCategoriaResponse(modelRepository.save(categoriaExistente));
             }else{
-                throw new IllegalArgumentException("La categoría ya existe");
+                throw new IllegalArgumentException("NO SE PUDO CREAR, ESA CATEGORÍA YA EXISTE");
             }
         }
         return CategoriaMapper.toCategoriaResponse(modelRepository.save(model));
@@ -75,7 +76,7 @@ public class CategoriaService implements ICategoriaService {
     public ResponseEntity<Void> eliminar(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
         if (model == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ LA CATEGORÍA CON ID: '"+id+"'");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         model.eliminar();
         modelRepository.save(model);
@@ -86,7 +87,7 @@ public class CategoriaService implements ICategoriaService {
     public ResponseEntity<Void> recuperar(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
         if (model == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ LA CATEGORÍA CON ID: '"+id+"'");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         model.recuperar();
         modelRepository.save(model);
