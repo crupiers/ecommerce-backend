@@ -2,21 +2,21 @@ package programacion.eCommerceApp.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import programacion.eCommerceApp.controller.request.NewCategoriaRequest;
 import programacion.eCommerceApp.controller.response.CategoriaResponse;
-import programacion.eCommerceApp.model.Categoria;
 
 public interface ICategoriaService {
 
     List<CategoriaResponse> listar();
 
-    Categoria buscarPorId(Integer id);
+    ResponseEntity<CategoriaResponse> buscarPorId(Integer id);
 
     CategoriaResponse crear(NewCategoriaRequest newCategoriaRequest);
 
     CategoriaResponse actualizar(NewCategoriaRequest newCategoriaRequest, Integer id);
 
-    void eliminar(Categoria model);
+    ResponseEntity<Void> eliminar(Integer id);
 
-    void recuperar(Categoria model);
+    ResponseEntity<Void> recuperar(Integer id);
 }
