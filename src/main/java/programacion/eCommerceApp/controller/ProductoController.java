@@ -1,78 +1,51 @@
 package programacion.eCommerceApp.controller;
 
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
-import programacion.eCommerceApp.mapper.ProductoMapper;
-import programacion.eCommerceApp.model.Producto;
 import programacion.eCommerceApp.service.IProductoService;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/eCommerce")
+@RequestMapping("/ecommerce")
 @CrossOrigin(value=" http://localhost:8080")
 
 public class ProductoController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductoController.class);
-
     @Autowired
     private IProductoService modelService;
 
-    @PostMapping("/producto")
+    @PostMapping("/productos")
     public ProductoResponse crear(@RequestBody @Valid NewProductoRequest newProductoRequest){
         return modelService.crear(newProductoRequest);
     }
 
-    @GetMapping("/producto")
-    public List<ProductoResponse> getAll(){
-        logger.info("Entra y trae todos los productos.");
-        return modelService.listar();
-    }
-
-    @GetMapping("/producto/{id}")
-    public ResponseEntity<ProductoResponse> buscarPorId(@PathVariable Integer id){
-        Producto model = modelService.buscarPorId(id);
-
-        if(model == null || model.getEstado() == Producto.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
-        }
-        ProductoResponse productoResponse = ProductoMapper.toProductoResponse(model);
-        return ResponseEntity.ok(productoResponse);
-    }
-
-    @PutMapping("/producto/actualizar/{id}")
+    @PutMapping("/productos/actualizar/{id}")
     public ProductoResponse actualizar(@RequestBody @Valid NewProductoRequest newProductoRequest , Integer id){
         return modelService.actualizar(newProductoRequest , id);
     }
 
-    @PutMapping("/producto/recuperar/{id}")
-    public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
-        Producto model = modelService.buscarPorId(id);
-
-        if(model == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
-        }
-        modelService.recuperar(model);
-        return ResponseEntity.ok().build();
+    @GetMapping("/productos")
+    public List<ProductoResponse> listar(){
+        return modelService.listar();
     }
 
-    @DeleteMapping("/producto/{id}")
+    @GetMapping("/productos/{id}")
+    public ResponseEntity<ProductoResponse> buscarPorId(@PathVariable Integer id){
+        return modelService.buscarPorId(id);
+    }
+
+    @DeleteMapping("/productos/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id){
-        Producto model = modelService.buscarPorId(id);
-
-        if (model == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL ID: "+id);
-        }
-        modelService.eliminar(model);
-        return ResponseEntity.ok().build();
+        return modelService.eliminar(id);
     }
+
+    @PutMapping("/productos/recuperar/{id}")
+    public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
+       return modelService.recuperar(id);
+    }
+
 }
