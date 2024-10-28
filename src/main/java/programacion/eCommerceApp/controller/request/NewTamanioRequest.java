@@ -1,15 +1,14 @@
 package programacion.eCommerceApp.controller.request;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record NewTamanioRequest(
+        @NotNull
+        @Pattern(regexp = "^[a-zA-Z0-9]+(\\s[a-zA-Z0-9]+)*$", message = "SÓLO PUEDEN HABER LETRAS Y NÚMEROS, NO TIENE QUE HABER ESPACIOS DOBLES NI ESPACIO AL INICIO NI AL FINAL")
+        String nombre,
 
-    @NotBlank(message = "EL NOMBRE DEL TAMAÑO PUEDE ESTAR VACÍO")
-    @Pattern(regexp = "^[A-Za-z\s]+$", message = "EL NOMBRE SÓLO PUEDE TENER LETRAS Y ESPACIOS")
-    String nombre,
-
-    @NotBlank(message = "LA DESCRIPCIÓN DEL TAMAÑO NO PUEDE ESTAR VACÍA")
-    String descripcion
-
-) { }
+        @NotNull
+        @Pattern(regexp = "^[^\\s][^\\s]+(\\s[^\\s]+)*$", message = "NO TIENE QUE HABER ESPACIOS DOBLES NI ESPACIO AL INICIO NI AL FINAL")
+        String descripcion
+) {}

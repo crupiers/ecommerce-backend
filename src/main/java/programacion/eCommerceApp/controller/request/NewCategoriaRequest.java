@@ -1,12 +1,10 @@
 package programacion.eCommerceApp.controller.request;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record NewCategoriaRequest (
-
-        @NotBlank(message = "El nombre de la categoria no puede estar vacio.")
-        @Pattern(regexp = "^[A-Za-z\s]+$", message = "El nombre solo debe contener letras y espacios")
+        @NotNull
+        @Pattern(regexp = "^[a-zA-Z0-9]+(\\s[a-zA-Z0-9]+)*$", message = "SÓLO PUEDEN HABER LETRAS Y NÚMEROS, NO TIENE QUE HABER ESPACIOS DOBLES NI ESPACIO AL INICIO NI AL FINAL")
         String nombre
-
-) { }
+) {}
