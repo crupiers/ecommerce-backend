@@ -14,6 +14,9 @@ import programacion.eCommerceApp.mapper.UsuarioMapper;
 import programacion.eCommerceApp.model.Usuario;
 import programacion.eCommerceApp.repository.IUsuarioRepository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Service
 public class AuthService implements IAuthService {
 
@@ -34,6 +37,7 @@ public class AuthService implements IAuthService {
 
     public AuthResponse register(NewRegisterRequest newRegisterRequest) {
         Usuario usuario = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
+        usuario.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));
         usuarioRepository.save(usuario);
 
         return UsuarioMapper.toAuthResponse(jwtService.getToken(usuario));
