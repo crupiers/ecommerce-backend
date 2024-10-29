@@ -6,39 +6,39 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
-@Data
-public class Tamanio {
+@Builder
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "nombre")})
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nombre;
-    private String descripcion;
+    private String contrasenia;
+    private Rol rol;
+
     @Builder.Default
-    private int estado = 0;
+    private Integer estado = 0;
     public static final int COMUN = 0;
     public static final int ELIMINADO = 1;
-
-    @Column(name = "created_by")
-    @CreatedBy
-    private String createdBy;
 
     @Column(name = "created_at")
     @CreatedDate
     private String createdAt;
-
-    @Column(name = "updated_by", nullable = true)
-    @LastModifiedBy
-    private String updatedBy;
 
     @Column(name = "updated_at", nullable = true)
     @LastModifiedDate
@@ -52,5 +52,20 @@ public class Tamanio {
         this.setDeletedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));
     }
     public void recuperar() { this.setEstado(COMUN); }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(rol.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return contrasenia;
+    }
+
+    @Override
+    public String getUsername() {
+        return nombre;
+    }
 
 }
