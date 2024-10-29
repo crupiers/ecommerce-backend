@@ -58,6 +58,7 @@ public class ColorService implements IColorService {
     public ColorResponse actualizar(NewColorRequest newColorRequest, Integer id){
         Color model = ColorMapper.toEntity(newColorRequest);
         Optional<Color> colorOptional = modelRepository.findById(id);
+
         if(colorOptional.isPresent()){
             if(colorOptional.get().getEstado()==Color.ELIMINADO){
                 throw new IllegalArgumentException("EL COLOR CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
@@ -66,7 +67,8 @@ public class ColorService implements IColorService {
             color.setNombre(model.getNombre());
             return ColorMapper.toColorResponse(modelRepository.save(color));
         }
-            throw new IllegalArgumentException("EL COLOR CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
+
+        throw new IllegalArgumentException("EL COLOR CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
 
     @Override

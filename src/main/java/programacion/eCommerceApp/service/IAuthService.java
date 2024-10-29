@@ -10,4 +10,7 @@ public interface IAuthService {
 
     AuthResponse register(NewRegisterRequest newRegisterRequest);
 
+    AuthResponse actualizar(NewRegisterRequest newRegisterRequest, Integer id);
+
+    void eliminar(Integer id);
 }
