@@ -1,6 +1,7 @@
 package programacion.eCommerceApp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity
@@ -13,7 +14,8 @@ public class Tamanio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
+    @Size(min = 2, max = 24)
     private String nombre;
     private String descripcion;
     @Builder.Default
