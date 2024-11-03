@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-@Entity //etiqueta para que la bbdd lo registre en tabla
-@Data //etiqueta de lombok para getters y setters (y alguna cosa más q no googlé)
-@Builder //patron de diseño para crear objetos de esta clase (no tengo idea de como funciona)
+@Entity
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Color {
@@ -23,7 +23,9 @@ public class Color {
     public static final int COMUN = 0;
     public static final int ELIMINADO = 1;
 
-    public void eliminar(){this.setEstado(ELIMINADO);}
+    public void eliminar(){
+        this.setEstado(ELIMINADO);
+    }
     public void recuperar(){
         this.setEstado((COMUN));
     }
