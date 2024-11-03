@@ -3,13 +3,13 @@ package programacion.eCommerceApp.controller.response;
 public record ProductoResponse(
         Integer id,
         String nombre,
-        String nombreColor,
-        Integer stock,
-        Integer codigoBarra,
+        String descripcion,
         Double precio,
-        String denominacionTamanio,
-        String denominacionMarca,
-        String nombreCategoria) {
-
-
+        Integer stock,
+        String nombreCategoria,
+        String nombreMarca,
+        String nombreTamanio,
+        String nombreColor,
+        Integer codigoBarra
+) {
 }

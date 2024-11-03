@@ -7,15 +7,17 @@ import programacion.eCommerceApp.model.*;
 public class ProductoMapper {
 
     public static ProductoResponse toProductoResponse(Producto producto){
-        return new ProductoResponse(producto.getId(),
+        return new ProductoResponse(
+                producto.getId(),
                 producto.getNombre(),
-                producto.getColor().getNombre(),
-                producto.getStock(),
-                producto.getCodigoBarra(),
+                producto.getDescripcion(),
                 producto.getPrecio(),
-                producto.getTamanio().getNombre(),
+                producto.getStock(),
+                producto.getCategoria().getNombre(),
                 producto.getMarca().getNombre(),
-                producto.getCategoria().getNombre());
+                producto.getTamanio().getNombre(),
+                producto.getColor().getNombre(),
+                producto.getCodigoBarra());
     }
     public static Producto toEntity(NewProductoRequest newProductoRequest, Color color, Tamanio tamanio, Categoria categoria, Marca marca) {
         return Producto.builder()
@@ -28,6 +30,7 @@ public class ProductoMapper {
                 .stock(newProductoRequest.stock())
                 .codigoBarra(newProductoRequest.codigoBarra())
                 .estado(0) // Estado por defecto, ajusta si es necesario
+                .descripcion((newProductoRequest.descripcion()))
                 .build();
     }
 }
