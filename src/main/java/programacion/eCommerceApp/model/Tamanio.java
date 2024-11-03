@@ -17,6 +17,7 @@ public class Tamanio {
     @Column(unique = true, nullable = false)
     @Size(min = 2, max = 24)
     private String nombre;
+    @Column(nullable = false)
     private String descripcion;
     @Builder.Default
     private int estado = 0;
