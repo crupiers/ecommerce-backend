@@ -7,12 +7,13 @@ import programacion.eCommerceApp.model.Categoria;
 public class CategoriaMapper {
     
     public static CategoriaResponse toCategoriaResponse(Categoria model) {
-        return new CategoriaResponse(model.getId(), model.getNombre(), model.getEstado());
+        return new CategoriaResponse(model.getId(), model.getNombre(), model.getDescripcion(), model.getEstado() );
     }
 
     public static Categoria toEntity(NewCategoriaRequest newCategoriaRequest) {
         return Categoria.builder()
                 .nombre(newCategoriaRequest.nombre())
+                .descripcion(newCategoriaRequest.descripcion())
                 .build();
     }
 
