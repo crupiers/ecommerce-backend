@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ICategoriaRepository extends JpaRepository <Categoria,Integer>{
-
     List<Categoria> findByEstado(int estado);
     Optional<Categoria> findByNombre(String nombre);
     Optional<Categoria> findById (int id);

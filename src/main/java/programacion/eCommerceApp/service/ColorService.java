@@ -1,7 +1,10 @@
 package programacion.eCommerceApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewColorRequest;
 import programacion.eCommerceApp.controller.response.ColorResponse;
 import programacion.eCommerceApp.mapper.ColorMapper;
@@ -10,29 +13,37 @@ import programacion.eCommerceApp.repository.IColorRepository;
 import java.util.List;
 import java.util.Optional;
 
-@Service //declaro que la clase es un service
-
+@Service
 public class ColorService implements IColorService {
 
     @Autowired
     private IColorRepository modelRepository;
+    private static final String mensajeIdNoEncontrado="NO SE ENCONTRÓ EL COLOR CON ID: ";
 
     @Override
     public List<ColorResponse> listar() {
         List<Color> colores = modelRepository.findByEstado(Color.COMUN);
-        
         return colores.stream().map(ColorMapper::toColorResponse).toList();
     }
 
     @Override
-    public Color buscarPorId(Integer id) {
-
-        return modelRepository.findById(id).orElse(null);
+    public ResponseEntity<ColorResponse> buscarPorId(Integer id) {
+        Color model = modelRepository.findById(id).orElse(null);
+        if(model==null || model.getEstado() == Color.ELIMINADO){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
+        ColorResponse colorResponse = ColorMapper.toColorResponse(model);
+        return ResponseEntity.ok(colorResponse);
     }
 
     @Override
-    public Color buscarPorNombre(String nombre) {
-        return modelRepository.findByNombre(nombre).orElse(null);
+    public ResponseEntity<ColorResponse> buscarPorNombre(String nombre) {
+        Color model = modelRepository.findByNombre(nombre).orElse(null);
+        if(model==null || model.getEstado() == Color.ELIMINADO){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL COLOR CON NOMBRE: "+nombre);
+        }
+        ColorResponse colorResponse = ColorMapper.toColorResponse(model);
+        return ResponseEntity.ok(colorResponse);
     }
 
     @Override
@@ -72,14 +83,24 @@ public class ColorService implements IColorService {
     }
 
     @Override
-    public void eliminar(Color model) {
+    public ResponseEntity<Void> eliminar(Integer id) {
+        Color model = modelRepository.findById(id).orElse(null);
+        if(model==null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
         model.eliminar();
-        modelRepository.save(model);        //con "save" realizamos tal tarea, el repository traduce la orden a SQL
+        modelRepository.save(model);
+        return ResponseEntity.ok().build();
     }
 
     @Override
-    public void recuperar(Color model) {
+    public ResponseEntity<Void> recuperar(Integer id) {
+        Color model = modelRepository.findById(id).orElse(null);
+        if(model==null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
         model.recuperar();
         modelRepository.save(model);
+        return ResponseEntity.ok().build();
     }
 }

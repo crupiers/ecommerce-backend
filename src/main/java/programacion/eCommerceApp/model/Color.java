@@ -1,21 +1,20 @@
 package programacion.eCommerceApp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-@Entity //etiqueta para que la bbdd lo registre en tabla
-@Data //etiqueta de lombok para getters y setters (y alguna cosa más q no googlé)
-@Builder //patron de diseño para crear objetos de esta clase (no tengo idea de como funciona)
-@ToString //nos devuelve el objeto con sus parametros
+@Entity
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -24,9 +23,15 @@ public class Color {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //genera números automáticamente
     private Integer id;
+    @Column(unique = true, nullable = false)
+    @Size(min = 2, max = 32)
     private String nombre;
+    @Column(nullable = false)
+    private String descripcion;
+    @Column(nullable = false)
     @Builder.Default
     private int estado = 0;
+
     public static final int COMUN = 0;
     public static final int ELIMINADO = 1;
 

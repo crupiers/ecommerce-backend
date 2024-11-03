@@ -1,6 +1,7 @@
 package programacion.eCommerceApp.service;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewCategoriaRequest;
@@ -17,6 +18,7 @@ public class CategoriaService implements ICategoriaService {
 
     @Autowired
     private ICategoriaRepository modelRepository;
+    private static final String mensajeIdNoEncontrado="NO SE ENCONTRÓ LA CATEGORÍA CON ID: ";
 
     @Override
     public List<CategoriaResponse> listar() {
@@ -25,9 +27,13 @@ public class CategoriaService implements ICategoriaService {
     }
 
     @Override
-    public Categoria buscarPorId(Integer id) {
-
-        return modelRepository.findById(id).orElse(null);
+    public ResponseEntity<CategoriaResponse> buscarPorId(Integer id) {
+        Categoria model = modelRepository.findById(id).orElse(null);
+        if(model == null || model.getEstado() == Categoria.ELIMINADO){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
+        CategoriaResponse categoriaResponse = CategoriaMapper.toCategoriaResponse(model);
+        return ResponseEntity.ok(categoriaResponse);
     }
 
     @Override
@@ -43,7 +49,7 @@ public class CategoriaService implements ICategoriaService {
                 categoriaExistente.setNombre(model.getNombre());
                 return CategoriaMapper.toCategoriaResponse(modelRepository.save(categoriaExistente));
             }else{
-                throw new IllegalArgumentException("La categoría ya existe");
+                throw new IllegalArgumentException("NO SE PUDO CREAR, ESA CATEGORÍA YA EXISTE");
             }
         }
         return CategoriaMapper.toCategoriaResponse(modelRepository.save(model));
@@ -67,14 +73,24 @@ public class CategoriaService implements ICategoriaService {
     }
 
     @Override
-    public void eliminar(Categoria model) {
+    public ResponseEntity<Void> eliminar(Integer id) {
+        Categoria model = modelRepository.findById(id).orElse(null);
+        if (model == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
         model.eliminar();
         modelRepository.save(model);
+        return ResponseEntity.ok().build();
     }
 
     @Override
-    public void recuperar(Categoria model) {
+    public ResponseEntity<Void> recuperar(Integer id) {
+        Categoria model = modelRepository.findById(id).orElse(null);
+        if (model == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
         model.recuperar();
         modelRepository.save(model);
+        return ResponseEntity.ok().build(); // Respuesta vacía con estado 200 OK
     }
 }

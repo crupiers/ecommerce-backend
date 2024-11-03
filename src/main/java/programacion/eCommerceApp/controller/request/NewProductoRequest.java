@@ -1,30 +1,44 @@
 package programacion.eCommerceApp.controller.request;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public record NewProductoRequest(
-        @NotBlank(message = "El nombre no puede estar vacío")
+        @NotNull
+        @Size(min = 2, max = 64, message = "EL NOMBRE DEBE IR DE ENTRE 2 Y 24 CARACTERES")
+        @Pattern(regexp = "^[a-zA-Z0-9]+(\\s[a-zA-Z0-9]+)*$", message = "SÓLO PUEDEN HABER LETRAS Y NÚMEROS, NO TIENE QUE HABER ESPACIOS DOBLES NI ESPACIO AL INICIO NI AL FINAL")
         String nombre,
 
-        @NotNull(message = "El stock no puede ser nulo")
+        @NotNull
+        @Pattern(regexp = "^[^\\s]+(\\s[^\\s]+)*$", message = "LA DESCRIPCIÓN NO TIENE QUE HABER ESPACIOS DOBLES NI ESPACIO AL INICIO NI AL FINAL, NI PUEDE ESTAR VACÍO")
+        String descripcion,
+
+        @NotNull
+        //@Pattern(regexp = "^[0-9]+$", message = "SE DEBE INGRESAR UN NÚMERO ENTERO, NO TIENE QUE HABER ESPACIOS")
         Integer stock,
 
-        @NotNull(message = "El código de barra no puede ser nulo")
+        @NotNull
+        //@Pattern(regexp = "^[0-9]+$", message = "SE DEBE INGRESAR UN NÚMERO ENTERO, NO TIENE QUE HABER ESPACIOS")
         Integer codigoBarra,
 
-        @NotNull(message = "El precio no puede ser nulo")
+        @NotNull
+        //@Pattern(regexp = "^(([0-9]+)|([0-9]+[.][0-9]+))$", message = "SE DEBE INGRESAR UN NÚMERO ENTERO O DECIMAL CON PUNTO Y NO COMA, NO TIENE QUE HABER ESPACIOS")
         Double precio,
 
-        @NotNull(message = "El ID del color no puede ser nulo")
+        @NotNull
+        //@Pattern(regexp = "^[0-9]+$", message = "SE DEBE INGRESAR UN NÚMERO ENTERO, NO TIENE QUE HABER ESPACIOS")
         Integer colorId,
 
-        @NotNull(message = "El ID del tamaño no puede ser nulo")
+        @NotNull
+        //@Pattern(regexp = "^[0-9]+$", message = "SE DEBE INGRESAR UN NÚMERO ENTERO, NO TIENE QUE HABER ESPACIOS")
         Integer tamanioId,
 
-        @NotNull(message = "El ID de la categoría no puede ser nulo")
+        @NotNull
+        //@Pattern(regexp = "^[0-9]+$", message = "SE DEBE INGRESAR UN NÚMERO ENTERO, NO TIENE QUE HABER ESPACIOS")
         Integer categoriaId,
 
-        @NotNull(message = "El ID de la marca no puede ser nulo")
+        @NotNull
+        //@Pattern(regexp = "^[0-9]+$", message = "SE DEBE INGRESAR UN NÚMERO ENTERO, NO TIENE QUE HABER ESPACIOS")
         Integer marcaId
-) { }
+) {}

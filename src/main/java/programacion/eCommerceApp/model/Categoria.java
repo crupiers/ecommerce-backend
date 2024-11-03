@@ -1,18 +1,17 @@
 package programacion.eCommerceApp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
 @Data
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -21,9 +20,15 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(unique = true, nullable = false)
+    @Size(min = 2, max = 32)
     private String nombre;
+    @Column(nullable = false)
+    private String descripcion;
+    @Column(nullable = false)
     @Builder.Default
     private int estado = 0;
+
     public static final int COMUN = 0;
     public static final int ELIMINADO = 1;
 

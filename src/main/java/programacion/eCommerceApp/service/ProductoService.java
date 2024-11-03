@@ -1,13 +1,15 @@
 package programacion.eCommerceApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
 import programacion.eCommerceApp.mapper.ProductoMapper;
 import programacion.eCommerceApp.model.*;
 import programacion.eCommerceApp.repository.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -16,18 +18,31 @@ public class ProductoService implements IProductoService{
 
     @Autowired
     private IProductoRepository modelRepository;
-
     @Autowired
     private IColorRepository colorRepository;
-
     @Autowired
     private ITamanioRepository tamanioRepository;
-
     @Autowired
     private IMarcaRepository marcaRepository;
-
     @Autowired
     private ICategoriaRepository categoriaRepository;
+    private static final String mensajeIdNoEncontrado = "NO SE ENCONTRÓ EL PRODUCTO CON ID: ";
+
+    @Override
+    public List<ProductoResponse> listar() {
+        List<Producto> productos = modelRepository.findByEstado(Producto.COMUN);
+        return productos.stream().map(ProductoMapper::toProductoResponse).toList();
+    }
+
+    @Override
+    public ResponseEntity<ProductoResponse> buscarPorId(Integer id) {
+        Producto model = modelRepository.findById(id).orElse(null);
+        if(model == null || model.getEstado() == Producto.ELIMINADO){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
+        ProductoResponse productoResponse = ProductoMapper.toProductoResponse(model);
+        return ResponseEntity.ok(productoResponse);
+    }
 
     @Override
     public ProductoResponse crear(NewProductoRequest newProductoRequest){
@@ -106,27 +121,26 @@ public class ProductoService implements IProductoService{
         throw new IllegalArgumentException("EL PRODUCTO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
 
-
     @Override
-    public List<ProductoResponse> listar() {
-        List<Producto> productos = modelRepository.findByEstado(Producto.COMUN);
-        return productos.stream().map(ProductoMapper::toProductoResponse).toList();
-    }
-
-    @Override
-    public Producto buscarPorId(Integer id) {
-        return modelRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public void recuperar(Producto model){
-        model.recuperar();
-        modelRepository.save(model);
-    }
-
-    @Override
-    public void eliminar(Producto model){
+    public ResponseEntity<Void> eliminar(Integer id){
+        Producto model = modelRepository.findById(id).orElse(null);
+        if (model == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
         model.eliminar();
         modelRepository.save(model);
+        return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<Void> recuperar(Integer id){
+        Producto model = modelRepository.findById(id).orElse(null);
+        if(model == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
+        model.recuperar();
+        modelRepository.save(model);
+        return ResponseEntity.ok().build();
+    }
+
 }

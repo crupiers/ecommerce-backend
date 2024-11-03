@@ -1,16 +1,15 @@
 package programacion.eCommerceApp.service;
 
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import programacion.eCommerceApp.controller.request.NewMarcaRequest;
 import programacion.eCommerceApp.controller.response.MarcaResponse;
-import programacion.eCommerceApp.model.Marca;
 
 public interface IMarcaService {
-
     List<MarcaResponse> listar();
-    Marca buscarPorId(Integer id);
+    ResponseEntity<MarcaResponse> buscarPorId(Integer id);
     MarcaResponse crear(NewMarcaRequest newMarcaRequest);
-    void eliminar(Marca model);
-    void recuperar(Marca model);
+    ResponseEntity<Void> eliminar(Integer id);
+    ResponseEntity<Void> recuperar(Integer id);
     MarcaResponse actualizar(NewMarcaRequest newMarcaRequest, Integer id);
 }

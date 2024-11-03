@@ -1,6 +1,9 @@
 package programacion.eCommerceApp.service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewMarcaRequest;
 import programacion.eCommerceApp.controller.response.MarcaResponse;
 import programacion.eCommerceApp.mapper.MarcaMapper;
@@ -15,6 +18,7 @@ public class MarcaService implements IMarcaService {
 
     @Autowired
     private IMarcaRepository modelRepository; //el repository no es instanciado nunca
+    private static final String mensajeIdNoEncontrado = "NO SE ENCONTRÓ LA MARCA CON ID: ";
 
     @Override
     public List<MarcaResponse> listar() {
@@ -23,8 +27,13 @@ public class MarcaService implements IMarcaService {
     }
 
     @Override
-    public Marca buscarPorId(Integer id) {
-        return modelRepository.findById(id).orElse(null);
+    public ResponseEntity<MarcaResponse> buscarPorId(Integer id) {
+        Marca model = modelRepository.findById(id).orElse(null);
+        if(model == null || model.getEstado() == Marca.ELIMINADO){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
+        MarcaResponse marcaResponse = MarcaMapper.toMarcaResponse(model);
+        return ResponseEntity.ok(marcaResponse);
     }
 
     @Override
@@ -48,18 +57,6 @@ public class MarcaService implements IMarcaService {
     }
 
     @Override
-    public void eliminar(Marca model) {
-        model.eliminar();
-        modelRepository.save(model);
-    }
-
-    @Override
-    public void recuperar(Marca model) {
-        model.recuperar();
-        modelRepository.save(model);
-    }
-
-    @Override
     public MarcaResponse actualizar(NewMarcaRequest newMarcaRequest, Integer id) {
         Marca model = MarcaMapper.toEntity(newMarcaRequest);
         Optional<Marca> marcaOptional = modelRepository.findById(id);
@@ -74,4 +71,27 @@ public class MarcaService implements IMarcaService {
         }
         throw new IllegalArgumentException("LA MARCA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
+
+    @Override
+    public ResponseEntity<Void> eliminar(Integer id) {
+        Marca model = modelRepository.findById(id).orElse(null);
+        if (model == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
+        model.eliminar();
+        modelRepository.save(model);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> recuperar(Integer id) {
+        Marca model = modelRepository.findById(id).orElse(null);
+        if (model == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        }
+        model.recuperar();
+        modelRepository.save(model);
+        return ResponseEntity.ok().build(); // Respuesta vacía con estado 200 OK
+    }
+
 }
