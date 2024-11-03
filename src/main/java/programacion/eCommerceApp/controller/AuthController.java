@@ -10,7 +10,7 @@ import programacion.eCommerceApp.controller.request.NewRegisterRequest;
 import programacion.eCommerceApp.controller.response.AuthResponse;
 
 @RestController
-@RequestMapping("/eCommerce")
+@RequestMapping("/ecommerce")
 @CrossOrigin(value=" http://localhost:8080")
 public class AuthController {
 

@@ -1,7 +1,6 @@
 package programacion.eCommerceApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,14 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewLoginRequest;
 import programacion.eCommerceApp.controller.request.NewRegisterRequest;
 import programacion.eCommerceApp.controller.response.AuthResponse;
 import programacion.eCommerceApp.mapper.UsuarioMapper;
 import programacion.eCommerceApp.model.Usuario;
 import programacion.eCommerceApp.repository.IUsuarioRepository;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
