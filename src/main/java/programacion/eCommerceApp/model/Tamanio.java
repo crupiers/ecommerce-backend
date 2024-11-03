@@ -15,7 +15,7 @@ public class Tamanio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(unique = true, nullable = false)
-    @Size(min = 2, max = 24)
+    @Size(min = 2, max = 32)
     private String nombre;
     @Column(nullable = false)
     private String descripcion;
