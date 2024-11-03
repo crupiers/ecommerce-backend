@@ -38,19 +38,15 @@ public class Producto {
     public static final int COMUN = 0;
     public static final int ELIMINADO = 1;
 
-    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "idColor")
     private Color color;
-    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "idTamanio")
     private Tamanio tamanio;
-    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "idCategoria")
     private Categoria categoria;
-    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "idMarca")
     private Marca marca;
