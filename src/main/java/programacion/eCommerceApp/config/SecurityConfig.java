@@ -26,7 +26,7 @@ public class SecurityConfig {
                 csrf.disable())
             .authorizeHttpRequests(authRequest ->
                 authRequest
-                    .requestMatchers("/eCommerce/auth/**").permitAll()
+                    .requestMatchers("/ecommerce/auth/**").permitAll()
                     .anyRequest().authenticated()
             )
             .sessionManagement(sessionManager ->
