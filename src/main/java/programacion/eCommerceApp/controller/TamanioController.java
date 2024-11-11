@@ -16,37 +16,37 @@ import java.util.List;
 public class TamanioController {
 
     @Autowired
-    private ITamanioService modelService;
+    private ITamanioService service;
 
     @PostMapping("/tamanios")
     @ResponseStatus(HttpStatus.CREATED)
     public TamanioResponse crear(@RequestBody @Valid NewTamanioRequest newTamanioRequest) {
-        return modelService.crear(newTamanioRequest);
+        return service.crear(newTamanioRequest);
     }
 
     @GetMapping("/tamanios")
     public List<TamanioResponse> listar() {
-        return modelService.listar();
+        return service.listar();
     }
 
     @GetMapping("/tamanios/recuperar/{id}")
     public ResponseEntity<TamanioResponse> buscarPorId(@PathVariable Integer id) {
-        return modelService.buscarPorId(id);
+        return service.buscarPorId(id);
     }
 
     @PutMapping("/tamanios/actualizar/{id}")
     public TamanioResponse actualizar(@RequestBody @Valid NewTamanioRequest newTamanioRequest,  @PathVariable Integer id) {
-        return modelService.actualizar(newTamanioRequest , id);
+        return service.actualizar(newTamanioRequest , id);
     }
 
     @DeleteMapping("/tamanios/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
-        return modelService.eliminar(id);
+        return service.eliminar(id);
     }
 
     @PutMapping("/tamanios/recuperar/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
-        return modelService.recuperar(id);
+        return service.recuperar(id);
     }
 
 }

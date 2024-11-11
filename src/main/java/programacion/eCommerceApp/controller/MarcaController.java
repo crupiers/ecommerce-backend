@@ -16,36 +16,36 @@ import java.util.List;
 public class MarcaController {
 
     @Autowired
-    private IMarcaService modelService;
+    private IMarcaService service;
 
     @GetMapping({"/marcas"})
     public List<MarcaResponse> listar() {
-        return modelService.listar();
+        return service.listar();
     }
 
     @GetMapping("/marcas/{id}")
     public ResponseEntity<MarcaResponse> buscarPorId(@PathVariable Integer id){
-        return modelService.buscarPorId(id);
+        return service.buscarPorId(id);
     }
     
     @PostMapping("/marcas")
     public MarcaResponse crear(@RequestBody @Valid NewMarcaRequest newMarcaRequest){
-        return modelService.crear(newMarcaRequest);
+        return service.crear(newMarcaRequest);
     }
 
     @PutMapping("/marcas/actualizar/{id}")
     public MarcaResponse actualizar(@RequestBody @Valid NewMarcaRequest newMarcaRequest, @PathVariable Integer id){
-        return modelService.actualizar(newMarcaRequest, id);
+        return service.actualizar(newMarcaRequest, id);
     }
 
     @DeleteMapping("/marcas/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
-        return modelService.eliminar(id);
+        return service.eliminar(id);
     }
 
     @PutMapping("/marcas/recuperar/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
-        return modelService.recuperar(id);
+        return service.recuperar(id);
     }
 
 }

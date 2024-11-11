@@ -18,43 +18,43 @@ import java.util.List;
 public class ColorController {
 
     @Autowired
-    private IColorService modelService;
+    private IColorService service;
 
     @GetMapping({"/colores"})
     public List<ColorResponse> listar(){
-        return modelService.listar();
+        return service.listar();
     }
 
     @GetMapping("/colores/{id}")
     public ResponseEntity<ColorResponse> buscarPorId(@PathVariable Integer id){
-        return modelService.buscarPorId(id);
+        return service.buscarPorId(id);
     }
 
     @GetMapping("/colores/existe/{nombre}")
     public ResponseEntity<ColorResponse> buscarPorNombre(@PathVariable String nombre){
-        return modelService.buscarPorNombre(nombre);
+        return service.buscarPorNombre(nombre);
     }
 
     @PostMapping("/colores")
     @ResponseStatus(HttpStatus.CREATED)
     public ColorResponse crear(@RequestBody @Valid NewColorRequest newColorRequest){
-        return modelService.crear(newColorRequest);
+        return service.crear(newColorRequest);
     }
 
     @PutMapping("/colores/actualizar/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ColorResponse actualizar(@RequestBody @Valid NewColorRequest newColorRequest, @PathVariable Integer id){
-        return modelService.actualizar(newColorRequest, id);
+        return service.actualizar(newColorRequest, id);
     }
 
     @DeleteMapping("/colores/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id){
-        return modelService.eliminar(id);
+        return service.eliminar(id);
     }
 
     @PutMapping("/colores/recuperar/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id){
-        return modelService.recuperar(id);
+        return service.recuperar(id);
     }
 
 }

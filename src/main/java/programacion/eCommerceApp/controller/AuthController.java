@@ -15,26 +15,26 @@ import programacion.eCommerceApp.controller.response.AuthResponse;
 public class AuthController {
 
     @Autowired
-    private IAuthService authService;
+    private IAuthService service;
 
     @PostMapping("/auth/login")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid NewLoginRequest newLoginRequest) {
-        return ResponseEntity.ok(authService.login(newLoginRequest));
+        return ResponseEntity.ok(service.login(newLoginRequest));
     }
 
     @PostMapping("/auth/register")
     public ResponseEntity<AuthResponse> register(@RequestBody @Valid NewRegisterRequest newRegisterRequest) {
-        return ResponseEntity.ok(authService.register(newRegisterRequest));
+        return ResponseEntity.ok(service.register(newRegisterRequest));
     }
 
     @PutMapping("/usuarios/{id}")
     public ResponseEntity<AuthResponse> actualizar(@RequestBody @Valid NewRegisterRequest newRegisterRequest, @PathVariable Integer id) {
-        return ResponseEntity.ok(authService.actualizar(newRegisterRequest, id));
+        return ResponseEntity.ok(service.actualizar(newRegisterRequest, id));
     }
 
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
-        authService.eliminar(id);
+        service.eliminar(id);
         return ResponseEntity.ok().build();
     }
 }

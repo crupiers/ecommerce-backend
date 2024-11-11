@@ -16,36 +16,36 @@ import java.util.List;
 public class ProductoController {
 
     @Autowired
-    private IProductoService modelService;
+    private IProductoService service;
 
     @PostMapping("/productos")
     public ProductoResponse crear(@RequestBody @Valid NewProductoRequest newProductoRequest){
-        return modelService.crear(newProductoRequest);
+        return service.crear(newProductoRequest);
     }
 
     @PutMapping("/productos/actualizar/{id}")
     public ProductoResponse actualizar(@RequestBody @Valid NewProductoRequest newProductoRequest , Integer id){
-        return modelService.actualizar(newProductoRequest , id);
+        return service.actualizar(newProductoRequest , id);
     }
 
     @GetMapping("/productos")
     public List<ProductoResponse> listar(){
-        return modelService.listar();
+        return service.listar();
     }
 
     @GetMapping("/productos/{id}")
     public ResponseEntity<ProductoResponse> buscarPorId(@PathVariable Integer id){
-        return modelService.buscarPorId(id);
+        return service.buscarPorId(id);
     }
 
     @DeleteMapping("/productos/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id){
-        return modelService.eliminar(id);
+        return service.eliminar(id);
     }
 
     @PutMapping("/productos/recuperar/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
-       return modelService.recuperar(id);
+       return service.recuperar(id);
     }
 
 }
