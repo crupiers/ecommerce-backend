@@ -50,6 +50,7 @@ public class ColorController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    
     @PostMapping("/color") //uso de la instruccion "POST"
     public ColorResponse crear(@RequestBody @Valid NewColorRequest newColorRequest){
         return modelService.crear(newColorRequest);
