@@ -56,6 +56,7 @@ public class ColorService implements IColorService {
             if(colorExistente.getEstado()==Color.ELIMINADO){
                 colorExistente.recuperar();
                 colorExistente.setNombre(model.getNombre());
+                colorExistente.setDescripcion(model.getDescripcion());
                 return ColorMapper.toColorResponse(modelRepository.save(colorExistente));
             }else {
                 throw new IllegalArgumentException("EL COLOR CON NOMBRE '"+newColorRequest.nombre()+"' YA EXISTE");
@@ -76,6 +77,7 @@ public class ColorService implements IColorService {
             }
             Color color = colorOptional.get();
             color.setNombre(model.getNombre());
+            color.setDescripcion((model.getDescripcion()));
             return ColorMapper.toColorResponse(modelRepository.save(color));
         }
 

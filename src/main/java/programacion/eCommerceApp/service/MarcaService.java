@@ -47,7 +47,6 @@ public class MarcaService implements IMarcaService {
                 marcaExistente.recuperar();
                 marcaExistente.setNombre(model.getNombre());
                 marcaExistente.setDescripcion(model.getDescripcion());
-
                 return MarcaMapper.toMarcaResponse(modelRepository.save(marcaExistente));
             }else{
                 throw new IllegalArgumentException("La marca ya existe");

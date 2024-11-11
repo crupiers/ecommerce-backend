@@ -68,6 +68,7 @@ public class ProductoService implements IProductoService{
             if (productoExistente.getEstado() == Producto.ELIMINADO) {
                 productoExistente.recuperar();
                 productoExistente.setNombre(model.getNombre());
+                productoExistente.setDescripcion(model.getDescripcion());
                 productoExistente.setStock(model.getStock());
                 productoExistente.setCodigoBarra(model.getCodigoBarra());
                 productoExistente.setPrecio(model.getPrecio());
@@ -75,7 +76,6 @@ public class ProductoService implements IProductoService{
                 productoExistente.setTamanio(model.getTamanio());
                 productoExistente.setCategoria(model.getCategoria());
                 productoExistente.setMarca(model.getMarca());
-
                 return ProductoMapper.toProductoResponse(modelRepository.save(productoExistente));
             } else {
                 throw new IllegalArgumentException("El producto ya existe");
@@ -108,6 +108,7 @@ public class ProductoService implements IProductoService{
             }
             Producto productoExistente = productoOptional.get();
             productoExistente.setNombre(model.getNombre());
+            productoExistente.setDescripcion(model.getDescripcion());
             productoExistente.setStock(model.getStock());
             productoExistente.setCodigoBarra(model.getCodigoBarra());
             productoExistente.setPrecio(model.getPrecio());

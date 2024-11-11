@@ -45,8 +45,8 @@ public class CategoriaService implements ICategoriaService {
             Categoria categoriaExistente = categoriaOptional.get();
             if(categoriaExistente.getEstado() == Categoria.ELIMINADO){
                 categoriaExistente.recuperar();
-
                 categoriaExistente.setNombre(model.getNombre());
+                categoriaExistente.setDescripcion((model.getDescripcion()));
                 return CategoriaMapper.toCategoriaResponse(modelRepository.save(categoriaExistente));
             }else{
                 throw new IllegalArgumentException("NO SE PUDO CREAR, ESA CATEGORÍA YA EXISTE");
@@ -67,6 +67,7 @@ public class CategoriaService implements ICategoriaService {
             }
             Categoria categoria = categoriaOptional.get();
             categoria.setNombre(model.getNombre());
+            categoria.setDescripcion(model.getDescripcion());
             return CategoriaMapper.toCategoriaResponse(modelRepository.save(categoria));
         }
             throw new IllegalArgumentException("LA CATEGORÍA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
