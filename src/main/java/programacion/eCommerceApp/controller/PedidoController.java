@@ -1,0 +1,30 @@
+package programacion.eCommerceApp.controller;
+
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import programacion.eCommerceApp.controller.request.NewPedidoRequest;
+import programacion.eCommerceApp.controller.response.PedidoResponse;
+import programacion.eCommerceApp.service.IPedidoService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/ecommerce")
+@CrossOrigin(value=" http://localhost:8080")
+public class PedidoController {
+
+    @Autowired
+    IPedidoService pedidosService;
+
+    @PostMapping("/pedidos")
+    public ResponseEntity<PedidoResponse> crear(@RequestBody @Valid NewPedidoRequest newPedidoRequest) {
+        return ResponseEntity.ok(pedidosService.crear(newPedidoRequest));
+    }
+
+    @GetMapping("/pedidos")
+    public List<PedidoResponse> listar() {
+        return pedidosService.listar();
+    }
+}
