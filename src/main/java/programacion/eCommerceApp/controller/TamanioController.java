@@ -29,7 +29,7 @@ public class TamanioController {
         return service.listar();
     }
 
-    @GetMapping("/tamanios/recuperar/{id}")
+    @GetMapping("/tamanios/{id}")
     public ResponseEntity<TamanioResponse> buscarPorId(@PathVariable Integer id) {
         return service.buscarPorId(id);
     }
