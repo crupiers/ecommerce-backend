@@ -37,7 +37,6 @@ public class ColorController {
     }
 
     @GetMapping("/color/{id}") //busco el color por su nombre
-
     public ResponseEntity<ColorResponse> buscarPorId(@PathVariable Integer id){
         //usamos el servicio para encontrar un color según su nombre
         Color model = modelService.buscarPorId(id);
@@ -51,8 +50,8 @@ public class ColorController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    
     @PostMapping("/color") //uso de la instruccion "POST"
-
     public ColorResponse crear(@RequestBody @Valid NewColorRequest newColorRequest){
         return modelService.crear(newColorRequest);
     }
@@ -84,6 +83,12 @@ public class ColorController {
         }
         modelService.eliminar(model);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/color/existe/{nombre}")
+    public Color buscarPorNombre(@PathVariable String nombre){
+        Color model = modelService.buscarPorNombre(nombre);
+        return model;
     }
 
 }
