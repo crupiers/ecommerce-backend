@@ -19,6 +19,7 @@ import programacion.eCommerceApp.model.Tamanio;
 import programacion.eCommerceApp.repository.IProductoRepository;
 
 @SpringBootTest
+
 public class ProductoServiceTest {
 
     @Autowired

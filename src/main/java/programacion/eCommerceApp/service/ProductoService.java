@@ -119,7 +119,8 @@ public class ProductoService implements IProductoService{
     }
     @Override
     public Producto buscarPorNombre(String nombre) {
-        return modelRepository.findByNombre(nombre).orElse(null);
+        return modelRepository.findByNombre(nombre)
+                .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado con nombre: " + nombre));
     }
     @Override
     public void recuperar(Producto model){
