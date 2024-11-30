@@ -117,7 +117,10 @@ public class ProductoService implements IProductoService{
     public Producto buscarPorId(Integer id) {
         return modelRepository.findById(id).orElse(null);
     }
-
+    @Override
+    public Producto buscarPorNombre(String nombre) {
+        return modelRepository.findByNombre(nombre).orElse(null);
+    }
     @Override
     public void recuperar(Producto model){
         model.recuperar();

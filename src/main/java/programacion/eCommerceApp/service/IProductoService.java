@@ -18,4 +18,6 @@ public interface IProductoService {
     void eliminar (Producto producto);
 
     ProductoResponse actualizar (NewProductoRequest newProductoRequest , Integer id);
+
+    Producto buscarPorNombre (String nombre);
 }
