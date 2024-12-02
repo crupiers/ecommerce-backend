@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 public record NewMarcaRequest(
 
     @NotBlank(message = "La denominación de la marca no puede estar vacio")
-    //FALTA ACLARAR ESTA REGEXP!!! NO USEN GPT AMIGOS
+    
     @Pattern(regexp = "^[A-Za-z\s]+$", message = "La denominación solo debe contener letras y espacios")
     String denominacion,
 
