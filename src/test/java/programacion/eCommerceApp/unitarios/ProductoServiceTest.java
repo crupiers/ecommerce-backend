@@ -1,5 +1,6 @@
-package programacion.eCommerceApp.service;
+package programacion.eCommerceApp.unitarios;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
@@ -17,6 +18,7 @@ import programacion.eCommerceApp.model.Marca;
 import programacion.eCommerceApp.model.Producto;
 import programacion.eCommerceApp.model.Tamanio;
 import programacion.eCommerceApp.repository.IProductoRepository;
+import programacion.eCommerceApp.service.ProductoService;
 
 @SpringBootTest
 
@@ -52,6 +54,7 @@ public class ProductoServiceTest {
     public void findProductoByNombre() {
         String nombrePrueba = "Heladera";
         Producto productoBuscadoPorNombre = productoService.buscarPorNombre(nombrePrueba);
+        assertNull(productoBuscadoPorNombre);
         assertEquals(nombrePrueba, productoBuscadoPorNombre.getNombre());
     }
 }

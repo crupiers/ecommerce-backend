@@ -1,21 +1,26 @@
-package programacion.eCommerceApp.service;
+package programacion.eCommerceApp.unitarios;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import programacion.eCommerceApp.model.Producto;
 import programacion.eCommerceApp.repository.IProductoRepository;
+import programacion.eCommerceApp.service.ProductoService;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
+
+@ExtendWith(MockitoExtension.class)
 public class ProductoServiceTest2 {
 
     @Mock
@@ -43,6 +48,7 @@ public class ProductoServiceTest2 {
         // Assert
         assertNotNull(productoBuscado);
         assertEquals(idPrueba, productoBuscado.getId());
+
         verify(productoRepository, times(1)).findById(idPrueba);
     }
 

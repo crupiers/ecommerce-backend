@@ -81,12 +81,12 @@ public class GuararMarcaServiceTest {
         when(marcaRepository.save(marcaExistente)).thenReturn(marcaExistente);
 
         MarcaResponse response = marcaService.crear(request);
-
-        assertNotNull(response);
-        assertEquals(request.denominacion(), response.denominacion());
-        assertEquals(request.observaciones(), response.observaciones());
-        assertEquals(Marca.COMUN, response.estado());
-        verify(marcaRepository, times(1)).findByDenominacion(marcaExistente.getDenominacion());
+        
+        assertNotNull(response, "La response de la creación de la marca no debe ser nula");
+        assertEquals(request.denominacion(), response.denominacion(), "La denominación de la marca debe ser la misma que la de la request");
+        assertEquals(request.observaciones(), response.observaciones(), "Las observaciones de la marca deben ser las mismas que las de la request");
+        assertEquals(Marca.COMUN, response.estado(), "La marca debe estar creada");
+        verify(marcaRepository, times(1)).findByDenominacion(marcaExistente.getDenominacion(),);
         verify(marcaRepository, times(1)).save(marcaExistente);
     }
 }
