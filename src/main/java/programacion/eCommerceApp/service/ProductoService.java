@@ -90,6 +90,7 @@ public class ProductoService implements IProductoService{
                 productoExistente.setNombre(model.getNombre());
                 productoExistente.setDescripcion(model.getDescripcion());
                 productoExistente.setStock(model.getStock());
+                productoExistente.setUmbral(model.getUmbral());
                 productoExistente.setCodigoBarra(model.getCodigoBarra());
                 productoExistente.setPrecio(model.getPrecio());
                 productoExistente.setColor(model.getColor());
@@ -130,6 +131,7 @@ public class ProductoService implements IProductoService{
             productoExistente.setNombre(model.getNombre());
             productoExistente.setDescripcion(model.getDescripcion());
             productoExistente.setStock(model.getStock());
+            productoExistente.setUmbral(model.getUmbral());
             productoExistente.setCodigoBarra(model.getCodigoBarra());
             productoExistente.setPrecio(model.getPrecio());
             productoExistente.setColor(model.getColor());
