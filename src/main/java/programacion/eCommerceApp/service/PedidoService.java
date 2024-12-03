@@ -77,6 +77,7 @@ public class PedidoService implements IPedidoService {
         }
         List<DetallePedido> detallesPedido = model.getDetallesPedido();
         detallesPedido.forEach(detallePedido -> {
+            detallePedido.getProducto().setStock(detallePedido.getProducto().getStock() + detallePedido.getCantidad());
             detallePedido.setEstado(DetallePedido.ELIMINADO);
             detallePedidoRepository.save(detallePedido);
         });
