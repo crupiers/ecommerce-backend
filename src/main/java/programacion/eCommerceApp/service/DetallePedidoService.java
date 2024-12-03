@@ -36,9 +36,12 @@ public class DetallePedidoService implements IDetallePedidoService {
         if (detallePedido.getCantidad() > producto.getStock()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO HAY STOCK SUFICIENTE PARA EL PRODUCTO CON ID: "+producto.getId());
         }
+
+        boolean estabaDebajoDelUmbral = detallePedido.getProducto().getStock() < detallePedido.getProducto().getUmbral();
+
         producto.setStock(producto.getStock() - detallePedido.getCantidad());
 
-        if (detallePedido.getProducto().getStock() < detallePedido.getProducto().getUmbral()){
+        if (detallePedido.getProducto().getStock() < detallePedido.getProducto().getUmbral() && !estabaDebajoDelUmbral){
             emailService.sendEmail(
                 "moranofrancisco1234@gmail.com",
                 "Alerta de stock bajo para producto '" + producto.getNombre() + "'",
