@@ -31,7 +31,7 @@ public class AuthService implements IAuthService {
     private AuthenticationManager authenticationManager;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public AuthResponse login(NewLoginRequest newLoginRequest) {
+    public AuthResponse login(final NewLoginRequest newLoginRequest) {
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findByNombre(newLoginRequest.nombre());
 
@@ -46,7 +46,7 @@ public class AuthService implements IAuthService {
         return UsuarioMapper.toAuthResponse(jwt);
     }
 
-    public AuthResponse register(NewRegisterRequest newRegisterRequest) {
+    public AuthResponse register(final NewRegisterRequest newRegisterRequest) {
         Usuario usuario = UsuarioMapper
                 .toEntity(newRegisterRequest, passwordEncoder);
         usuario.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));
@@ -55,7 +55,7 @@ public class AuthService implements IAuthService {
         return UsuarioMapper.toAuthResponse(jwtService.getToken(usuario));
     }
 
-    public AuthResponse actualizar(NewRegisterRequest newRegisterRequest, Integer id) {
+    public AuthResponse actualizar(final NewRegisterRequest newRegisterRequest, final Integer id) {
 
         Usuario model = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
@@ -74,8 +74,8 @@ public class AuthService implements IAuthService {
         }
 
         if (usuarioOptional.get().getEstado() == Usuario.ELIMINADO) {
-            throw new IllegalArgumentException("EL USUARIO CON ID '" + id +
-                    "' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
+            throw new IllegalArgumentException("EL USUARIO CON ID '" + id
+                    + "' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
         }
 
         Usuario usuario = usuarioOptional.get();
@@ -86,7 +86,7 @@ public class AuthService implements IAuthService {
         return UsuarioMapper.toAuthResponse(jwtService.getToken(usuario));
     }
 
-    public void eliminar(Integer id) {
+    public void eliminar(final Integer id) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
 
         if (usuarioOptional.isEmpty()) {
@@ -103,8 +103,8 @@ public class AuthService implements IAuthService {
         }
 
         if (usuarioOptional.get().getEstado() == Usuario.ELIMINADO) {
-            throw new IllegalArgumentException("EL USUARIO CON ID '" + id +
-                    "' YA ESTÁ ELIMINADO");
+            throw new IllegalArgumentException("EL USUARIO CON ID '" + id
+                    + "' YA ESTÁ ELIMINADO");
         }
 
         Usuario usuario = usuarioOptional.get();

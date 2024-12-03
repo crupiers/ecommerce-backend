@@ -18,7 +18,7 @@ public class MarcaService implements IMarcaService {
 
     @Autowired
     private IMarcaRepository modelRepository; //el repository no es instanciado nunca
-    private static final String mensajeIdNoEncontrado = "NO SE ENCONTRÓ LA MARCA CON ID: ";
+    private static final String MENSAJE_ID_NOENCONTRADO = "NO SE ENCONTRÓ LA MARCA CON ID: ";
 
     @Override
     public List<MarcaResponse> listar() {
@@ -27,17 +27,17 @@ public class MarcaService implements IMarcaService {
     }
 
     @Override
-    public ResponseEntity<MarcaResponse> buscarPorId(Integer id) {
+    public ResponseEntity<MarcaResponse> buscarPorId(final Integer id) {
         Marca model = modelRepository.findById(id).orElse(null);
         if (model == null || model.getEstado() == Marca.ELIMINADO) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO + id);
         }
         MarcaResponse marcaResponse = MarcaMapper.toMarcaResponse(model);
         return ResponseEntity.ok(marcaResponse);
     }
 
     @Override
-    public MarcaResponse crear(NewMarcaRequest newMarcaRequest) {
+    public MarcaResponse crear(final NewMarcaRequest newMarcaRequest) {
         Marca model = MarcaMapper.toEntity(newMarcaRequest);
         Optional<Marca> marcaOptional = modelRepository.findByNombre(model.getNombre());
 
@@ -56,11 +56,11 @@ public class MarcaService implements IMarcaService {
     }
 
     @Override
-    public MarcaResponse actualizar(NewMarcaRequest newMarcaRequest, Integer id) {
+    public MarcaResponse actualizar(final NewMarcaRequest newMarcaRequest, final Integer id) {
         Marca model = MarcaMapper.toEntity(newMarcaRequest);
         Optional<Marca> marcaOptional = modelRepository.findById(id);
         if (marcaOptional.isPresent()) {
-            if(marcaOptional.get().getEstado() == Marca.ELIMINADO){
+            if (marcaOptional.get().getEstado() == Marca.ELIMINADO) {
                 throw new IllegalArgumentException("LA MARCA CON ID '"
                         + id
                         + "' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADA");
@@ -76,10 +76,10 @@ public class MarcaService implements IMarcaService {
     }
 
     @Override
-    public ResponseEntity<Void> eliminar(Integer id) {
+    public ResponseEntity<Void> eliminar(final Integer id) {
         Marca model = modelRepository.findById(id).orElse(null);
         if (model == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO + id);
         }
         model.eliminar();
         modelRepository.save(model);
@@ -87,10 +87,10 @@ public class MarcaService implements IMarcaService {
     }
 
     @Override
-    public ResponseEntity<Void> recuperar(Integer id) {
+    public ResponseEntity<Void> recuperar(final Integer id) {
         Marca model = modelRepository.findById(id).orElse(null);
         if (model == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO + id);
         }
         model.recuperar();
         modelRepository.save(model);

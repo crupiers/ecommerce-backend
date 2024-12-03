@@ -1,8 +1,17 @@
 package programacion.eCommerceApp.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -17,11 +26,14 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 public class Producto {
 
+    private static final int NOMBRE_LONGITUD_MAX = 64;
+    private static final int NOMBRE_LONGITUD_MIN = 2;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(unique = true, nullable = false)
-    @Size(min = 2, max = 64)
+    @Size(min = NOMBRE_LONGITUD_MIN, max = NOMBRE_LONGITUD_MAX)
     private String nombre;
     @Column(nullable = false)
     private String descripcion;

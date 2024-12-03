@@ -18,7 +18,7 @@ public class CategoriaService implements ICategoriaService {
 
     @Autowired
     private ICategoriaRepository modelRepository;
-    private static final String mensajeIdNoEncontrado = "NO SE ENCONTRÓ LA CATEGORÍA CON ID: ";
+    private static final String MENSAJE_ID_NOENCONTRADO = "NO SE ENCONTRÓ LA CATEGORÍA CON ID: ";
 
     @Override
     public List<CategoriaResponse> listar() {
@@ -27,17 +27,17 @@ public class CategoriaService implements ICategoriaService {
     }
 
     @Override
-    public ResponseEntity<CategoriaResponse> buscarPorId(Integer id) {
+    public ResponseEntity<CategoriaResponse> buscarPorId(final Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
         if (model == null || model.getEstado() == Categoria.ELIMINADO) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO + id);
         }
         CategoriaResponse categoriaResponse = CategoriaMapper.toCategoriaResponse(model);
         return ResponseEntity.ok(categoriaResponse);
     }
 
     @Override
-    public CategoriaResponse crear(NewCategoriaRequest newCategoriaRequest) {
+    public CategoriaResponse crear(final NewCategoriaRequest newCategoriaRequest) {
         Categoria model = CategoriaMapper.toEntity(newCategoriaRequest);
         Optional<Categoria> categoriaOptional = modelRepository.findByNombre(model.getNombre());
 
@@ -59,7 +59,7 @@ public class CategoriaService implements ICategoriaService {
     }
 
     @Override
-    public CategoriaResponse actualizar(NewCategoriaRequest newCategoriaRequest, Integer id) {
+    public CategoriaResponse actualizar(final NewCategoriaRequest newCategoriaRequest, final Integer id) {
         Categoria model = CategoriaMapper.toEntity(newCategoriaRequest);
         Optional<Categoria> categoriaOptional = modelRepository.findById(id); //busco en base al id de la ruta
 
@@ -78,10 +78,10 @@ public class CategoriaService implements ICategoriaService {
     }
 
     @Override
-    public ResponseEntity<Void> eliminar(Integer id) {
+    public ResponseEntity<Void> eliminar(final Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
-        if (model == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
+        if (model == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO + id);
         }
         model.eliminar();
         modelRepository.save(model);
@@ -89,10 +89,10 @@ public class CategoriaService implements ICategoriaService {
     }
 
     @Override
-    public ResponseEntity<Void> recuperar(Integer id) {
+    public ResponseEntity<Void> recuperar(final Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
         if (model == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO + id);
         }
         model.recuperar();
         modelRepository.save(model);

@@ -1,8 +1,16 @@
 package programacion.eCommerceApp.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -10,7 +18,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Entity
 @Data
@@ -20,11 +27,14 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 public class Color {
 
+    private static final int NOMBRE_LONGITUD_MAX = 32;
+    private static final int NOMBRE_LONGITUD_MIN = 2;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //genera números automáticamente
     private Integer id;
     @Column(unique = true, nullable = false)
-    @Size(min = 2, max = 32)
+    @Size(min = NOMBRE_LONGITUD_MIN, max = NOMBRE_LONGITUD_MAX)
     private String nombre;
     @Column(nullable = false)
     private String descripcion;

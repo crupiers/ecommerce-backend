@@ -15,7 +15,7 @@ public record NewMarcaRequest(
         String descripcion
 ) {
         public NewMarcaRequest {
-                if (descripcion == null){
+                if (descripcion == null) {
                         descripcion = nombre;
                 }
         }

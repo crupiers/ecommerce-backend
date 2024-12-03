@@ -5,11 +5,15 @@ import programacion.eCommerceApp.controller.response.MarcaResponse;
 import programacion.eCommerceApp.model.Marca;
 
 public class MarcaMapper {
-    public static MarcaResponse toMarcaResponse(Marca marca) {
+
+    public MarcaMapper() {
+    }
+
+    public static MarcaResponse toMarcaResponse(final Marca marca) {
         return new MarcaResponse(marca.getId(), marca.getNombre(), marca.getDescripcion(), marca.getEstado());
     }
 
-    public static Marca toEntity(NewMarcaRequest newMarcaRequest) {
+    public static Marca toEntity(final NewMarcaRequest newMarcaRequest) {
         return Marca.builder().nombre(newMarcaRequest.nombre()).descripcion(newMarcaRequest.descripcion()).build();
     }
 

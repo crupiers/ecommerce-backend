@@ -2,11 +2,18 @@ package programacion.eCommerceApp.mapper;
 
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
-import programacion.eCommerceApp.model.*;
+import programacion.eCommerceApp.model.Producto;
+import programacion.eCommerceApp.model.Color;
+import programacion.eCommerceApp.model.Tamanio;
+import programacion.eCommerceApp.model.Categoria;
+import programacion.eCommerceApp.model.Marca;
 
 public class ProductoMapper {
 
-    public static ProductoResponse toProductoResponse(Producto producto) {
+    public ProductoMapper() {
+    }
+
+    public static ProductoResponse toProductoResponse(final Producto producto) {
         return new ProductoResponse(
                 producto.getId(),
                 producto.getNombre(),
@@ -19,7 +26,11 @@ public class ProductoMapper {
                 producto.getColor().getNombre(),
                 producto.getCodigoBarra());
     }
-    public static Producto toEntity(NewProductoRequest newProductoRequest, Color color, Tamanio tamanio, Categoria categoria, Marca marca) {
+    public static Producto toEntity(final NewProductoRequest newProductoRequest,
+                                    final Color color,
+                                    final Tamanio tamanio,
+                                    final Categoria categoria,
+                                    final Marca marca) {
         return Producto.builder()
                 .nombre(newProductoRequest.nombre())
                 .color(color) // Entidad Color

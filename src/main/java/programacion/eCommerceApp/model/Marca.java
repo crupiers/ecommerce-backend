@@ -1,10 +1,13 @@
 package programacion.eCommerceApp.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Builder;
-import lombok.ToString;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
@@ -21,11 +24,14 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class Marca {
 
+    private static final int NOMBRE_LONGITUD_MAX = 32;
+    private static final int NOMBRE_LONGITUD_MIN = 2;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(unique = true, nullable = false)
-    @Size(min = 2, max = 32)
+    @Size(min = NOMBRE_LONGITUD_MIN, max = NOMBRE_LONGITUD_MAX)
     private String nombre;
     @Column(nullable = false)
     private String descripcion;

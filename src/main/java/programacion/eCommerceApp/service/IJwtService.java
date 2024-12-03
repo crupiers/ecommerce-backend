@@ -1,6 +1,5 @@
 package programacion.eCommerceApp.service;
 
-import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface IJwtService {

@@ -18,7 +18,7 @@ public class TamanioService implements ITamanioService {
 
     @Autowired
     private ITamanioRepository modelRepository;
-    private static final String mensajeIdNoEncontrado = "NO SE ENCONTRÓ EL TAMAÑO CON ID: ";
+    private static final String MENSAJE_ID_NOENCONTRADO = "NO SE ENCONTRÓ EL TAMAÑO CON ID: ";
 
     @Override
     public List<TamanioResponse> listar() {
@@ -27,7 +27,7 @@ public class TamanioService implements ITamanioService {
     }
 
     @Override
-    public TamanioResponse crear(NewTamanioRequest newTamanioRequest) {
+    public TamanioResponse crear(final NewTamanioRequest newTamanioRequest) {
         Tamanio model = TamanioMapper.toEntity(newTamanioRequest);
         Optional<Tamanio> tamanioOptional = modelRepository.findByNombre(model.getNombre());
 
@@ -47,12 +47,12 @@ public class TamanioService implements ITamanioService {
     }
 
     @Override
-    public TamanioResponse actualizar(NewTamanioRequest newTamanioRequest, Integer id) {
+    public TamanioResponse actualizar(final NewTamanioRequest newTamanioRequest, Integer id) {
         Tamanio model = TamanioMapper.toEntity(newTamanioRequest);
         Optional<Tamanio> tamanioOptional = modelRepository.findById(id);
 
         if (tamanioOptional.isPresent()) {
-            if (tamanioOptional.get().getEstado()==Tamanio.ELIMINADO) {
+            if (tamanioOptional.get().getEstado() == Tamanio.ELIMINADO) {
                 throw new IllegalArgumentException("EL TAMAÑO CON ID '"
                         + id
                         + "' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
@@ -68,21 +68,21 @@ public class TamanioService implements ITamanioService {
     }
 
     @Override
-    public ResponseEntity<TamanioResponse> buscarPorId(Integer id) {
+    public ResponseEntity<TamanioResponse> buscarPorId(final Integer id) {
         Tamanio model = modelRepository.findById(id).orElse(null);
         //uso la constante "ELIMINADO" para comparar y no el valor
         if (model == null || model.getEstado() == Tamanio.ELIMINADO) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO + id);
         }
         TamanioResponse tamanioResponse = TamanioMapper.toTamanioResponse(model);
         return ResponseEntity.ok(tamanioResponse);
     }
 
     @Override
-    public ResponseEntity<Void> eliminar(Integer id) {
+    public ResponseEntity<Void> eliminar(final Integer id) {
         Tamanio model = modelRepository.findById(id).orElse(null);
         if (model == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO + id);
         }
         model.eliminar();
         modelRepository.save(model);
@@ -90,10 +90,10 @@ public class TamanioService implements ITamanioService {
     }
 
     @Override
-    public ResponseEntity<Void> recuperar (Integer id) {
+    public ResponseEntity<Void> recuperar (final Integer id) {
         Tamanio model = modelRepository.findById(id).orElse(null);
         if (model == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO +id);
         }
         model.recuperar();
         modelRepository.save(model);

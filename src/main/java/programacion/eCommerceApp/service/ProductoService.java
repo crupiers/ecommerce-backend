@@ -8,7 +8,11 @@ import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
 import programacion.eCommerceApp.mapper.ProductoMapper;
-import programacion.eCommerceApp.model.*;
+import programacion.eCommerceApp.model.Producto;
+import programacion.eCommerceApp.model.Tamanio;
+import programacion.eCommerceApp.model.Categoria;
+import programacion.eCommerceApp.model.Marca;
+import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.repository.*;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +30,7 @@ public class ProductoService implements IProductoService {
     private IMarcaRepository marcaRepository;
     @Autowired
     private ICategoriaRepository categoriaRepository;
-    private static final String mensajeIdNoEncontrado = "NO SE ENCONTRÓ EL PRODUCTO CON ID: ";
+    private static final String MENSAJE_ID_NOENCONTRADO = "NO SE ENCONTRÓ EL PRODUCTO CON ID: ";
 
     @Override
     public List<ProductoResponse> listar() {
@@ -35,17 +39,17 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public ResponseEntity<ProductoResponse> buscarPorId(Integer id) {
+    public ResponseEntity<ProductoResponse> buscarPorId(final Integer id) {
         Producto model = modelRepository.findById(id).orElse(null);
         if (model == null || model.getEstado() == Producto.ELIMINADO) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO + id);
         }
         ProductoResponse productoResponse = ProductoMapper.toProductoResponse(model);
         return ResponseEntity.ok(productoResponse);
     }
 
     @Override
-    public ProductoResponse crear(NewProductoRequest newProductoRequest) {
+    public ProductoResponse crear(final NewProductoRequest newProductoRequest) {
 
         Tamanio tamanio = tamanioRepository.findById(newProductoRequest.tamanioId())
                 .orElseThrow(() -> new IllegalArgumentException("Tamaño no encontrado con ID: " + newProductoRequest.tamanioId()));
@@ -85,7 +89,7 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public ProductoResponse actualizar(NewProductoRequest newProductoRequest, Integer id) {
+    public ProductoResponse actualizar(final NewProductoRequest newProductoRequest, final Integer id) {
         Tamanio tamanio = tamanioRepository.findById(newProductoRequest.tamanioId())
                 .orElseThrow(() -> new IllegalArgumentException("Tamaño no encontrado con ID: " + newProductoRequest.tamanioId()));
 
@@ -121,14 +125,14 @@ public class ProductoService implements IProductoService {
 
             return ProductoMapper.toProductoResponse(modelRepository.save(productoExistente));
         }
-        throw new IllegalArgumentException("EL PRODUCTO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
+        throw new IllegalArgumentException("EL PRODUCTO CON ID '" + id + "' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
 
     @Override
-    public ResponseEntity<Void> eliminar(Integer id) {
+    public ResponseEntity<Void> eliminar(final Integer id) {
         Producto model = modelRepository.findById(id).orElse(null);
         if (model == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO + id);
         }
         model.eliminar();
         modelRepository.save(model);
@@ -136,10 +140,10 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public ResponseEntity<Void> recuperar(Integer id) {
+    public ResponseEntity<Void> recuperar(final Integer id) {
         Producto model = modelRepository.findById(id).orElse(null);
         if(model == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAJE_ID_NOENCONTRADO + id);
         }
         model.recuperar();
         modelRepository.save(model);

@@ -20,8 +20,9 @@ public class CustomExceptionHandler {
     //recibo el estado HTTP que me indica el error "web"
     //recibo una lista con los errores de consola mediante el parametro "message"
     //uso "request" para describir quién origina el error
-    private Map<String, Object> buildBadRequestResponseBody(HttpStatus status, List<String> message,
-                                                            WebRequest request) {
+    private Map<String, Object> buildBadRequestResponseBody(final HttpStatus status,
+                                                            final List<String> message,
+                                                            final WebRequest request) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", status.value());
@@ -36,7 +37,8 @@ public class CustomExceptionHandler {
     //declaro un metodo especifico para una excepcion especifica
     @ExceptionHandler(MethodArgumentNotValidException.class)
     //recibo la excepcion "ex" y la peticion "request"
-    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex, WebRequest request) {
+    public ResponseEntity<Object> handleValidationExceptions(final MethodArgumentNotValidException ex,
+                                                             final WebRequest request) {
         List<String> errors = new ArrayList<>(); //lista para guardar los errores
 
         //creamos un objeto "FieldError" que guarda un campo de error, es decir, un error concreto
