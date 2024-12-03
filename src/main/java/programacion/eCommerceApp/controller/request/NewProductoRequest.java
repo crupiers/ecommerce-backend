@@ -27,6 +27,9 @@ public record NewProductoRequest(
         Double precio,
 
         @NotNull
+        Integer umbral,
+
+        @NotNull
         //@Pattern(regexp = "^[0-9]+$", message = "SE DEBE INGRESAR UN NÚMERO ENTERO, NO TIENE QUE HABER ESPACIOS")
         Integer colorId,
 

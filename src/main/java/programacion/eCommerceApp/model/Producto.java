@@ -32,6 +32,9 @@ public class Producto {
     @Column(nullable = false)
     private Double precio;
     @Column(nullable = false)
+    private Integer umbral;
+
+    @Column(nullable = false)
     @Builder.Default
     private int estado = 0;
 

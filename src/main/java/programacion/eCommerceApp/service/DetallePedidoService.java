@@ -2,6 +2,8 @@ package programacion.eCommerceApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewDetallePedidoRequest;
@@ -21,6 +23,8 @@ public class DetallePedidoService implements IDetallePedidoService {
     private IProductoRepository productoRepository;
     @Autowired
     private IDetallePedidoRepository detallePedidoRepository;
+    @Autowired
+    private JavaMailSender mailSender;
 
     public DetallePedidoResponse crear(NewDetallePedidoRequest newDetallePedidoRequest) {
 
@@ -34,6 +38,14 @@ public class DetallePedidoService implements IDetallePedidoService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO HAY STOCK SUFICIENTE PARA EL PRODUCTO CON ID: "+producto.getId());
         }
         producto.setStock(producto.getStock() - detallePedido.getCantidad());
+
+        if (detallePedido.getProducto().getStock() < detallePedido.getProducto().getUmbral()){
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo("moranofrancisco1234@gmail.com");
+            message.setSubject("Alerta de Stock Bajo");
+            message.setText("El producto " + producto.getNombre() + " tiene un stock bajo de " + producto.getStock() + " unidades.");
+            mailSender.send(message);
+        }
 
         return DetallePedidoMapper.toDetallePedidoResponse(detallePedidoRepository.save(detallePedido));
     }
