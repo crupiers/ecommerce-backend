@@ -27,4 +27,15 @@ public class PedidoController {
     public List<PedidoResponse> listar() {
         return pedidosService.listar();
     }
+
+    @GetMapping("/pedidos/{id}")
+    public ResponseEntity<PedidoResponse> buscarPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(pedidosService.buscarPorId(id));
+    }
+
+    @GetMapping("/pedidos/porUsuario/{idUsuario}")
+    public List<PedidoResponse> buscarPorUsuario(@PathVariable Integer idUsuario) {
+        return pedidosService.buscarPorUsuario(idUsuario);
+    }
+
 }

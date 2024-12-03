@@ -29,8 +29,13 @@ public class DetallePedidoService implements IDetallePedidoService {
 
         DetallePedido detallePedido = DetallePedidoMapper.toEntity(newDetallePedidoRequest, producto);
         detallePedido.setSubtotal(detallePedido.calcularSubtotal());
-        return DetallePedidoMapper.toDetallePedidoResponse(detallePedidoRepository.save(detallePedido));
 
+        if (detallePedido.getCantidad() > producto.getStock()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO HAY STOCK SUFICIENTE PARA EL PRODUCTO CON ID: "+producto.getId());
+        }
+        producto.setStock(producto.getStock() - detallePedido.getCantidad());
+
+        return DetallePedidoMapper.toDetallePedidoResponse(detallePedidoRepository.save(detallePedido));
     }
 
     public List<DetallePedidoResponse> listar() {

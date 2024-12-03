@@ -36,6 +36,8 @@ public class PedidoService implements IPedidoService {
 
         Pedido pedido = PedidoMapper.toEntity(newPedidoRequest, detallesPedido, usuario);
         pedido.setTotal(pedido.calcularTotal());
+
+
         return PedidoMapper.toPedidoResponse(pedidoRepository.save(pedido));
     }
 
@@ -44,5 +46,19 @@ public class PedidoService implements IPedidoService {
         return pedidos.stream().map(PedidoMapper::toPedidoResponse).toList();
     }
 
+    public PedidoResponse buscarPorId(Integer id) {
+        Pedido model = pedidoRepository.findById(id).orElse(null);
+        if(model == null || model.getEstado() == Pedido.ELIMINADO){
+            throw new IllegalArgumentException("NO SE ENCONTRÓ EL PEDIDO CON ID: "+id);
+        }
+        return PedidoMapper.toPedidoResponse(model);
+    }
+
+    public List<PedidoResponse> buscarPorUsuario(Integer idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + idUsuario));
+        List<Pedido> pedidos = pedidoRepository.findAllByUsuario(usuario);
+        return pedidos.stream().map(PedidoMapper::toPedidoResponse).toList();
+    }
 
 }
