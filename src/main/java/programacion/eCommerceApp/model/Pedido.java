@@ -34,7 +34,7 @@ public class Pedido {
     @Builder.Default
     private Double total = 0.0;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idUsuario")
     private Usuario usuario;
 

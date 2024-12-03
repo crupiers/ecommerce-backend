@@ -38,4 +38,8 @@ public class PedidoController {
         return pedidosService.buscarPorUsuario(idUsuario);
     }
 
+    @DeleteMapping("/pedidos/{id}")
+    public ResponseEntity<PedidoResponse> eliminar(@PathVariable Integer id) {
+        return ResponseEntity.ok(pedidosService.eliminar(id));
+    }
 }
