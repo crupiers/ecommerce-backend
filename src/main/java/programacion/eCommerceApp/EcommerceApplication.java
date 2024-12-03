@@ -9,10 +9,10 @@ import programacion.eCommerceApp.pipe.AuditorAwareImpl;
 
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider")
 @SpringBootApplication
-public class eCommerceApplication {
+public class EcommerceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(eCommerceApplication.class, args);
+		SpringApplication.run(EcommerceApplication.class, args);
 	}
 
 	@Bean
