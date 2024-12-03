@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface IProductoService {
     ProductoResponse crear(NewProductoRequest newProductoRequest);
-    ProductoResponse actualizar (NewProductoRequest newProductoRequest , Integer id);
+    ProductoResponse actualizar(NewProductoRequest newProductoRequest, Integer id);
     List<ProductoResponse> listar();
-    ResponseEntity<ProductoResponse> buscarPorId (Integer id);
-    ResponseEntity<Void> eliminar (Integer id);
-    ResponseEntity<Void> recuperar (Integer id);
+    ResponseEntity<ProductoResponse> buscarPorId(Integer id);
+    ResponseEntity<Void> eliminar(Integer id);
+    ResponseEntity<Void> recuperar(Integer id);
 }

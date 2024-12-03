@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductoService implements IProductoService{
+public class ProductoService implements IProductoService {
 
     @Autowired
     private IProductoRepository modelRepository;
@@ -37,15 +37,15 @@ public class ProductoService implements IProductoService{
     @Override
     public ResponseEntity<ProductoResponse> buscarPorId(Integer id) {
         Producto model = modelRepository.findById(id).orElse(null);
-        if(model == null || model.getEstado() == Producto.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        if (model == null || model.getEstado() == Producto.ELIMINADO) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
         }
         ProductoResponse productoResponse = ProductoMapper.toProductoResponse(model);
         return ResponseEntity.ok(productoResponse);
     }
 
     @Override
-    public ProductoResponse crear(NewProductoRequest newProductoRequest){
+    public ProductoResponse crear(NewProductoRequest newProductoRequest) {
 
         Tamanio tamanio = tamanioRepository.findById(newProductoRequest.tamanioId())
                 .orElseThrow(() -> new IllegalArgumentException("Tamaño no encontrado con ID: " + newProductoRequest.tamanioId()));
@@ -63,7 +63,7 @@ public class ProductoService implements IProductoService{
 
         Optional<Producto> productoOptional = modelRepository.findByNombre(newProductoRequest.nombre());
 
-        if(productoOptional.isPresent()){
+        if (productoOptional.isPresent()) {
             Producto productoExistente = productoOptional.get();
             if (productoExistente.getEstado() == Producto.ELIMINADO) {
                 productoExistente.recuperar();
@@ -85,7 +85,7 @@ public class ProductoService implements IProductoService{
     }
 
     @Override
-    public ProductoResponse actualizar(NewProductoRequest newProductoRequest , Integer id){
+    public ProductoResponse actualizar(NewProductoRequest newProductoRequest, Integer id) {
         Tamanio tamanio = tamanioRepository.findById(newProductoRequest.tamanioId())
                 .orElseThrow(() -> new IllegalArgumentException("Tamaño no encontrado con ID: " + newProductoRequest.tamanioId()));
 
@@ -103,8 +103,10 @@ public class ProductoService implements IProductoService{
         Optional<Producto> productoOptional = modelRepository.findByNombre(model.getNombre());
 
         if (productoOptional.isPresent()) {
-            if(productoOptional.get().getEstado()==Producto.ELIMINADO){
-                throw new IllegalArgumentException("EL PRODUCTO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
+            if (productoOptional.get().getEstado() == Producto.ELIMINADO) {
+                throw new IllegalArgumentException("EL PRODUCTO CON ID '"
+                        + id
+                        + "' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
             }
             Producto productoExistente = productoOptional.get();
             productoExistente.setNombre(model.getNombre());
@@ -123,7 +125,7 @@ public class ProductoService implements IProductoService{
     }
 
     @Override
-    public ResponseEntity<Void> eliminar(Integer id){
+    public ResponseEntity<Void> eliminar(Integer id) {
         Producto model = modelRepository.findById(id).orElse(null);
         if (model == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
@@ -134,7 +136,7 @@ public class ProductoService implements IProductoService{
     }
 
     @Override
-    public ResponseEntity<Void> recuperar(Integer id){
+    public ResponseEntity<Void> recuperar(Integer id) {
         Producto model = modelRepository.findById(id).orElse(null);
         if(model == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);

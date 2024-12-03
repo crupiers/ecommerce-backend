@@ -11,7 +11,7 @@ import programacion.eCommerceApp.service.ITamanioService;
 import java.util.List;
 
 @RestController
-@CrossOrigin(value="http://localhost:8080")
+@CrossOrigin(value = "http://localhost:8080")
 @RequestMapping("/ecommerce")
 public class TamanioController {
 
@@ -36,7 +36,7 @@ public class TamanioController {
 
     @PutMapping("/tamanios/actualizar/{id}")
     public TamanioResponse actualizar(@RequestBody @Valid NewTamanioRequest newTamanioRequest,  @PathVariable Integer id) {
-        return service.actualizar(newTamanioRequest , id);
+        return service.actualizar(newTamanioRequest, id);
     }
 
     @DeleteMapping("/tamanios/{id}")

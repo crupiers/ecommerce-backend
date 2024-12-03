@@ -10,7 +10,7 @@ public class TamanioMapper {
         return new TamanioResponse(tamanio.getId(), tamanio.getNombre(), tamanio.getDescripcion(), tamanio.getEstado());
     }
 
-    public static Tamanio toEntity (NewTamanioRequest newTamanioRequest) {
+    public static Tamanio toEntity(NewTamanioRequest newTamanioRequest) {
         return Tamanio.builder()
                 .nombre(newTamanioRequest.nombre())
                 .descripcion(newTamanioRequest.descripcion())

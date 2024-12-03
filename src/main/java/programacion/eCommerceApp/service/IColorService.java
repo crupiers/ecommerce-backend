@@ -8,9 +8,9 @@ import java.util.List;
 public interface IColorService {
     List<ColorResponse> listar();
     ResponseEntity<ColorResponse> buscarPorId(Integer id);
-    ResponseEntity<ColorResponse> buscarPorNombre (String nombre);
+    ResponseEntity<ColorResponse> buscarPorNombre(String nombre);
     ColorResponse crear(NewColorRequest newColorRequest);
     ColorResponse actualizar(NewColorRequest newColorRequest, Integer id);
     ResponseEntity<Void> eliminar(Integer id);
-    ResponseEntity<Void> recuperar (Integer id);
+    ResponseEntity<Void> recuperar(Integer id);
 }

@@ -29,8 +29,8 @@ public class MarcaService implements IMarcaService {
     @Override
     public ResponseEntity<MarcaResponse> buscarPorId(Integer id) {
         Marca model = modelRepository.findById(id).orElse(null);
-        if(model == null || model.getEstado() == Marca.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        if (model == null || model.getEstado() == Marca.ELIMINADO) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
         }
         MarcaResponse marcaResponse = MarcaMapper.toMarcaResponse(model);
         return ResponseEntity.ok(marcaResponse);
@@ -43,12 +43,12 @@ public class MarcaService implements IMarcaService {
 
         if (marcaOptional.isPresent()) {
             Marca marcaExistente = marcaOptional.get();
-            if(marcaExistente.getEstado() == Marca.ELIMINADO){
+            if (marcaExistente.getEstado() == Marca.ELIMINADO) {
                 marcaExistente.recuperar();
                 marcaExistente.setNombre(model.getNombre());
                 marcaExistente.setDescripcion(model.getDescripcion());
                 return MarcaMapper.toMarcaResponse(modelRepository.save(marcaExistente));
-            }else{
+            } else {
                 throw new IllegalArgumentException("La marca ya existe");
             }
         }
@@ -59,16 +59,20 @@ public class MarcaService implements IMarcaService {
     public MarcaResponse actualizar(NewMarcaRequest newMarcaRequest, Integer id) {
         Marca model = MarcaMapper.toEntity(newMarcaRequest);
         Optional<Marca> marcaOptional = modelRepository.findById(id);
-        if(marcaOptional.isPresent()){
-            if(marcaOptional.get().getEstado()==Marca.ELIMINADO){
-                throw new IllegalArgumentException("LA MARCA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADA");
+        if (marcaOptional.isPresent()) {
+            if(marcaOptional.get().getEstado() == Marca.ELIMINADO){
+                throw new IllegalArgumentException("LA MARCA CON ID '"
+                        + id
+                        + "' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADA");
             }
             Marca marca = marcaOptional.get();
             marca.setNombre(model.getNombre());
             marca.setDescripcion(model.getDescripcion());
             return MarcaMapper.toMarcaResponse(modelRepository.save(marca));
         }
-        throw new IllegalArgumentException("LA MARCA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
+        throw new IllegalArgumentException("LA MARCA CON ID '"
+                + id
+                + "' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
 
     @Override

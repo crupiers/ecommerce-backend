@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController 
 @RequestMapping("ecommerce")
-@CrossOrigin(value=" http://localhost:8080")
+@CrossOrigin(value = " http://localhost:8080")
 
 public class ColorController {
 
@@ -21,29 +21,29 @@ public class ColorController {
     private IColorService service;
 
     @GetMapping({"/colores"})
-    public List<ColorResponse> listar(){
+    public List<ColorResponse> listar() {
         return service.listar();
     }
 
     @GetMapping("/colores/{id}")
-    public ResponseEntity<ColorResponse> buscarPorId(@PathVariable Integer id){
+    public ResponseEntity<ColorResponse> buscarPorId(@PathVariable Integer id) {
         return service.buscarPorId(id);
     }
 
     @GetMapping("/colores/existe/{nombre}")
-    public ResponseEntity<ColorResponse> buscarPorNombre(@PathVariable String nombre){
+    public ResponseEntity<ColorResponse> buscarPorNombre(@PathVariable String nombre) {
         return service.buscarPorNombre(nombre);
     }
 
     @PostMapping("/colores")
     @ResponseStatus(HttpStatus.CREATED)
-    public ColorResponse crear(@RequestBody @Valid NewColorRequest newColorRequest){
+    public ColorResponse crear(@RequestBody @Valid NewColorRequest newColorRequest) {
         return service.crear(newColorRequest);
     }
 
     @PutMapping("/colores/actualizar/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ColorResponse actualizar(@RequestBody @Valid NewColorRequest newColorRequest, @PathVariable Integer id){
+    public ColorResponse actualizar(@RequestBody @Valid NewColorRequest newColorRequest, @PathVariable Integer id) {
         return service.actualizar(newColorRequest, id);
     }
 

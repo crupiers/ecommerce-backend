@@ -14,9 +14,9 @@ public record NewColorRequest(
         @Pattern(regexp = "^[^\\s]+(\\s[^\\s]+)*$", message = "LA DESCRIPCIÓN NO TIENE QUE HABER ESPACIOS DOBLES NI ESPACIO AL INICIO NI AL FINAL, NI PUEDE ESTAR VACÍO")
         String descripcion
 ) {
-        public NewColorRequest{
-               if(descripcion==null){
-                       descripcion=nombre;
+        public NewColorRequest {
+               if (descripcion == null) {
+                       descripcion = nombre;
                }
         }
 }

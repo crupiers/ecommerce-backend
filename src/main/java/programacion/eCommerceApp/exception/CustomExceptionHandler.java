@@ -42,9 +42,10 @@ public class CustomExceptionHandler {
         //creamos un objeto "FieldError" que guarda un campo de error, es decir, un error concreto
         //con "getBindingResult().getFieldErrors()" recibo una lista de "FieldError"
         //así itero el "for" por cada campo de error de la excepcion
-        for (FieldError fieldError : ex.getBindingResult().getFieldErrors())
+        for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
             //agrego el mensaje del campo de error a mi lista que cree
             errors.add(fieldError.getDefaultMessage());
+        }
 
         //una vez tengo los errores, creo la salida con el metodo pertinente de esta clase
         Map<String, Object> body = this.buildBadRequestResponseBody(HttpStatus.BAD_REQUEST, errors, request);

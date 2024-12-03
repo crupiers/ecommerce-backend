@@ -18,7 +18,7 @@ public class CategoriaService implements ICategoriaService {
 
     @Autowired
     private ICategoriaRepository modelRepository;
-    private static final String mensajeIdNoEncontrado="NO SE ENCONTRÓ LA CATEGORÍA CON ID: ";
+    private static final String mensajeIdNoEncontrado = "NO SE ENCONTRÓ LA CATEGORÍA CON ID: ";
 
     @Override
     public List<CategoriaResponse> listar() {
@@ -29,8 +29,8 @@ public class CategoriaService implements ICategoriaService {
     @Override
     public ResponseEntity<CategoriaResponse> buscarPorId(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
-        if(model == null || model.getEstado() == Categoria.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+        if (model == null || model.getEstado() == Categoria.ELIMINADO) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
         }
         CategoriaResponse categoriaResponse = CategoriaMapper.toCategoriaResponse(model);
         return ResponseEntity.ok(categoriaResponse);
@@ -43,12 +43,14 @@ public class CategoriaService implements ICategoriaService {
 
         if (categoriaOptional.isPresent()) {
             Categoria categoriaExistente = categoriaOptional.get();
-            if(categoriaExistente.getEstado() == Categoria.ELIMINADO){
+            if (categoriaExistente.getEstado() == Categoria.ELIMINADO) {
                 categoriaExistente.recuperar();
                 categoriaExistente.setNombre(model.getNombre());
                 categoriaExistente.setDescripcion((model.getDescripcion()));
-                return CategoriaMapper.toCategoriaResponse(modelRepository.save(categoriaExistente));
-            }else{
+                return CategoriaMapper
+                        .toCategoriaResponse(modelRepository
+                                .save(categoriaExistente));
+            } else {
                 throw new IllegalArgumentException("NO SE PUDO CREAR, ESA CATEGORÍA YA EXISTE");
             }
         }
@@ -61,23 +63,25 @@ public class CategoriaService implements ICategoriaService {
         Categoria model = CategoriaMapper.toEntity(newCategoriaRequest);
         Optional<Categoria> categoriaOptional = modelRepository.findById(id); //busco en base al id de la ruta
 
-        if (categoriaOptional.isPresent()){
-            if(categoriaOptional.get().getEstado()==Categoria.ELIMINADO){
-                throw new IllegalArgumentException("LA CATEGORÍA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADA");
+        if (categoriaOptional.isPresent()) {
+            if (categoriaOptional.get().getEstado() == Categoria.ELIMINADO) {
+                throw new IllegalArgumentException("LA CATEGORÍA CON ID '" + id
+                        + "' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADA");
             }
             Categoria categoria = categoriaOptional.get();
             categoria.setNombre(model.getNombre());
             categoria.setDescripcion(model.getDescripcion());
             return CategoriaMapper.toCategoriaResponse(modelRepository.save(categoria));
         }
-            throw new IllegalArgumentException("LA CATEGORÍA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
+            throw new IllegalArgumentException("LA CATEGORÍA CON ID '" + id
+                    + "' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
 
     @Override
     public ResponseEntity<Void> eliminar(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
         if (model == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
         }
         model.eliminar();
         modelRepository.save(model);
@@ -88,7 +92,7 @@ public class CategoriaService implements ICategoriaService {
     public ResponseEntity<Void> recuperar(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
         if (model == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
         }
         model.recuperar();
         modelRepository.save(model);

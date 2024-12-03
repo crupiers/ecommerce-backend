@@ -74,6 +74,7 @@ public class Producto {
         this.setEstado(ELIMINADO);
         this.setDeletedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));
     }
-    public void recuperar() { this.setEstado(COMUN); }
-
+    public void recuperar() {
+        this.setEstado(COMUN);
+    }
 }

@@ -5,4 +5,6 @@ public record MarcaResponse(
         String nombre,
         String descripcion,
         int estado
-) {}
+) {
+
+}

@@ -5,9 +5,9 @@ import programacion.eCommerceApp.controller.response.CategoriaResponse;
 import programacion.eCommerceApp.model.Categoria;
 
 public class CategoriaMapper {
-    
+
     public static CategoriaResponse toCategoriaResponse(Categoria model) {
-        return new CategoriaResponse(model.getId(), model.getNombre(), model.getDescripcion(), model.getEstado() );
+        return new CategoriaResponse(model.getId(), model.getNombre(), model.getDescripcion(), model.getEstado());
     }
 
     public static Categoria toEntity(NewCategoriaRequest newCategoriaRequest) {

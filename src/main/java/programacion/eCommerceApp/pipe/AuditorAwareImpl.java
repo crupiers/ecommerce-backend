@@ -15,8 +15,9 @@ public class AuditorAwareImpl implements AuditorAware<String> {
         Optional<Authentication> authentication = Optional
             .ofNullable(SecurityContextHolder.getContext().getAuthentication());
 
-        if (authentication.isEmpty())
+        if (authentication.isEmpty()) {
             return Optional.of("Desconocido");
+        }
 
         return Optional.of(authentication.get().getName());
     }

@@ -36,17 +36,19 @@ public class AuthService implements IAuthService {
         Optional<Usuario> usuarioOptional = usuarioRepository.findByNombre(newLoginRequest.nombre());
 
         if (usuarioOptional.isPresent() && usuarioOptional.get().getEstado() == Usuario.ELIMINADO) {
-            throw new IllegalArgumentException("EL USUARIO '"+usuarioOptional.get().getNombre()+"' ESTÁ ELIMINADO");
+            throw new IllegalArgumentException("EL USUARIO '" + usuarioOptional.get().getNombre() + "' ESTÁ ELIMINADO");
         }
 
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(newLoginRequest.nombre(),newLoginRequest.contrasenia()));
-        UserDetails userDetails = usuarioRepository.findByNombre(newLoginRequest.nombre()).orElseThrow();
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(newLoginRequest.nombre(), newLoginRequest.contrasenia()));
+        UserDetails userDetails = usuarioRepository
+                .findByNombre(newLoginRequest.nombre()).orElseThrow();
         String jwt = jwtService.getToken(userDetails);
         return UsuarioMapper.toAuthResponse(jwt);
     }
 
     public AuthResponse register(NewRegisterRequest newRegisterRequest) {
-        Usuario usuario = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
+        Usuario usuario = UsuarioMapper
+                .toEntity(newRegisterRequest, passwordEncoder);
         usuario.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));
         usuarioRepository.save(usuario);
 
@@ -59,17 +61,21 @@ public class AuthService implements IAuthService {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
 
         if (usuarioOptional.isEmpty()) {
-            throw new IllegalArgumentException("EL USUARIO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
+            throw new IllegalArgumentException("EL USUARIO CON ID '" + id
+                    + "' QUE SE QUIERE ACTUALIZAR NO EXISTE");
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (!Objects.equals(authentication.getName(), usuarioOptional.get().getNombre())) {
-            throw new IllegalArgumentException("EL USUARIO '"+authentication.getName()+"' ESTÁ INTENTANDO ACTUALIZAR UN USUARIO DE ID '"+id+"' QUE NO ES EL SUYO");
+            throw new IllegalArgumentException("EL USUARIO '" + authentication.getName()
+                    + "' ESTÁ INTENTANDO ACTUALIZAR UN USUARIO DE ID '" + id
+                    + "' QUE NO ES EL SUYO");
         }
 
         if (usuarioOptional.get().getEstado() == Usuario.ELIMINADO) {
-            throw new IllegalArgumentException("EL USUARIO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
+            throw new IllegalArgumentException("EL USUARIO CON ID '" + id +
+                    "' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
         }
 
         Usuario usuario = usuarioOptional.get();
@@ -84,17 +90,21 @@ public class AuthService implements IAuthService {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
 
         if (usuarioOptional.isEmpty()) {
-            throw new IllegalArgumentException("EL USUARIO '"+id+"' NO EXISTE Y NO PUEDE SER BORRADO");
+            throw new IllegalArgumentException("EL USUARIO '" + id
+                    + "' NO EXISTE Y NO PUEDE SER BORRADO");
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (!Objects.equals(authentication.getName(), usuarioOptional.get().getNombre())) {
-            throw new IllegalArgumentException("EL USUARIO '"+authentication.getName()+"' ESTÁ INTENTANDO ELIMINAR UN USUARIO DE ID '"+id+"' QUE NO ES EL SUYO");
+            throw new IllegalArgumentException("EL USUARIO '" + authentication.getName()
+                    + "' ESTÁ INTENTANDO ELIMINAR UN USUARIO DE ID '" + id
+                    + "' QUE NO ES EL SUYO");
         }
 
         if (usuarioOptional.get().getEstado() == Usuario.ELIMINADO) {
-            throw new IllegalArgumentException("EL USUARIO CON ID '"+id+"' YA ESTÁ ELIMINADO");
+            throw new IllegalArgumentException("EL USUARIO CON ID '" + id +
+                    "' YA ESTÁ ELIMINADO");
         }
 
         Usuario usuario = usuarioOptional.get();

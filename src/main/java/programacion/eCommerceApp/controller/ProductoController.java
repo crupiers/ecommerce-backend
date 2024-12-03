@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ecommerce")
-@CrossOrigin(value=" http://localhost:8080")
+@CrossOrigin(value = " http://localhost:8080")
 
 public class ProductoController {
 
@@ -19,17 +19,17 @@ public class ProductoController {
     private IProductoService service;
 
     @PostMapping("/productos")
-    public ProductoResponse crear(@RequestBody @Valid NewProductoRequest newProductoRequest){
+    public ProductoResponse crear(@RequestBody @Valid NewProductoRequest newProductoRequest) {
         return service.crear(newProductoRequest);
     }
 
     @PutMapping("/productos/actualizar/{id}")
-    public ProductoResponse actualizar(@RequestBody @Valid NewProductoRequest newProductoRequest , Integer id){
-        return service.actualizar(newProductoRequest , id);
+    public ProductoResponse actualizar(@RequestBody @Valid NewProductoRequest newProductoRequest , Integer id) {
+        return service.actualizar(newProductoRequest, id);
     }
 
     @GetMapping("/productos")
-    public List<ProductoResponse> listar(){
+    public List<ProductoResponse> listar() {
         return service.listar();
     }
 
@@ -39,13 +39,13 @@ public class ProductoController {
     }
 
     @DeleteMapping("/productos/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Integer id){
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
         return service.eliminar(id);
     }
 
     @PutMapping("/productos/recuperar/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
-       return service.recuperar(id);
+        return service.recuperar(id);
     }
 
 }

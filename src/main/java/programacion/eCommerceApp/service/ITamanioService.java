@@ -8,8 +8,8 @@ import java.util.List;
 public interface ITamanioService {
     TamanioResponse crear(NewTamanioRequest newTamanioRequest);
     List<TamanioResponse> listar();
-    ResponseEntity<TamanioResponse> buscarPorId (Integer id);
-    ResponseEntity<Void> eliminar (Integer id);
-    ResponseEntity<Void> recuperar (Integer id);
+    ResponseEntity<TamanioResponse> buscarPorId(Integer id);
+    ResponseEntity<Void> eliminar(Integer id);
+    ResponseEntity<Void> recuperar(Integer id);
     TamanioResponse actualizar(NewTamanioRequest newTamanioRequest, Integer id);
 }

@@ -6,7 +6,7 @@ import programacion.eCommerceApp.model.*;
 
 public class ProductoMapper {
 
-    public static ProductoResponse toProductoResponse(Producto producto){
+    public static ProductoResponse toProductoResponse(Producto producto) {
         return new ProductoResponse(
                 producto.getId(),
                 producto.getNombre(),

@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ecommerce")
-@CrossOrigin(value=" http://localhost:8080")
+@CrossOrigin(value = " http://localhost:8080")
 
 public class MarcaController {
 
@@ -24,17 +24,17 @@ public class MarcaController {
     }
 
     @GetMapping("/marcas/{id}")
-    public ResponseEntity<MarcaResponse> buscarPorId(@PathVariable Integer id){
+    public ResponseEntity<MarcaResponse> buscarPorId(@PathVariable Integer id) {
         return service.buscarPorId(id);
     }
-    
+
     @PostMapping("/marcas")
-    public MarcaResponse crear(@RequestBody @Valid NewMarcaRequest newMarcaRequest){
+    public MarcaResponse crear(@RequestBody @Valid NewMarcaRequest newMarcaRequest) {
         return service.crear(newMarcaRequest);
     }
 
     @PutMapping("/marcas/actualizar/{id}")
-    public MarcaResponse actualizar(@RequestBody @Valid NewMarcaRequest newMarcaRequest, @PathVariable Integer id){
+    public MarcaResponse actualizar(@RequestBody @Valid NewMarcaRequest newMarcaRequest, @PathVariable Integer id) {
         return service.actualizar(newMarcaRequest, id);
     }
 
