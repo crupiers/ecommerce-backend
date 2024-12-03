@@ -3,7 +3,6 @@ package programacion.eCommerceApp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.controller.request.NewDetallePedidoRequest;
@@ -24,7 +23,7 @@ public class DetallePedidoService implements IDetallePedidoService {
     @Autowired
     private IDetallePedidoRepository detallePedidoRepository;
     @Autowired
-    private JavaMailSender mailSender;
+    private EmailService emailService;
 
     public DetallePedidoResponse crear(NewDetallePedidoRequest newDetallePedidoRequest) {
 
@@ -40,11 +39,11 @@ public class DetallePedidoService implements IDetallePedidoService {
         producto.setStock(producto.getStock() - detallePedido.getCantidad());
 
         if (detallePedido.getProducto().getStock() < detallePedido.getProducto().getUmbral()){
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo("moranofrancisco1234@gmail.com");
-            message.setSubject("Alerta de Stock Bajo");
-            message.setText("El producto " + producto.getNombre() + " tiene un stock bajo de " + producto.getStock() + " unidades.");
-            mailSender.send(message);
+            emailService.sendEmail(
+                "moranofrancisco1234@gmail.com",
+                "Alerta de stock bajo para producto '" + producto.getNombre() + "'",
+                "El stock del producto '" + producto.getNombre() + "' ha alcanzado las '" + producto.getStock() + "' unidades, debajo de su umbral definido de '" + producto.getUmbral() + "'."
+                );
         }
 
         return DetallePedidoMapper.toDetallePedidoResponse(detallePedidoRepository.save(detallePedido));

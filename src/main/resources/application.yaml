@@ -4,20 +4,20 @@ spring:
     username: ${DB_ROOT_USER:root}
     password: ${DB_ROOT_PASSWORD:admin}
     driver-class-name: com.mysql.cj.jdbc.Driver
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ecommerceCrupiers@gmail.com
-    password: ecommerceCrupiers123
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
   main:
     banner-mode: off
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ecommerceCrupiers@gmail.com
+    password: wmll tkvu lzho pima
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
