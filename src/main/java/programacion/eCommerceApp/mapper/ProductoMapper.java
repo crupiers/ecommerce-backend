@@ -28,6 +28,7 @@ public class ProductoMapper {
                 .categoria(categoria) // Entidad Categoria
                 .marca(marca) // Entidad Marca
                 .precio(newProductoRequest.precio())
+                .umbral(newProductoRequest.umbral())
                 .stock(newProductoRequest.stock())
                 .codigoBarra(newProductoRequest.codigoBarra())
                 .estado(0) // Estado por defecto, ajusta si es necesario
