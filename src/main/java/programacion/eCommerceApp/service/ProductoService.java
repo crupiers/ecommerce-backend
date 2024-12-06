@@ -59,6 +59,26 @@ public class ProductoService implements IProductoService{
         Marca marca = marcaRepository.findById(newProductoRequest.marcaId())
                 .orElseThrow(() -> new IllegalArgumentException("Marca no encontrada con ID: " + newProductoRequest.marcaId()));
 
+        if (newProductoRequest.stock() < 0) {
+            throw new IllegalArgumentException("El stock no puede ser negativo");
+        }
+
+        if (newProductoRequest.precio() < 0) {
+            throw new IllegalArgumentException("El precio no puede ser negativo");
+        }
+
+        if (newProductoRequest.codigoBarra() < 0) {
+            throw new IllegalArgumentException("El código de barra no puede ser negativo");
+        }
+
+        if (newProductoRequest.umbral() < 0) {
+            throw new IllegalArgumentException("El umbral no puede ser negativo");
+        }
+
+        if (newProductoRequest.stock() <= newProductoRequest.umbral()) {
+            throw new IllegalArgumentException("El stock no puede ser menor o igual al umbral");
+        }
+
         Producto model = ProductoMapper.toEntity(newProductoRequest, color, tamanio, categoria, marca);
 
         Optional<Producto> productoOptional = modelRepository.findByNombre(newProductoRequest.nombre());
@@ -70,6 +90,7 @@ public class ProductoService implements IProductoService{
                 productoExistente.setNombre(model.getNombre());
                 productoExistente.setDescripcion(model.getDescripcion());
                 productoExistente.setStock(model.getStock());
+                productoExistente.setUmbral(model.getUmbral());
                 productoExistente.setCodigoBarra(model.getCodigoBarra());
                 productoExistente.setPrecio(model.getPrecio());
                 productoExistente.setColor(model.getColor());
@@ -110,6 +131,7 @@ public class ProductoService implements IProductoService{
             productoExistente.setNombre(model.getNombre());
             productoExistente.setDescripcion(model.getDescripcion());
             productoExistente.setStock(model.getStock());
+            productoExistente.setUmbral(model.getUmbral());
             productoExistente.setCodigoBarra(model.getCodigoBarra());
             productoExistente.setPrecio(model.getPrecio());
             productoExistente.setColor(model.getColor());

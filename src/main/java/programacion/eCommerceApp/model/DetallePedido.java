@@ -1,58 +1,41 @@
 package programacion.eCommerceApp.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Entity
-@Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Producto {
+@Data
+@Entity
+@Builder
+public class DetallePedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique = true, nullable = false)
-    @Size(min = 2, max = 64)
-    private String nombre;
-    @Column(nullable = false)
-    private String descripcion;
-    @Column(nullable = false)
-    private Integer stock;
-    @Column(nullable = false)
-    private Integer codigoBarra;
-    @Column(nullable = false)
-    private Double precio;
-    @Column(nullable = false)
-    private Integer umbral;
 
-    @Column(nullable = false)
+    private Integer cantidad;
+
     @Builder.Default
-    private int estado = 0;
-
-    public static final int COMUN = 0;
-    public static final int ELIMINADO = 1;
+    private double subtotal = 0;
 
     @ManyToOne
-    @JoinColumn(name = "idColor")
-    private Color color;
-    @ManyToOne
-    @JoinColumn(name = "idTamanio")
-    private Tamanio tamanio;
-    @ManyToOne
-    @JoinColumn(name = "idCategoria")
-    private Categoria categoria;
-    @ManyToOne
-    @JoinColumn(name = "idMarca")
-    private Marca marca;
+    @JoinColumn(name = "idProducto")
+    private Producto producto;
+
+    public double calcularSubtotal() {
+        return producto.getPrecio() * cantidad;
+    }
 
     @Column(name = "created_by")
     @CreatedBy
@@ -72,6 +55,12 @@ public class Producto {
 
     @Column(name = "deleted_at", nullable = true)
     private String deletedAt;
+
+    @Builder.Default
+    private int estado = 0;
+
+    public static final int COMUN = 0;
+    public static final int ELIMINADO = 1;
 
     public void eliminar() {
         this.setEstado(ELIMINADO);

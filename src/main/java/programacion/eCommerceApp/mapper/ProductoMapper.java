@@ -12,6 +12,7 @@ public class ProductoMapper {
                 producto.getNombre(),
                 producto.getDescripcion(),
                 producto.getPrecio(),
+                producto.getUmbral(),
                 producto.getStock(),
                 producto.getCategoria().getNombre(),
                 producto.getMarca().getNombre(),
@@ -27,6 +28,7 @@ public class ProductoMapper {
                 .categoria(categoria) // Entidad Categoria
                 .marca(marca) // Entidad Marca
                 .precio(newProductoRequest.precio())
+                .umbral(newProductoRequest.umbral())
                 .stock(newProductoRequest.stock())
                 .codigoBarra(newProductoRequest.codigoBarra())
                 .estado(0) // Estado por defecto, ajusta si es necesario

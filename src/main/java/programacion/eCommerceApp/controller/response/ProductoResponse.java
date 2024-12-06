@@ -5,6 +5,7 @@ public record ProductoResponse(
         String nombre,
         String descripcion,
         Double precio,
+        Integer umbral,
         Integer stock,
         String nombreCategoria,
         String nombreMarca,

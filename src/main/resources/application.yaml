@@ -10,3 +10,14 @@ spring:
     show-sql: true
   main:
     banner-mode: off
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ecommerceCrupiers@gmail.com
+    password: wmll tkvu lzho pima
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
