@@ -10,6 +10,10 @@ public record ProductoResponse(
         String nombreMarca,
         String nombreTamanio,
         String nombreColor,
-        Integer codigoBarra
-) {
+        Integer codigoBarra,
+        String motivo
+){
+
 }
+
+

@@ -17,7 +17,8 @@ public class ProductoMapper {
                 producto.getMarca().getNombre(),
                 producto.getTamanio().getNombre(),
                 producto.getColor().getNombre(),
-                producto.getCodigoBarra());
+                producto.getCodigoBarra(),
+                producto.getMotivo());
     }
     public static Producto toEntity(NewProductoRequest newProductoRequest, Color color, Tamanio tamanio, Categoria categoria, Marca marca) {
         return Producto.builder()
@@ -31,6 +32,7 @@ public class ProductoMapper {
                 .codigoBarra(newProductoRequest.codigoBarra())
                 .estado(0) // Estado por defecto, ajusta si es necesario
                 .descripcion((newProductoRequest.descripcion()))
+                .motivo("-") //por defecto, sin motivo
                 .build();
     }
 }

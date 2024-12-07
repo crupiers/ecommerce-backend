@@ -38,6 +38,9 @@ public class Producto {
     public static final int COMUN = 0;
     public static final int ELIMINADO = 1;
 
+    @Column(nullable = false)
+    private String motivo;
+
     @ManyToOne
     @JoinColumn(name = "idColor")
     private Color color;

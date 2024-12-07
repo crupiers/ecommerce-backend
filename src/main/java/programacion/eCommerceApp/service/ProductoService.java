@@ -123,6 +123,20 @@ public class ProductoService implements IProductoService{
     }
 
     @Override
+    public ProductoResponse actualizarStock(Integer id, String motivo, Integer cantidad){
+        Producto producto = modelRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Producto"+ id+ "no encontrado"));
+
+        if(producto.getEstado() == Producto.ELIMINADO){
+            throw new IllegalArgumentException("El producto con id"+id+"esta eliminado");
+        }
+        producto.setStock(cantidad);
+        producto.setMotivo(motivo);
+
+        Producto productoActualizadoStock = modelRepository.save(producto);
+        return ProductoMapper.toProductoResponse(productoActualizadoStock);
+    }
+
+    @Override
     public ResponseEntity<Void> eliminar(Integer id){
         Producto model = modelRepository.findById(id).orElse(null);
         if (model == null){
