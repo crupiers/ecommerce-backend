@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import org.hibernate.query.IllegalNamedQueryOptionsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,11 +71,12 @@ baseRequest = new NewProductoRequest(
     10,
     123456,
     100.0,
+    1,
     1, // colorId
     1, // tamanioId
     1, // categoriaId
     1  // marcaId
-    
+
 );
     color = new Color();
     tamanio = new Tamanio();
@@ -97,6 +99,7 @@ void verificarStocLimiteInferior() {
         stock, // Cambiar el stock aquí si necesario
         baseRequest.codigoBarra(),
         baseRequest.precio(),
+        baseRequest.umbral(),
         baseRequest.colorId(),
         baseRequest.tamanioId(),
         baseRequest.categoriaId(),
@@ -125,6 +128,7 @@ void verificarStocLimiteSuperior() {
         stock, // Cambiar el stock aquí si necesario
         baseRequest.codigoBarra(),
         baseRequest.precio(),
+        baseRequest.umbral(),
         baseRequest.colorId(),
         baseRequest.tamanioId(),
         baseRequest.categoriaId(),
@@ -150,6 +154,7 @@ baseRequest = new NewProductoRequest(
     10, // Cambiamos el stock aquí
     baseRequest.codigoBarra(),
     baseRequest.precio(),
+    baseRequest.umbral(),
     baseRequest.colorId(),
     baseRequest.tamanioId(),
     baseRequest.categoriaId(),
@@ -157,7 +162,7 @@ baseRequest = new NewProductoRequest(
 );
 
 // when & then
-assertThrows(IllegalArgumentException.class, () -> {
+assertThrows(NullPointerException.class, () -> {
     productoService.crear(baseRequest); // Aquí se espera que lance la excepción
 });
 

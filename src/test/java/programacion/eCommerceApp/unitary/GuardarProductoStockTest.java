@@ -64,6 +64,7 @@ void setUp() {
         10,
         123456,
         100.0,
+        10, // umbral
         1, // colorId
         1, // tamanioId
         1, // categoriaId
@@ -96,12 +97,14 @@ void verificarStockPermitido() {
 @Test
 void verificarStockInvalido() {
     // given
+    Integer stock = -1;
     baseRequest = new NewProductoRequest(
         baseRequest.nombre(),
         baseRequest.descripcion(),
-        -1, // Cambiamos el stock aquí
+        stock,
         baseRequest.codigoBarra(),
         baseRequest.precio(),
+        baseRequest.umbral(),
         baseRequest.colorId(),
         baseRequest.tamanioId(),
         baseRequest.categoriaId(),
@@ -114,7 +117,7 @@ void verificarStockInvalido() {
     });
 
     // Verificar el mensaje de la excepción
-    // assertEquals("El stock no puede ser negativo", exception.getMessage());
+    assertEquals("El stock no puede ser negativo", exception.getMessage());
 
     // Verificar que el repositorio nunca intentó guardar el producto
     verify(productoRepository, never()).save(any());
