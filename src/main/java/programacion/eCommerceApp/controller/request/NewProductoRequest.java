@@ -40,11 +40,6 @@ public record NewProductoRequest(
 
         @NotNull
         //@Pattern(regexp = "^[0-9]+$", message = "SE DEBE INGRESAR UN NÚMERO ENTERO, NO TIENE QUE HABER ESPACIOS")
-        Integer marcaId,
+        Integer marcaId
 
-        @NotNull
-        String motivo,
-
-        @NotNull
-        Integer cantidad
 ) {}

@@ -12,5 +12,4 @@ public interface IProductoService {
     ResponseEntity<ProductoResponse> buscarPorId (Integer id);
     ResponseEntity<Void> eliminar (Integer id);
     ResponseEntity<Void> recuperar (Integer id);
-    ProductoResponse actualizarStock (Integer id, String motivo, Integer cantidad);
 }

@@ -21,26 +21,13 @@ public class ProductoController {
     private IProductoService service;
 
     @PostMapping("/productos")
-    public ProductoResponse crear(@RequestBody @Valid NewProductoRequest newProductoRequest){
+    public ProductoResponse crear(@RequestBody @Valid NewProductoRequest newProductoRequest) {
         return service.crear(newProductoRequest);
     }
 
     @PutMapping("/productos/actualizar/{id}")
-    public ProductoResponse actualizar(@RequestBody @Valid NewProductoRequest newProductoRequest , Integer id){
-        return service.actualizar(newProductoRequest , id);
-    }
-
-    @PutMapping("/productos/actualizarStock/{id}")
-    public ProductoResponse actualizarStock(@PathVariable Integer id, @RequestBody Map<String, Object> params) {
-        // Extraer los valores del Map
-        String motivo = (String) params.get("motivo");
-        Integer cantidad = (Integer) params.get("cantidad");
-
-        if (motivo == null || cantidad == null) {
-            throw new IllegalArgumentException("El motivo y la cantidad son obligatorios.");
-        }
-
-        return service.actualizarStock(id, motivo, cantidad);
+    public ProductoResponse actualizar(@RequestBody @Valid NewProductoRequest newProductoRequest, Integer id) {
+        return service.actualizar(newProductoRequest, id);
     }
 
     @GetMapping("/productos")
