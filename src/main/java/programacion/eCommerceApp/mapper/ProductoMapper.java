@@ -16,8 +16,9 @@ public class ProductoMapper {
                         mov.getId(),
                         mov.getCantidad(),
                         mov.getMotivo(),
-                        mov.getTipoMovimiento()
-                ))
+                        mov.getTipoMovimiento(),
+                        mov.getFechaPedido(),
+                        mov.getHoraPedido()))
                 .collect(Collectors.toList());
         return new ProductoResponse(
                 producto.getId(),

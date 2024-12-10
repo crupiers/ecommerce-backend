@@ -10,7 +10,9 @@ public class MovimientoStockMapper {
                 movimientoStock.getId(),
                 movimientoStock.getCantidad(),
                 movimientoStock.getMotivo(),
-                movimientoStock.getTipoMovimiento());
+                movimientoStock.getTipoMovimiento(),
+                movimientoStock.getFechaPedido(),
+                movimientoStock.getHoraPedido());
     }
     public static MovimientoStock toEntity(NewMovimientoStockRequest newMovimientoStockRequest){
         return MovimientoStock.builder()
