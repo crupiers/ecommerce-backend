@@ -10,7 +10,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import org.hibernate.query.IllegalNamedQueryOptionsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +33,9 @@ import programacion.eCommerceApp.repository.IMarcaRepository;
 import programacion.eCommerceApp.repository.IProductoRepository;
 import programacion.eCommerceApp.repository.ITamanioRepository;
 import programacion.eCommerceApp.service.ProductoService;
-
+/*Esta clase verifica que cuando se cree un producto con stock entre el limite inferior y superior, el stock se guarde correctamente.
+y que no se guarde el producto cuando está fuera de los límites. Lanza un IllegalArgumentException.
+*/
 @ExtendWith(MockitoExtension.class) //para que funcione la inyección de dependencias.
 public class ControlStockTest {
 
@@ -59,11 +60,12 @@ private NewProductoRequest baseRequest;
     private Categoria categoria;
     private Marca marca;
 
-    private Integer limiteInferior = 0;
-    private Integer limiteSuperior = 1000000;
+    private Integer stockLimiteInferior = 1;
+    private Integer stockLimiteSuperior = 1000000;
+    private Integer umbral = 0;
 
 @BeforeEach
-void setUp() {
+public void setUp() {
 
 baseRequest = new NewProductoRequest(
     "Producto de prueba",
@@ -71,7 +73,7 @@ baseRequest = new NewProductoRequest(
     10,
     123456,
     100.0,
-    1,
+    umbral,
     1, // colorId
     1, // tamanioId
     1, // categoriaId
@@ -87,16 +89,48 @@ baseRequest = new NewProductoRequest(
     when(tamanioRepository.findById(baseRequest.tamanioId())).thenReturn(Optional.of(tamanio));
     when(categoriaRepository.findById(baseRequest.categoriaId())).thenReturn(Optional.of(categoria));
     when(marcaRepository.findById(baseRequest.marcaId())).thenReturn(Optional.of(marca));
+
+
 }
 @Test
-void verificarStocLimiteInferior() {
-    // given
-    Integer stock = 0;
+public void verificarStocLimiteInferior() {
+      // given
+      Integer stock = stockLimiteInferior;
 
     baseRequest = new NewProductoRequest(
         baseRequest.nombre(),
         baseRequest.descripcion(),
-        stock, // Cambiar el stock aquí si necesario
+        stock, // Limite inferior
+        baseRequest.codigoBarra(),
+        baseRequest.precio(),
+        baseRequest.umbral(),
+        baseRequest.colorId(),
+        baseRequest.tamanioId(),
+        baseRequest.categoriaId(),
+        baseRequest.marcaId()
+    );
+    
+    Producto productoEsperado = ProductoMapper.toEntity(baseRequest, color, tamanio, categoria, marca);
+    when(productoRepository.save(any())).thenReturn(productoEsperado);
+    // when
+    
+    ProductoResponse response = productoService.crear(baseRequest);
+
+    // then
+    
+    assertTrue(response.stock() >= stockLimiteInferior && response.stock() <= stockLimiteSuperior,
+     "El stock debe estar entre " + stockLimiteInferior + "y " + stockLimiteSuperior);
+    verify(productoRepository, times(1)).save(any());
+}
+@Test
+public void verificarStocLimiteSuperior() {
+    // given
+    Integer stock = stockLimiteSuperior;
+
+    baseRequest = new NewProductoRequest(
+        baseRequest.nombre(),
+        baseRequest.descripcion(),
+        stock,
         baseRequest.codigoBarra(),
         baseRequest.precio(),
         baseRequest.umbral(),
@@ -113,45 +147,19 @@ void verificarStocLimiteInferior() {
     ProductoResponse response = productoService.crear(baseRequest);
 
     // then
-    
-    assertTrue(response.stock() >= limiteInferior && response.stock() <= limiteSuperior, "El stock debe estar entre 0 y 1000");
+    assertTrue(response.stock() >= stockLimiteInferior && response.stock() <= stockLimiteSuperior,
+     "El stock debe estar entre " + stockLimiteInferior + "y " + stockLimiteSuperior);
     verify(productoRepository, times(1)).save(any());
+    
 }
 @Test
-void verificarStocLimiteSuperior() {
-    // given
-    Integer stock = 1000000;
-
-    baseRequest = new NewProductoRequest(
-        baseRequest.nombre(),
-        baseRequest.descripcion(),
-        stock, // Cambiar el stock aquí si necesario
-        baseRequest.codigoBarra(),
-        baseRequest.precio(),
-        baseRequest.umbral(),
-        baseRequest.colorId(),
-        baseRequest.tamanioId(),
-        baseRequest.categoriaId(),
-        baseRequest.marcaId()
-    );
-    
-    Producto productoEsperado = ProductoMapper.toEntity(baseRequest, color, tamanio, categoria, marca);
-    
-    // when
-    when(productoRepository.save(any())).thenReturn(productoEsperado);
-    ProductoResponse response = productoService.crear(baseRequest);
-
-    // then
-    assertTrue(response.stock() >= limiteInferior && response.stock() <= limiteSuperior, "El stock debe estar entre 0 y 1000");
-    verify(productoRepository, times(1)).save(any());
-}
-@Test
-void verificarStockInvalido() {
+public void verificarStockInvalidoInferiorMinimo() {
 // given
+    Integer stock = stockLimiteInferior - 1;
 baseRequest = new NewProductoRequest(
     baseRequest.nombre(),
     baseRequest.descripcion(),
-    10, // Cambiamos el stock aquí
+    stock, 
     baseRequest.codigoBarra(),
     baseRequest.precio(),
     baseRequest.umbral(),
@@ -159,18 +167,40 @@ baseRequest = new NewProductoRequest(
     baseRequest.tamanioId(),
     baseRequest.categoriaId(),
     baseRequest.marcaId()
-);
-
-// when & then
-assertThrows(NullPointerException.class, () -> {
-    productoService.crear(baseRequest); // Aquí se espera que lance la excepción
-});
-
-// Verificar el mensaje de la excepción
-// assertEquals("El stock no puede ser negativo", exception.getMessage());
+);     
+    // when & then
+    assertThrows(IllegalArgumentException.class, () -> {
+                productoService.crear(baseRequest); // Aquí se espera que lance la excepción
+    },          "El stock debe estar entre 1 y 1000")
+    ;
 
 // Verificar que el repositorio nunca intentó guardar el producto
-// verify(productoRepository, never()).save(any());
+    verify(productoRepository, never()).save(any());
 }
+@Test
+public void verificarStockInvalidoSuperiorMaximo() {
+// given
+Integer stock = stockLimiteSuperior + 1;
 
+baseRequest = new NewProductoRequest(
+    baseRequest.nombre(),
+    baseRequest.descripcion(),
+    stock,
+    baseRequest.codigoBarra(),
+    baseRequest.precio(),
+    baseRequest.umbral(),
+    baseRequest.colorId(),
+    baseRequest.tamanioId(),
+    baseRequest.categoriaId(),
+    baseRequest.marcaId()
+);     
+// when & then
+assertThrows(IllegalArgumentException.class, () -> {
+            productoService.crear(baseRequest); // Aquí se espera que lance la excepción
+},          "El stock debe estar entre 0 y 1000")
+;
+
+// Verificar que el repositorio nunca intentó guardar el producto
+    verify(productoRepository, never()).save(any());
+}
 }

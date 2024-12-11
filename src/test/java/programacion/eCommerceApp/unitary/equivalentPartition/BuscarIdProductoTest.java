@@ -1,4 +1,4 @@
-package programacion.eCommerceApp.unitary.limitValues;
+package programacion.eCommerceApp.unitary.equivalentPartition;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
 import programacion.eCommerceApp.controller.response.ProductoResponse;
+import programacion.eCommerceApp.mapper.ProductoMapper;
 import programacion.eCommerceApp.model.Categoria;
 import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.model.Marca;
@@ -25,10 +26,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
+/*
+ Esta clase verifica que cuando se busque un producto por su id, se encuentre y no sea nulo.
+ */
 @ExtendWith(MockitoExtension.class)
-public class BuscarIdPorductoTest {
+public class BuscarIdProductoTest {
 
 @Mock
 private IProductoRepository productoRepository;
@@ -59,21 +62,49 @@ void setUp() {
 }
 
 @Test
-void testBuscarPorId() {
+void testBuscarPorIdEncontradoyNoNull() {
+    // given
+    Integer idPrueba = 1;
+    
 
-    
-    // given BDDMockito
     given(productoRepository.findById(idPrueba)).willReturn(Optional.of(productoMock));
-    ProductoResponse productoResponse = new ProductoResponse(idPrueba, "Producto", "No", 10.0, 1, "Categoria", "h", "a", "a", 121321);
-    
+    ProductoResponse productoResponse = ProductoMapper.toProductoResponse(productoMock);
+
     // when
-    when(productoService.buscarPorId(idPrueba)).thenReturn(ResponseEntity.ok(productoResponse));
     ResponseEntity<ProductoResponse> responseEntity = productoService.buscarPorId(idPrueba);
-    ProductoResponse productoBuscado = responseEntity.getBody();
+
     // then
+    ProductoResponse productoBuscado = responseEntity.getBody();
     assertNotNull(productoBuscado);
-    assertEquals(productoMock.getNombre(), productoBuscado.nombre());
-    assertEquals(productoMock.getPrecio(), productoBuscado.precio());
+
+    assertAll("producto",
+        () -> assertEquals(productoResponse.id(), productoBuscado.id()),
+        () -> assertEquals(productoResponse.nombre(), productoBuscado.nombre()),
+        () -> assertEquals(productoResponse.descripcion(), productoBuscado.descripcion()),
+        () -> assertEquals(productoResponse.precio(), productoBuscado.precio()),
+        () -> assertEquals(productoResponse.umbral(), productoBuscado.umbral()),
+        () -> assertEquals(productoResponse.stock(), productoBuscado.stock()),
+        () -> assertEquals(productoResponse.nombreCategoria(), productoBuscado.nombreCategoria()),
+        () -> assertEquals(productoResponse.nombreMarca(), productoBuscado.nombreMarca()),
+        () -> assertEquals(productoResponse.nombreTamanio(), productoBuscado.nombreTamanio()),
+        () -> assertEquals(productoResponse.nombreColor(), productoBuscado.nombreColor()),
+        () -> assertEquals(productoResponse.codigoBarra(), productoBuscado.codigoBarra())
+    );
+
+    verify(productoRepository, times(1)).findById(idPrueba);
+}
+
+@Test
+void testBuscarPorIdEncontradoEliminado() {
+    // given
+    Integer idPrueba = 1;
+    productoMock.setEstado(Producto.ELIMINADO);
+    given(productoRepository.findById(idPrueba)).willReturn(Optional.of(productoMock));
+
+    // when & then
+    assertThrows(ResponseStatusException.class, () -> {
+        productoService.buscarPorId(idPrueba);
+    });
 
     verify(productoRepository, times(1)).findById(idPrueba);
 }

@@ -22,7 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
+/*esta clase verifica que cuando se cree una marca nueva, se guarde correctamente y que no se guarde si ya existe. 
+Lanza una IllegalArgumentException.
+*/
 @ExtendWith(MockitoExtension.class)
 public class GuardarMarcaEstadoTest {
 
@@ -40,7 +42,7 @@ public class GuardarMarcaEstadoTest {
     @Test
     void testCrearMarcaNueva() {
         //given
-        NewMarcaRequest request = new NewMarcaRequest("Marca Nueva", "Observaciones");
+        NewMarcaRequest request = new NewMarcaRequest("Marca Nueva", "descripcion");
         Marca marca = MarcaMapper.toEntity(request);
         //when
         when(marcaRepository.save(marca)).thenReturn(marca);
@@ -56,7 +58,7 @@ public class GuardarMarcaEstadoTest {
 
     @Test
     void testCrearMarcaExistenteNoEliminada() {
-        NewMarcaRequest request = new NewMarcaRequest("Marca Existente", "Observaciones");
+        NewMarcaRequest request = new NewMarcaRequest("Marca Existente", "descripcion");
         Marca marcaExistente = MarcaMapper.toEntity(request);
         marcaExistente.setEstado(Marca.COMUN);
 
@@ -73,7 +75,7 @@ public class GuardarMarcaEstadoTest {
 
     @Test
     void testCrearMarcaExistenteEliminada() {
-        NewMarcaRequest request = new NewMarcaRequest("Marca Eliminada", "Observaciones");
+        NewMarcaRequest request = new NewMarcaRequest("Marca Eliminada", "descripcion");
         Marca marcaExistente = MarcaMapper.toEntity(request);
         marcaExistente.setEstado(Marca.ELIMINADO);
 
