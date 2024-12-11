@@ -38,19 +38,22 @@ public class AuthService implements IAuthService {
         if (usuarioOptional.isPresent() && usuarioOptional.get().getEstado() == Usuario.ELIMINADO) {
             throw new IllegalArgumentException("EL USUARIO '"+usuarioOptional.get().getNombre()+"' ESTÁ ELIMINADO");
         }
-
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(newLoginRequest.nombre(),newLoginRequest.contrasenia()));
-        UserDetails userDetails = usuarioRepository.findByNombre(newLoginRequest.nombre()).orElseThrow();
+        UserDetails userDetails = usuarioRepository.findByNombre(newLoginRequest.nombre()).orElseThrow(
+            () -> new IllegalArgumentException("EL USUARIO '"+newLoginRequest.nombre()+"' NO EXISTE")
+        );
         String jwt = jwtService.getToken(userDetails);
-        return UsuarioMapper.toAuthResponse(jwt);
+
+        Usuario usuario = usuarioOptional.get();
+        return UsuarioMapper.toAuthResponse(usuario, jwt);
     }
 
     public AuthResponse register(NewRegisterRequest newRegisterRequest) {
         Usuario usuario = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
         usuario.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));
         usuarioRepository.save(usuario);
-
-        return UsuarioMapper.toAuthResponse(jwtService.getToken(usuario));
+        String jwt = jwtService.getToken(usuario);
+        return UsuarioMapper.toAuthResponse(usuario, jwt);
     }
 
     public AuthResponse actualizar(NewRegisterRequest newRegisterRequest, Integer id) {
@@ -68,6 +71,10 @@ public class AuthService implements IAuthService {
             throw new IllegalArgumentException("EL USUARIO '"+authentication.getName()+"' ESTÁ INTENTANDO ACTUALIZAR UN USUARIO DE ID '"+id+"' QUE NO ES EL SUYO");
         }
 
+        if (usuarioRepository.findByNombre(newRegisterRequest.nombre()).isPresent()) {
+            throw new IllegalArgumentException("EL NOMBRE DE USUARIO '"+newRegisterRequest.nombre()+"' YA EXISTE");
+        }
+
         if (usuarioOptional.get().getEstado() == Usuario.ELIMINADO) {
             throw new IllegalArgumentException("EL USUARIO CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR ESTÁ ELIMINADO");
         }
@@ -76,8 +83,8 @@ public class AuthService implements IAuthService {
         usuario.setNombre(model.getNombre());
         usuario.setContrasenia(model.getContrasenia());
         usuarioRepository.save(usuario);
-
-        return UsuarioMapper.toAuthResponse(jwtService.getToken(usuario));
+        String jwt = jwtService.getToken(usuario);
+        return UsuarioMapper.toAuthResponse(usuario, jwt);
     }
 
     public void eliminar(Integer id) {
@@ -102,4 +109,25 @@ public class AuthService implements IAuthService {
         usuarioRepository.save(usuario);
     }
 
+    public AuthResponse buscarPorId(Integer id) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
+
+        if (usuarioOptional.isEmpty()) {
+            throw new IllegalArgumentException("EL USUARIO CON ID '"+id+"' NO EXISTE");
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!Objects.equals(authentication.getName(), usuarioOptional.get().getNombre())) {
+            throw new IllegalArgumentException("EL USUARIO '"+authentication.getName()+"' ESTÁ INTENTANDO BUSCAR UN USUARIO DE ID '"+id+"' QUE NO ES EL SUYO");
+        }
+
+        if (usuarioOptional.get().getEstado() == Usuario.ELIMINADO) {
+            throw new IllegalArgumentException("EL USUARIO CON ID '" + id + "' ESTÁ ELIMINADO");
+        }
+
+        String jwt = jwtService.getToken(usuarioOptional.get());
+        Usuario usuario = usuarioOptional.get();
+        return UsuarioMapper.toAuthResponse(usuario, jwt);
+    }
 }

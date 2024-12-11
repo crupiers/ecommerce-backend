@@ -19,8 +19,8 @@ public class UsuarioMapper {
             .build();
     }
 
-    public static AuthResponse toAuthResponse(String jwt) {
-        return new AuthResponse(jwt);
+    public static AuthResponse toAuthResponse(Usuario usuario, String jwt) {
+        return new AuthResponse(jwt, usuario.getId(), usuario.getNombre(), usuario.getContrasenia(), usuario.getRol().name(), usuario.getEstado());
     }
 
 }

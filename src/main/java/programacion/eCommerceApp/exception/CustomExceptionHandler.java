@@ -32,6 +32,12 @@ public class CustomExceptionHandler {
         return body;
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgumentException(IllegalArgumentException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 
     //declaro un metodo especifico para una excepcion especifica
     @ExceptionHandler(MethodArgumentNotValidException.class)

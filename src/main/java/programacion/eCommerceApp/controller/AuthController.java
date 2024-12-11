@@ -37,4 +37,9 @@ public class AuthController {
         service.eliminar(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/usuarios/{id}")
+    public ResponseEntity<AuthResponse> buscarPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.buscarPorId(id));
+    }
 }
