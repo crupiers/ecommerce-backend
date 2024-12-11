@@ -1,6 +1,5 @@
 package programacion.eCommerceApp.mapper;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import programacion.eCommerceApp.controller.request.NewRegisterRequest;
 import programacion.eCommerceApp.controller.response.AuthResponse;
@@ -15,7 +14,7 @@ public class UsuarioMapper {
         return Usuario.builder()
             .nombre(newRegisterRequest.nombre())
             .contrasenia(passwordEncoder.encode(newRegisterRequest.contrasenia()))
-            .rol(Rol.USER)
+            .rol(Rol.ROLE_USER)
             .build();
     }
 

@@ -1,6 +1,6 @@
 package programacion.eCommerceApp.model;
 
 public enum Rol {
-    ADMIN,
-    USER
+    ROLE_ADMIN,
+    ROLE_USER
 }

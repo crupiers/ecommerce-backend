@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import programacion.eCommerceApp.controller.request.NewMarcaRequest;
 import programacion.eCommerceApp.controller.response.MarcaResponse;
+import programacion.eCommerceApp.model.Marca;
 import programacion.eCommerceApp.service.IMarcaService;
 import java.util.List;
 
@@ -18,9 +19,14 @@ public class MarcaController {
     @Autowired
     private IMarcaService service;
 
-    @GetMapping({"/marcas"})
+    @GetMapping("/marcas")
     public List<MarcaResponse> listar() {
         return service.listar();
+    }
+
+    @GetMapping("/admin/marcas/auditoria")
+    public List<MarcaResponse> listarParaAuditoria() {
+        return service.listarParaAuditoria();
     }
 
     @GetMapping("/marcas/{id}")

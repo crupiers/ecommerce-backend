@@ -29,6 +29,11 @@ public class TamanioController {
         return service.listar();
     }
 
+    @GetMapping("/admin/tamanios/auditoria")
+    public List<TamanioResponse> listarParaAuditoria() {
+        return service.listarParaAuditoria();
+    }
+
     @GetMapping("/tamanios/{id}")
     public ResponseEntity<TamanioResponse> buscarPorId(@PathVariable Integer id) {
         return service.buscarPorId(id);

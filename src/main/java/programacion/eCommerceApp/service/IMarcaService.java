@@ -12,4 +12,5 @@ public interface IMarcaService {
     ResponseEntity<Void> eliminar(Integer id);
     ResponseEntity<Void> recuperar(Integer id);
     MarcaResponse actualizar(NewMarcaRequest newMarcaRequest, Integer id);
+    List<MarcaResponse> listarParaAuditoria();
 }

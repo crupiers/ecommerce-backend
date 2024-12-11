@@ -6,8 +6,18 @@ import programacion.eCommerceApp.model.Categoria;
 
 public class CategoriaMapper {
     
-    public static CategoriaResponse toCategoriaResponse(Categoria model) {
-        return new CategoriaResponse(model.getId(), model.getNombre(), model.getDescripcion(), model.getEstado() );
+    public static CategoriaResponse toCategoriaResponse(Categoria categoria) {
+        return new CategoriaResponse(
+            categoria.getId(),
+            categoria.getNombre(),
+            categoria.getDescripcion(),
+            categoria.getEstado(),
+            categoria.getCreatedBy(),
+            categoria.getCreatedAt(),
+            categoria.getUpdatedBy(),
+            categoria.getUpdatedAt(),
+            categoria.getDeletedAt()
+        );
     }
 
     public static Categoria toEntity(NewCategoriaRequest newCategoriaRequest) {

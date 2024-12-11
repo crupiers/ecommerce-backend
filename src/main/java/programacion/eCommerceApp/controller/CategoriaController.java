@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import programacion.eCommerceApp.controller.request.NewCategoriaRequest;
 import programacion.eCommerceApp.controller.response.CategoriaResponse;
 import programacion.eCommerceApp.service.ICategoriaService;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/ecommerce")
-@CrossOrigin(value=" http://localhost:8080")
+@CrossOrigin(value = " http://localhost:8080")
 
 public class CategoriaController {
 
@@ -24,20 +25,25 @@ public class CategoriaController {
         return service.listar();
     }
 
+    @GetMapping("/admin/categorias/auditoria")
+    public List<CategoriaResponse> listarParaAuditoria() {
+        return service.listarParaAuditoria();
+    }
+
     @GetMapping("/categorias/{id}")
-    public ResponseEntity<CategoriaResponse> buscarPorId(@PathVariable Integer id){
+    public ResponseEntity<CategoriaResponse> buscarPorId(@PathVariable Integer id) {
         return service.buscarPorId(id);
     }
 
     @PostMapping("/categorias")
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoriaResponse crear(@RequestBody @Valid NewCategoriaRequest newCategoriaRequest){
+    public CategoriaResponse crear(@RequestBody @Valid NewCategoriaRequest newCategoriaRequest) {
         return service.crear(newCategoriaRequest);
     }
 
     @PutMapping("/categorias/actualizar/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoriaResponse actualizar(@RequestBody @Valid NewCategoriaRequest newCategoriaRequest, @PathVariable Integer id){
+    public CategoriaResponse actualizar(@RequestBody @Valid NewCategoriaRequest newCategoriaRequest, @PathVariable Integer id) {
         return service.actualizar(newCategoriaRequest, id);
     }
 

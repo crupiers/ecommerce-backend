@@ -12,4 +12,5 @@ public interface ITamanioService {
     ResponseEntity<Void> eliminar (Integer id);
     ResponseEntity<Void> recuperar (Integer id);
     TamanioResponse actualizar(NewTamanioRequest newTamanioRequest, Integer id);
+    List<TamanioResponse> listarParaAuditoria();
 }

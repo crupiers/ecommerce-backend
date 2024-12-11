@@ -10,6 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import programacion.eCommerceApp.jwt.JwtAuthenticationFilter;
+import programacion.eCommerceApp.model.Rol;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +28,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authRequest ->
                 authRequest
                     .requestMatchers("/ecommerce/auth/**").permitAll()
+                    .requestMatchers("/ecommerce/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
             )
             .sessionManagement(sessionManager ->

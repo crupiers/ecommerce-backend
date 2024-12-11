@@ -26,7 +26,7 @@ public class ColorController {
         return service.listar();
     }
 
-    @GetMapping("/colores/auditoria")
+    @GetMapping("/admin/colores/auditoria")
     public List<ColorResponse> listarParaAuditoria(){ return service.listarParaAuditoria();}
 
     @GetMapping("/colores/{id}")
