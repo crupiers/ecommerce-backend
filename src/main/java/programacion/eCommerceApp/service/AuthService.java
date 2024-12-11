@@ -46,6 +46,9 @@ public class AuthService implements IAuthService {
     }
 
     public AuthResponse register(NewRegisterRequest newRegisterRequest) {
+        if (newRegisterRequest.contrasenia().length() < 8 || newRegisterRequest.contrasenia().length() > 64) {
+            throw new IllegalArgumentException("La contraseña debe tener entre 8 y 64 caracteres");
+        }
         Usuario usuario = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
         usuario.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));
         usuarioRepository.save(usuario);
@@ -54,7 +57,9 @@ public class AuthService implements IAuthService {
     }
 
     public AuthResponse actualizar(NewRegisterRequest newRegisterRequest, Integer id) {
-
+        if (newRegisterRequest.contrasenia().length() < 8 || newRegisterRequest.contrasenia().length() > 64) {
+            throw new IllegalArgumentException("La contraseña debe tener entre 8 y 64 caracteres");
+        }
         Usuario model = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
 
