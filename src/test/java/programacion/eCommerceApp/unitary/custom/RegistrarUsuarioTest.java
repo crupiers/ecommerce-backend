@@ -1,4 +1,4 @@
-package programacion.eCommerceApp.unitary.equivalentPartition;
+package programacion.eCommerceApp.unitary.custom;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
-@ExtendWith
+@ExtendWith(MockitoExtension.class)
 class AuthServiceTest {
 
     @InjectMocks

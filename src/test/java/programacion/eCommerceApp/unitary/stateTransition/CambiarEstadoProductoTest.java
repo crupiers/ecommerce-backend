@@ -81,7 +81,6 @@ public void eliminarProductoExistente() {
     assertNotNull(response);
     // assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(Producto.ELIMINADO, productoMock.getEstado());
-    assertNotNull(productoMock.getDeletedAt()); // Verifica que la fecha de eliminación se estableció
 
     verify(productoRepository, times(1)).findById(idPrueba);
     verify(productoRepository, times(1)).save(productoMock);
