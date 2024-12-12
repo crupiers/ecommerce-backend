@@ -1,7 +1,8 @@
 package programacion.eCommerceApp.unitary.stateTransition;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,31 +10,34 @@ import static org.mockito.BDDMockito.given;
 
 import java.util.Optional;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.junit.MockitoJUnitRunner;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
-import programacion.eCommerceApp.controller.response.ProductoResponse;
-import programacion.eCommerceApp.mapper.ProductoMapper;
 import programacion.eCommerceApp.model.Categoria;
 import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.model.Marca;
 import programacion.eCommerceApp.model.Producto;
 import programacion.eCommerceApp.model.Tamanio;
-import programacion.eCommerceApp.repository.ICategoriaRepository;
-import programacion.eCommerceApp.repository.IColorRepository;
-import programacion.eCommerceApp.repository.IMarcaRepository;
 import programacion.eCommerceApp.repository.IProductoRepository;
-import programacion.eCommerceApp.repository.ITamanioRepository;
 import programacion.eCommerceApp.service.ProductoService;
-
-@ExtendWith(MockitoExtension.class)
+/*
+ * Se prueba:
+ * - Eliminar un producto existente
+ * - Eliminar un producto no existente
+ * - Eliminar un producto eliminado
+ * - Recuperar un producto eliminado
+ * - Recuperar un producto no existente
+ * - Recuperar un producto no eliminado
+ */
+@RunWith(MockitoJUnitRunner.class)
 public class CambiarEstadoProductoTest {
 
 @Mock
@@ -45,8 +49,8 @@ private ProductoService productoService;
 private Integer idPrueba;
 private Producto productoMock;
 
-@BeforeEach
-void setUp() {
+@Before
+public void setUp() {
     MockitoAnnotations.openMocks(this);
     idPrueba = 2;
     productoMock = Producto.builder()
@@ -65,26 +69,43 @@ void setUp() {
 }
 
 @Test
-public void testBuscarPorIdEncontradoyNoNull() {
+public void eliminarProductoExistente() {
     // given
-    Integer idPrueba = 1;
-    
+    when(productoRepository.findById(idPrueba)).thenReturn(Optional.of(productoMock));
     when(productoRepository.save(productoMock)).thenReturn(productoMock);
-    given(productoRepository.findById(idPrueba)).willReturn(Optional.of(productoMock));
-    ProductoResponse productoResponse = ProductoMapper.toProductoResponse(productoMock);
 
     // when
-    ResponseEntity<ProductoResponse> responseEntity = productoService.buscarPorId(idPrueba);
+    ResponseEntity<Void> response = productoService.eliminar(productoMock.getId());
 
     // then
-    ProductoResponse productoBuscado = responseEntity.getBody();
-    
+    assertNotNull(response);
+    // assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(Producto.ELIMINADO, productoMock.getEstado());
+    assertNotNull(productoMock.getDeletedAt()); // Verifica que la fecha de eliminación se estableció
 
     verify(productoRepository, times(1)).findById(idPrueba);
+    verify(productoRepository, times(1)).save(productoMock);
+}
+@Test
+public void testEliminarProductoNoExistente() {
+    // given
+    when(productoRepository.findById(idPrueba)).thenReturn(Optional.empty());
+
+    // when
+    assertThrows(ResponseStatusException.class, () -> productoService.eliminar(idPrueba));
+}
+@Test
+public void testEliminarProductoEliminado() {
+    // given
+    productoMock.setEstado(Producto.ELIMINADO);
+    when(productoRepository.findById(idPrueba)).thenReturn(Optional.of(productoMock));
+
+    // when
+    assertThrows(ResponseStatusException.class, () -> productoService.eliminar(idPrueba));
 }
 
 @Test
-public void testRecuperarProducto() {
+public void testRecuperarProductoEliminado() {
     // given
     Integer idPrueba = 2;
     productoMock.setEstado(Producto.ELIMINADO);
@@ -98,5 +119,22 @@ public void testRecuperarProducto() {
     assertEquals(Producto.COMUN, productoMock.getEstado());
     verify(productoRepository, times(1)).findById(idPrueba);
     verify(productoRepository, times(1)).save(productoMock);
+}
+@Test
+public void testRecuperarProductoNoExistente() {
+    // given
+    when(productoRepository.findById(idPrueba)).thenReturn(Optional.empty());
+
+    // when
+    assertThrows(ResponseStatusException.class, () -> productoService.recuperar(idPrueba));
+}
+
+@Test
+public void testRecuperarProductoNoEliminado() {
+    // given
+    when(productoRepository.findById(idPrueba)).thenReturn(Optional.of(productoMock));
+
+    // when
+    assertThrows(ResponseStatusException.class, () -> productoService.recuperar(idPrueba));
 }
 }

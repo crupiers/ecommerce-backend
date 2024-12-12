@@ -147,7 +147,7 @@ public class ProductoService implements IProductoService{
     @Override
     public ResponseEntity<Void> eliminar(Integer id){
         Producto model = modelRepository.findById(id).orElse(null);
-        if (model == null){
+        if (model == null || model.getEstado() == Producto.ELIMINADO) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         model.setEstado(Producto.ELIMINADO);
@@ -158,7 +158,7 @@ public class ProductoService implements IProductoService{
     @Override
     public ResponseEntity<Void> recuperar(Integer id){
         Producto model = modelRepository.findById(id).orElse(null);
-        if(model == null){
+        if(model == null || model.getEstado() == Producto.COMUN){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         model.recuperar();

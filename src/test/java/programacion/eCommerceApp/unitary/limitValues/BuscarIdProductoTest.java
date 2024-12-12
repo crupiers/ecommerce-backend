@@ -1,5 +1,11 @@
 package programacion.eCommerceApp.unitary.limitValues;
 
+/* Este código prueba el comportamiento del servicio ProductoService 
+al buscar un producto por su ID. 
+Utiliza Mockito para simular el repositorio de productos y verifica 
+que el servicio se comporte correctamente 
+tanto cuando se encuentra un producto como cuando no se encuentra.
+*/ 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +31,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class BuscarIdProductoTest {
@@ -60,16 +65,13 @@ void setUp() {
 
 @Test
 public void testBuscarPorId() {
-
-    
     // given BDDMockito
     given(productoRepository.findById(idPrueba)).willReturn(Optional.of(productoMock));
-    ProductoResponse productoResponse = new ProductoResponse(idPrueba, "Producto", "No", 10.0, 1, idPrueba, "Categoria", "h", "a", "a", 121321);
     
     // when
-    when(productoService.buscarPorId(idPrueba)).thenReturn(ResponseEntity.ok(productoResponse));
     ResponseEntity<ProductoResponse> responseEntity = productoService.buscarPorId(idPrueba);
     ProductoResponse productoBuscado = responseEntity.getBody();
+    
     // then
     assertNotNull(productoBuscado);
     assertEquals(productoMock.getNombre(), productoBuscado.nombre());
@@ -81,7 +83,6 @@ public void testBuscarPorId() {
 @Test
 public void testBuscarPorIdNoEncontrado() {
     // given BDDMockito
-    int idPrueba = 2;
     given(productoRepository.findById(idPrueba)).willReturn(Optional.empty());
 
     // when & then

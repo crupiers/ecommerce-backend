@@ -95,7 +95,7 @@ void verificarStockPermitido() {
 
 
 @Test
-public void verificarStockInvalido() {
+void verificarStockInvalido() {
     // given
     Integer stock = -1;
     baseRequest = new NewProductoRequest(
