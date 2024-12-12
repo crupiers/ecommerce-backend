@@ -3,79 +3,72 @@ package programacion.eCommerceApp.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import programacion.eCommerceApp.controller.request.NewRegisterRequest;
 import programacion.eCommerceApp.controller.response.AuthResponse;
-import programacion.eCommerceApp.mapper.UsuarioMapper;
 import programacion.eCommerceApp.model.Usuario;
 import programacion.eCommerceApp.repository.IUsuarioRepository;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class AuthServiceTest {
 
-    @Mock
-    private IUsuarioRepository usuarioRepository;
-    @Mock
-    private JwtService jwtService;
-    @Mock
-    private AuthenticationManager authenticationManager;
-    @InjectMocks
     private AuthService authService;
-
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private IUsuarioRepository usuarioRepository;
+    private JwtService jwtService;
+    private AuthenticationManager authenticationManager;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        usuarioRepository = mock(IUsuarioRepository.class);
+        jwtService = mock(JwtService.class);
+        authenticationManager = mock(AuthenticationManager.class);
+        authService = new AuthService();
+        authService.usuarioRepository = usuarioRepository;
+        authService.jwtService = jwtService;
+        authService.authenticationManager = authenticationManager;
     }
 
     @Test
-    void testRegister() {
-        NewRegisterRequest newRegisterRequest = new NewRegisterRequest("testUser", "testPassword");
-        Usuario usuario = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
-        usuario.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));
+    void testRegister_Success() {
+        NewRegisterRequest request = new NewRegisterRequest("newUser", "Password123");
+        when(usuarioRepository.findByNombre(request.nombre())).thenReturn(Optional.empty());
+        when(jwtService.getToken(any(Usuario.class))).thenReturn("jwtToken");
 
-        when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
-        when(jwtService.getToken(any(Usuario.class))).thenReturn("testToken");
-
-        AuthResponse response = authService.register(newRegisterRequest);
+        AuthResponse response = authService.register(request);
 
         assertNotNull(response);
-        assertEquals("testToken", response.token());
+        assertEquals("newUser", response.getNombre());
+        assertEquals("jwtToken", response.getToken());
         verify(usuarioRepository, times(1)).save(any(Usuario.class));
-        verify(jwtService, times(1)).getToken(any(Usuario.class));
     }
 
     @Test
-    void testRegisterWithShortPassword() {
-        NewRegisterRequest newRegisterRequest = new NewRegisterRequest("testUser", "short");
+    void testRegister_UsernameAlreadyExists() {
+        NewRegisterRequest request = new NewRegisterRequest("existingUser", "Password123");
+        when(usuarioRepository.findByNombre(request.nombre())).thenReturn(Optional.of(new Usuario()));
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            authService.register(newRegisterRequest);
+            authService.register(request);
         });
 
-        assertEquals("La contraseña debe tener entre 8 y 64 caracteres", exception.getMessage());
+        assertEquals("EL NOMBRE DE USUARIO 'existingUser' YA EXISTE", exception.getMessage());
     }
 
     @Test
-    void testRegisterWithLongPassword() {
-        String longPassword = "a".repeat(65);
-        NewRegisterRequest newRegisterRequest = new NewRegisterRequest("testUser", longPassword);
+    void testRegister_InvalidPassword() {
+        NewRegisterRequest request = new NewRegisterRequest("newUser", "pass");
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            authService.register(newRegisterRequest);
+            authService.register(request);
         });
 
-        assertEquals("La contraseña debe tener entre 8 y 64 caracteres", exception.getMessage());
+        assertEquals("La contraseña del usuario debe tener al menos una mayúscula, una minúscula, un número y no debe tener espacios", exception.getMessage());
     }
 }

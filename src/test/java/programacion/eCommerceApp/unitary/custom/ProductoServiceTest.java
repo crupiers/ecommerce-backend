@@ -1,5 +1,5 @@
 
-package programacion.eCommerceApp.service;
+package programacion.eCommerceApp.unitary.custom;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 import programacion.eCommerceApp.model.Producto;
 import programacion.eCommerceApp.repository.IProductoRepository;
+import programacion.eCommerceApp.service.ProductoService;
 
 import java.util.Optional;
 
