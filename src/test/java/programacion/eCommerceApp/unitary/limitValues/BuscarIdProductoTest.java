@@ -1,40 +1,39 @@
-package programacion.eCommerceApp.unitary.stateTransition;
+package programacion.eCommerceApp.unitary.limitValues;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.BDDMockito.given;
-
-import java.util.Optional;
-import org.junit.Test;
+/* Este código prueba el comportamiento del servicio ProductoService 
+al buscar un producto por su ID. 
+Utiliza Mockito para simular el repositorio de productos y verifica 
+que el servicio se comporte correctamente 
+tanto cuando se encuentra un producto como cuando no se encuentra.
+*/ 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
 import programacion.eCommerceApp.controller.response.ProductoResponse;
-import programacion.eCommerceApp.mapper.ProductoMapper;
 import programacion.eCommerceApp.model.Categoria;
 import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.model.Marca;
 import programacion.eCommerceApp.model.Producto;
 import programacion.eCommerceApp.model.Tamanio;
-import programacion.eCommerceApp.repository.ICategoriaRepository;
-import programacion.eCommerceApp.repository.IColorRepository;
-import programacion.eCommerceApp.repository.IMarcaRepository;
 import programacion.eCommerceApp.repository.IProductoRepository;
-import programacion.eCommerceApp.repository.ITamanioRepository;
 import programacion.eCommerceApp.service.ProductoService;
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 @ExtendWith(MockitoExtension.class)
-public class BuscarIdProductoTest {
+class BuscarIdProductoTest {
 
 @Mock
 private IProductoRepository productoRepository;
@@ -65,38 +64,32 @@ void setUp() {
 }
 
 @Test
-public void testBuscarPorIdEncontradoyNoNull() {
-    // given
-    Integer idPrueba = 1;
-    
-    when(productoRepository.save(productoMock)).thenReturn(productoMock);
+public void testBuscarPorId() {
+    // given BDDMockito
     given(productoRepository.findById(idPrueba)).willReturn(Optional.of(productoMock));
-    ProductoResponse productoResponse = ProductoMapper.toProductoResponse(productoMock);
-
+    
     // when
     ResponseEntity<ProductoResponse> responseEntity = productoService.buscarPorId(idPrueba);
-
-    // then
     ProductoResponse productoBuscado = responseEntity.getBody();
     
+    // then
+    assertNotNull(productoBuscado);
+    assertEquals(productoMock.getNombre(), productoBuscado.nombre());
+    assertEquals(productoMock.getPrecio(), productoBuscado.precio());
 
     verify(productoRepository, times(1)).findById(idPrueba);
 }
 
 @Test
-public void testRecuperarProducto() {
-    // given
-    Integer idPrueba = 2;
-    productoMock.setEstado(Producto.ELIMINADO);
-    given(productoRepository.findById(idPrueba)).willReturn(Optional.of(productoMock));
+public void testBuscarPorIdNoEncontrado() {
+    // given BDDMockito
+    given(productoRepository.findById(idPrueba)).willReturn(Optional.empty());
 
-    // when
-    ResponseEntity<Void> responseEntity = productoService.recuperar(idPrueba);
-
-    // then
-    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    assertEquals(Producto.COMUN, productoMock.getEstado());
+    // when & then
+    assertThrows(ResponseStatusException.class, () -> {
+        productoService.buscarPorId(idPrueba);
+    });
     verify(productoRepository, times(1)).findById(idPrueba);
-    verify(productoRepository, times(1)).save(productoMock);
 }
+
 }
