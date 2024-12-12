@@ -13,4 +13,5 @@ public interface ICategoriaService {
     CategoriaResponse actualizar(NewCategoriaRequest newCategoriaRequest, Integer id);
     ResponseEntity<Void> eliminar(Integer id);
     ResponseEntity<Void> recuperar(Integer id);
+    List<CategoriaResponse> listarParaAuditoria();
 }

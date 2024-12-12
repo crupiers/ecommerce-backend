@@ -13,4 +13,5 @@ public interface IColorService {
     ColorResponse actualizar(NewColorRequest newColorRequest, Integer id);
     ResponseEntity<Void> eliminar(Integer id);
     ResponseEntity<Void> recuperar (Integer id);
+    List<ColorResponse> listarParaAuditoria();
 }

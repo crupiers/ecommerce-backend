@@ -94,4 +94,9 @@ public class CategoriaService implements ICategoriaService {
         modelRepository.save(model);
         return ResponseEntity.ok().build(); // Respuesta vacía con estado 200 OK
     }
+
+    public List<CategoriaResponse> listarParaAuditoria() {
+        List<Categoria> categorias = modelRepository.findAll();
+        return categorias.stream().map(CategoriaMapper::toCategoriaResponse).toList();
+    }
 }

@@ -13,4 +13,6 @@ public interface IAuthService {
     AuthResponse actualizar(NewRegisterRequest newRegisterRequest, Integer id);
 
     void eliminar(Integer id);
+
+    AuthResponse buscarPorId(Integer id);
 }

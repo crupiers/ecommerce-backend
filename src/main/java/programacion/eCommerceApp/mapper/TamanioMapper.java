@@ -7,7 +7,17 @@ import programacion.eCommerceApp.model.Tamanio;
 public class TamanioMapper {
 
     public static TamanioResponse toTamanioResponse(Tamanio tamanio) {
-        return new TamanioResponse(tamanio.getId(), tamanio.getNombre(), tamanio.getDescripcion(), tamanio.getEstado());
+        return new TamanioResponse(
+            tamanio.getId(),
+            tamanio.getNombre(),
+            tamanio.getDescripcion(),
+            tamanio.getEstado(),
+            tamanio.getCreatedBy(),
+            tamanio.getCreatedAt(),
+            tamanio.getUpdatedBy(),
+            tamanio.getUpdatedAt(),
+            tamanio.getDeletedAt()
+        );
     }
 
     public static Tamanio toEntity (NewTamanioRequest newTamanioRequest) {

@@ -147,10 +147,10 @@ public class ProductoService implements IProductoService{
     @Override
     public ResponseEntity<Void> eliminar(Integer id){
         Producto model = modelRepository.findById(id).orElse(null);
-        if (model == null  || model.getEstado() == Producto.ELIMINADO) {
+        if (model == null || model.getEstado() == Producto.ELIMINADO) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
-        model.eliminar();
+        model.setEstado(Producto.ELIMINADO);
         modelRepository.save(model);
         return ResponseEntity.ok().build();
     }

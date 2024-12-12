@@ -71,6 +71,11 @@ public class MarcaService implements IMarcaService {
         throw new IllegalArgumentException("LA MARCA CON ID '"+id+"' QUE SE QUIERE ACTUALIZAR NO EXISTE");
     }
 
+    public List<MarcaResponse> listarParaAuditoria() {
+        List<Marca> marcas = modelRepository.findAll();
+        return marcas.stream().map(MarcaMapper::toMarcaResponse).toList();
+    }
+
     @Override
     public ResponseEntity<Void> eliminar(Integer id) {
         Marca model = modelRepository.findById(id).orElse(null);

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import programacion.eCommerceApp.controller.request.NewColorRequest;
 import programacion.eCommerceApp.controller.response.ColorResponse;
+import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.service.IColorService;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public class ColorController {
     public List<ColorResponse> listar(){
         return service.listar();
     }
+
+    @GetMapping("/admin/colores/auditoria")
+    public List<ColorResponse> listarParaAuditoria(){ return service.listarParaAuditoria();}
 
     @GetMapping("/colores/{id}")
     public ResponseEntity<ColorResponse> buscarPorId(@PathVariable Integer id){

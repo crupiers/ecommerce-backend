@@ -105,4 +105,9 @@ public class ColorService implements IColorService {
         modelRepository.save(model);
         return ResponseEntity.ok().build();
     }
+
+    public List<ColorResponse> listarParaAuditoria() {
+        List<Color> colores = modelRepository.findAll();
+        return colores.stream().map(ColorMapper::toColorResponse).toList();
+    }
 }

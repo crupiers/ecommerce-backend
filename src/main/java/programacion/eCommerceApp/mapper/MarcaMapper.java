@@ -6,7 +6,17 @@ import programacion.eCommerceApp.model.Marca;
 
 public class MarcaMapper {
     public static MarcaResponse toMarcaResponse(Marca marca) {
-        return new MarcaResponse(marca.getId(), marca.getNombre(), marca.getDescripcion(), marca.getEstado());
+        return new MarcaResponse(
+            marca.getId(),
+            marca.getNombre(),
+            marca.getDescripcion(),
+            marca.getEstado(),
+            marca.getCreatedBy(),
+            marca.getCreatedAt(),
+            marca.getUpdatedBy(),
+            marca.getUpdatedAt(),
+            marca.getDeletedAt()
+        );
     }
 
     public static Marca toEntity(NewMarcaRequest newMarcaRequest) {
