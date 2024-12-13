@@ -26,7 +26,6 @@ public class ProductoService implements IProductoService{
     private IMarcaRepository marcaRepository;
     @Autowired
     private ICategoriaRepository categoriaRepository;
-    private static final String mensajeIdNoEncontrado = "NO SE ENCONTRÓ EL PRODUCTO CON ID: ";
 
     @Override
     public List<ProductoResponse> listar() {
@@ -38,7 +37,7 @@ public class ProductoService implements IProductoService{
     public ResponseEntity<ProductoResponse> buscarPorId(Integer id) {
         Producto model = modelRepository.findById(id).orElse(null);
         if(model == null || model.getEstado() == Producto.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException("NO SE ENCONTRÓ EL PRODUCTO CON ID '" + id + "'");
         }
         ProductoResponse productoResponse = ProductoMapper.toProductoResponse(model);
         return ResponseEntity.ok(productoResponse);
@@ -148,7 +147,7 @@ public class ProductoService implements IProductoService{
     public ResponseEntity<Void> eliminar(Integer id){
         Producto model = modelRepository.findById(id).orElse(null);
         if (model == null || model.getEstado() == Producto.ELIMINADO) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException("NO SE ENCONTRÓ EL PRODUCTO CON ID '" + id + "'");
         }
         model.setEstado(Producto.ELIMINADO);
         modelRepository.save(model);
@@ -159,7 +158,7 @@ public class ProductoService implements IProductoService{
     public ResponseEntity<Void> recuperar(Integer id){
         Producto model = modelRepository.findById(id).orElse(null);
         if(model == null || model.getEstado() == Producto.COMUN){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException("NO SE ENCONTRÓ EL PRODUCTO CON ID '" + id + "'");
         }
         model.recuperar();
         modelRepository.save(model);
