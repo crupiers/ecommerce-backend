@@ -1,4 +1,4 @@
-package programacion.eCommerceApp.unitarios;
+package programacion.eCommerceApp.unitary.custom;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,9 +22,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
+/*esta clase verifica que cuando se cree una marca nueva, se guarde correctamente y que no se guarde si ya existe. 
+Lanza una IllegalArgumentException.
+*/
 @ExtendWith(MockitoExtension.class)
-public class GuararMarcaServiceTest {
+public class CrearMarcaEstadoTest {
 
     @Mock
     private IMarcaRepository marcaRepository;
@@ -40,7 +42,7 @@ public class GuararMarcaServiceTest {
     @Test
     void testCrearMarcaNueva() {
         //given
-        NewMarcaRequest request = new NewMarcaRequest("Marca Nueva", "Observaciones");
+        NewMarcaRequest request = new NewMarcaRequest("Marca Nueva", "descripcion");
         Marca marca = MarcaMapper.toEntity(request);
         //when
         when(marcaRepository.save(marca)).thenReturn(marca);
@@ -48,45 +50,49 @@ public class GuararMarcaServiceTest {
         MarcaResponse response = marcaService.crear(request);
         //then
         assertNotNull(response);
-        assertEquals(request.denominacion(), response.denominacion());
-        assertEquals(request.observaciones(), response.observaciones());
-        verify(marcaRepository, times(1)).findByDenominacion(marca.getDenominacion());
+        assertEquals(request.nombre(), response.nombre());
+        assertEquals(request.descripcion(), response.descripcion());
+        verify(marcaRepository, times(1)).findByNombre(marca.getNombre());
         verify(marcaRepository, times(1)).save(marca);
     }
 
     @Test
     void testCrearMarcaExistenteNoEliminada() {
-        NewMarcaRequest request = new NewMarcaRequest("Marca Existente", "Observaciones");
+        NewMarcaRequest request = new NewMarcaRequest("Marca Existente", "descripcion");
         Marca marcaExistente = MarcaMapper.toEntity(request);
         marcaExistente.setEstado(Marca.COMUN);
 
-        when(marcaRepository.findByDenominacion(marcaExistente.getDenominacion())).thenReturn(Optional.of(marcaExistente));
+        when(marcaRepository.findByNombre(marcaExistente.getNombre())).thenReturn(Optional.of(marcaExistente));
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             marcaService.crear(request);
         });
         assertNotNull(request);
         assertEquals("La marca ya existe", exception.getMessage());
-        verify(marcaRepository, times(1)).findByDenominacion(marcaExistente.getDenominacion());
+        verify(marcaRepository, times(1)).findByNombre(marcaExistente.getNombre());
         verify(marcaRepository, never()).save(any(Marca.class));
     }
 
     @Test
     void testCrearMarcaExistenteEliminada() {
-        NewMarcaRequest request = new NewMarcaRequest("Marca Eliminada", "Observaciones");
+        NewMarcaRequest request = new NewMarcaRequest("Marca Eliminada", "descripcion");
         Marca marcaExistente = MarcaMapper.toEntity(request);
         marcaExistente.setEstado(Marca.ELIMINADO);
 
-        when(marcaRepository.findByDenominacion(marcaExistente.getDenominacion())).thenReturn(Optional.of(marcaExistente));
+        when(marcaRepository.findByNombre(marcaExistente.getNombre())).thenReturn(Optional.of(marcaExistente));
         when(marcaRepository.save(marcaExistente)).thenReturn(marcaExistente);
 
         MarcaResponse response = marcaService.crear(request);
         
         assertNotNull(response, "La response de la creación de la marca no debe ser nula");
-        assertEquals(request.denominacion(), response.denominacion(), "La denominación de la marca debe ser la misma que la de la request");
-        assertEquals(request.observaciones(), response.observaciones(), "Las observaciones de la marca deben ser las mismas que las de la request");
+        assertEquals(request.nombre() + request.descripcion(), response.nombre() + request.descripcion(), "La denominación de la marca debe ser la misma que la de la request");
         assertEquals(Marca.COMUN, response.estado(), "La marca debe estar creada");
-        verify(marcaRepository, times(1)).findByDenominacion(marcaExistente.getDenominacion(),);
+        verify(marcaRepository, times(1)).findByNombre(marcaExistente.getNombre());
         verify(marcaRepository, times(1)).save(marcaExistente);
+        verify(marcaService, times(1)).recuperar(marcaExistente.getId());
+        
+        //quiero verificar que marcaService recupere la marca:
+
+        
     }
 }

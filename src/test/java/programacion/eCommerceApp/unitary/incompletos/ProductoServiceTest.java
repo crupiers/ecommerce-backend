@@ -1,5 +1,5 @@
 
-package programacion.eCommerceApp.unitary.custom;
+package programacion.eCommerceApp.unitary.incompletos;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

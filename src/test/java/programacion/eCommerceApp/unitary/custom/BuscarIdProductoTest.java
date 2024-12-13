@@ -1,5 +1,4 @@
-package programacion.eCommerceApp.unitary.equivalentPartition;
-
+package programacion.eCommerceApp.unitary.custom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

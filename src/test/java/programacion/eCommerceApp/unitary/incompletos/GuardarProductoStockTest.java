@@ -1,4 +1,4 @@
-package programacion.eCommerceApp.unitary.custom;
+package programacion.eCommerceApp.unitary.incompletos;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

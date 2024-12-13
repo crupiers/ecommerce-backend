@@ -50,10 +50,12 @@ public class AuthService implements IAuthService {
 
     public AuthResponse register(NewRegisterRequest newRegisterRequest) {
         if (usuarioRepository.findByNombre(newRegisterRequest.nombre()).isPresent()) {
-            throw new IllegalArgumentException("EL NOMBRE DE USUARIO '" + newRegisterRequest.nombre() + "' YA EXISTE");
+            throw new IllegalArgumentException
+            ("EL NOMBRE DE USUARIO '" + newRegisterRequest.nombre() + "' YA EXISTE");
         }
         if (!newRegisterRequest.contrasenia().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?!.*\\s).{8,64}$")) {
-            throw new IllegalArgumentException("La contraseña del usuario debe tener al menos una mayúscula, una minúscula, un número y no debe tener espacios");
+            throw new IllegalArgumentException
+            ("La contraseña del usuario debe tener al menos una mayúscula, una minúscula, un número y no debe tener espacios");
         }
 
         Usuario usuario = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
