@@ -26,6 +26,7 @@ public class ProductoService implements IProductoService{
     private IMarcaRepository marcaRepository;
     @Autowired
     private ICategoriaRepository categoriaRepository;
+    private static final String mensajeIdNoEncontrado = "NO SE ENCONTRÓ EL PRODUCTO CON ID: ";
 
     @Override
     public List<ProductoResponse> listar() {
@@ -37,7 +38,7 @@ public class ProductoService implements IProductoService{
     public ResponseEntity<ProductoResponse> buscarPorId(Integer id) {
         Producto model = modelRepository.findById(id).orElse(null);
         if(model == null || model.getEstado() == Producto.ELIMINADO){
-            throw new IllegalArgumentException("NO SE ENCONTRÓ EL PRODUCTO CON ID '" + id + "'");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         ProductoResponse productoResponse = ProductoMapper.toProductoResponse(model);
         return ResponseEntity.ok(productoResponse);
@@ -58,8 +59,8 @@ public class ProductoService implements IProductoService{
         Marca marca = marcaRepository.findById(newProductoRequest.marcaId())
                 .orElseThrow(() -> new IllegalArgumentException("Marca no encontrada con ID: " + newProductoRequest.marcaId()));
 
-        if (newProductoRequest.stock() < 0) {
-            throw new IllegalArgumentException("El stock no puede ser negativo");
+        if (newProductoRequest.stock() < 0 || newProductoRequest.stock() > 1000000) {
+            throw new IllegalArgumentException("El stock debe estar entre 0 y 1.000.000");
         }
 
         if (newProductoRequest.precio() < 0) {
@@ -146,10 +147,10 @@ public class ProductoService implements IProductoService{
     @Override
     public ResponseEntity<Void> eliminar(Integer id){
         Producto model = modelRepository.findById(id).orElse(null);
-        if (model == null){
-            throw new IllegalArgumentException("NO SE ENCONTRÓ EL PRODUCTO CON ID '" + id + "'");
+        if (model == null || model.getEstado() == Producto.ELIMINADO) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
-        model.eliminar();
+        model.setEstado(Producto.ELIMINADO);
         modelRepository.save(model);
         return ResponseEntity.ok().build();
     }
@@ -157,8 +158,8 @@ public class ProductoService implements IProductoService{
     @Override
     public ResponseEntity<Void> recuperar(Integer id){
         Producto model = modelRepository.findById(id).orElse(null);
-        if(model == null){
-            throw new IllegalArgumentException("NO SE ENCONTRÓ EL PRODUCTO CON ID '" + id + "'");
+        if(model == null || model.getEstado() == Producto.COMUN){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         model.recuperar();
         modelRepository.save(model);
