@@ -55,9 +55,6 @@ public class AuthService implements IAuthService {
         if (!newRegisterRequest.contrasenia().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?!.*\\s).{8,64}$")) {
             throw new IllegalArgumentException("La contraseña del usuario debe tener al menos una mayúscula, una minúscula, un número y no debe tener espacios");
         }
-        if (newRegisterRequest.contrasenia().length() < 8) {
-            throw new IllegalArgumentException("LA CONTRASEÑA DEBE TENER AL MENOS 8 CARACTERES");
-        }
 
         Usuario usuario = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
         usuario.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));

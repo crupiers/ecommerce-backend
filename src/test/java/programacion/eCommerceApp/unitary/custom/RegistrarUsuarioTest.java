@@ -1,8 +1,10 @@
 package programacion.eCommerceApp.unitary.custom;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -18,14 +20,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import programacion.eCommerceApp.model.Usuario;
-
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-@ExtendWith(MockitoExtension.class)
-class AuthServiceTest {
+@RunWith(MockitoJUnitRunner.class)
+public class RegistrarUsuarioTest {
 
     @InjectMocks
     private AuthService authService;
@@ -39,69 +42,61 @@ class AuthServiceTest {
     @Mock
     private Authentication authentication;
 
-    @BeforeEach
+    @Before
     void setUp() {
         MockitoAnnotations.openMocks(this);
         SecurityContextHolder.setContext(securityContext);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
     }
 
     @Test
-    void eliminar_usuarioNoExiste_lanzaExcepcion() {
-        // Arrange
-        Integer userId = 1;
-        when(usuarioRepository.findById(userId)).thenReturn(Optional.empty());
+    public void eliminar_usuarioNoExiste_lanzaExcepcion() {
+        Integer id = 1;
+        when(usuarioRepository.findById(id)).thenReturn(Optional.empty());
 
-        // Act & Assert
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> authService.eliminar(userId));
-        assertEquals("EL USUARIO '1' NO EXISTE Y NO PUEDE SER BORRADO", exception.getMessage());
+        assertThrows(IllegalArgumentException.class, () -> authService.eliminar(id));
     }
 
     @Test
-    void eliminar_usuarioNoAutenticado_lanzaExcepcion() {
-        // Arrange
-        Integer userId = 1;
+    public void eliminar_usuarioNoAutenticadoIntentandoEliminarOtro_lanzaExcepcion() {
+        Integer id = 1;
         Usuario usuario = new Usuario();
+        usuario.setId(id);
         usuario.setNombre("otroUsuario");
-        when(usuarioRepository.findById(userId)).thenReturn(Optional.of(usuario));
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getName()).thenReturn("usuarioActual");
+        when(usuarioRepository.findById(id)).thenReturn(Optional.of(usuario));
+        when(authentication.getName()).thenReturn("usuarioDiferente");
 
-        // Act & Assert
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> authService.eliminar(userId));
-        assertEquals("EL USUARIO 'usuarioActual' ESTÁ INTENTANDO ELIMINAR UN USUARIO DE ID '1' QUE NO ES EL SUYO", exception.getMessage());
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> authService.eliminar(id));
+        assertEquals("EL USUARIO 'usuarioDiferente' ESTÁ INTENTANDO ELIMINAR UN USUARIO DE ID '1' QUE NO ES EL SUYO", exception.getMessage());
     }
 
     @Test
-    void eliminar_usuarioYaEliminado_lanzaExcepcion() {
-        // Arrange
-        Integer userId = 1;
+    public void eliminar_usuarioYaEliminado_lanzaExcepcion() {
+        Integer id = 1;
         Usuario usuario = new Usuario();
+        usuario.setId(id);
+        usuario.setNombre("usuario");
         usuario.setEstado(Usuario.ELIMINADO);
-        when(usuarioRepository.findById(userId)).thenReturn(Optional.of(usuario));
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getName()).thenReturn("usuarioActual");
+        when(usuarioRepository.findById(id)).thenReturn(Optional.of(usuario));
+        when(authentication.getName()).thenReturn("usuario");
 
-        // Act & Assert
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> authService.eliminar(userId));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> authService.eliminar(id));
         assertEquals("EL USUARIO CON ID '1' YA ESTÁ ELIMINADO", exception.getMessage());
     }
 
     @Test
-    public void eliminar_usuarioValido_eliminaCorrectamente() {
-    // Arrange
-    Integer userId = 1;
-    Usuario usuario = mock(Usuario.class);
-    when(usuarioRepository.findById(userId)).thenReturn(Optional.of(usuario));
-    when(securityContext.getAuthentication()).thenReturn(authentication);
-    when(authentication.getName()).thenReturn("usuarioActual");
-    when(usuario.getNombre()).thenReturn("usuarioActual");
-    when(usuario.getEstado()).thenReturn(Usuario.COMUN);
+    public void eliminar_usuarioCorrecto_actualizaEstadoYGuarda() {
+        Integer id = 1;
+        Usuario usuario = new Usuario();
+        usuario.setId(id);
+        usuario.setNombre("usuario");
+        usuario.setEstado(Usuario.COMUN);
+        when(usuarioRepository.findById(id)).thenReturn(Optional.of(usuario));
+        when(authentication.getName()).thenReturn("usuario");
 
-    // Act
-    authService.eliminar(userId);
+        authService.eliminar(id);
 
-    // Assert
-    verify(usuario).eliminar();
-    verify(usuarioRepository).save(usuario);
-}
+        assertEquals(Usuario.ELIMINADO, usuario.getEstado());
+        verify(usuarioRepository).save(usuario);
+    }
 }
