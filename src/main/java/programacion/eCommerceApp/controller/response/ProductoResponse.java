@@ -1,5 +1,7 @@
 package programacion.eCommerceApp.controller.response;
 
+import java.util.List;
+
 public record ProductoResponse(
         Integer id,
         String nombre,
@@ -11,6 +13,10 @@ public record ProductoResponse(
         String nombreMarca,
         String nombreTamanio,
         String nombreColor,
-        Integer codigoBarra
-) {
+        Integer codigoBarra,
+        List<MovimientoStockResponse>movimientos
+){
+
 }
+
+

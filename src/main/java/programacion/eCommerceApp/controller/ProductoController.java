@@ -1,6 +1,7 @@
 package programacion.eCommerceApp.controller;
 
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
 import programacion.eCommerceApp.service.IProductoService;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ecommerce")
@@ -19,13 +21,13 @@ public class ProductoController {
     private IProductoService service;
 
     @PostMapping("/productos")
-    public ProductoResponse crear(@RequestBody @Valid NewProductoRequest newProductoRequest){
+    public ProductoResponse crear(@RequestBody @Valid NewProductoRequest newProductoRequest) {
         return service.crear(newProductoRequest);
     }
 
     @PutMapping("/productos/actualizar/{id}")
-    public ProductoResponse actualizar(@RequestBody @Valid NewProductoRequest newProductoRequest , Integer id){
-        return service.actualizar(newProductoRequest , id);
+    public ProductoResponse actualizar(@RequestBody @Valid NewProductoRequest newProductoRequest, Integer id) {
+        return service.actualizar(newProductoRequest, id);
     }
 
     @GetMapping("/productos")

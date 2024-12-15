@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface IProductoRepository extends JpaRepository <Producto, Integer> {
     List<Producto> findByEstado(int estado);
     Optional<Producto> findByNombre(String nombre);
+
 }
