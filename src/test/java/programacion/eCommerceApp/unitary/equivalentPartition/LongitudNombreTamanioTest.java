@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.http.MediaType;
 
-public class TamanioControllerTest {
+public class LongitudNombreTamanioTest {
     @Mock
     private ITamanioService tamanioService;
     private MockMvc mockMvc;

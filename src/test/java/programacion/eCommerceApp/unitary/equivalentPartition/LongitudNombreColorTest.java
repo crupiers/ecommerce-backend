@@ -18,9 +18,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.http.MediaType;
 
-public class ColorControllerTest {
+public class LongitudNombreColorTest {
     @Mock
-    private IColorService ColorService;
+    
     private MockMvc mockMvc;
 
     private ObjectMapper objectMapper;
