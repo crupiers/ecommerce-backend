@@ -4,6 +4,8 @@ import programacion.eCommerceApp.controller.request.NewMovimientoStockRequest;
 import programacion.eCommerceApp.controller.response.MovimientoStockResponse;
 import programacion.eCommerceApp.model.MovimientoStock;
 
+import java.util.List;
+
 public class MovimientoStockMapper {
     public static MovimientoStockResponse toMovimientoStockResponse(MovimientoStock movimientoStock){
         return new MovimientoStockResponse(
@@ -11,8 +13,10 @@ public class MovimientoStockMapper {
                 movimientoStock.getCantidad(),
                 movimientoStock.getMotivo(),
                 movimientoStock.getTipoMovimiento(),
+                movimientoStock.getCreatedBy(),
                 movimientoStock.getFechaPedido(),
-                movimientoStock.getHoraPedido());
+                movimientoStock.getHoraPedido()
+        );
     }
     public static MovimientoStock toEntity(NewMovimientoStockRequest newMovimientoStockRequest){
         return MovimientoStock.builder()
@@ -21,4 +25,5 @@ public class MovimientoStockMapper {
                 .tipoMovimiento(newMovimientoStockRequest.tipoMovimiento())
                 .build();
     }
+
 }

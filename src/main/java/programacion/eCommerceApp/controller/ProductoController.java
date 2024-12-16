@@ -35,6 +35,11 @@ public class ProductoController {
         return service.listar();
     }
 
+    @GetMapping("/admin/productos/auditoria")
+    public List<ProductoResponse> listarParaAuditoria(){
+        return service.listarParaAuditoria();
+    }
+
     @GetMapping("/productos/{id}")
     public ResponseEntity<ProductoResponse> buscarPorId(@PathVariable Integer id){
         return service.buscarPorId(id);

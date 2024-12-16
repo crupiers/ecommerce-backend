@@ -5,6 +5,7 @@ public record MovimientoStockResponse(
         Integer cantidad,
         String motivo,
         String tipoMovimiento,
+        String createdBy,
         String fechaMovimiento,
         String horaMovimiento
 ) {

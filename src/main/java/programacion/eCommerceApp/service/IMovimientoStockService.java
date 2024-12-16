@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface IMovimientoStockService {
     MovimientoStockResponse crear(Integer productoId, NewMovimientoStockRequest newMovimientoStockRequest);
+    List<MovimientoStockResponse> listarParaAuditoria();
 }

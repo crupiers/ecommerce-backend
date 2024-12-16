@@ -149,7 +149,7 @@ public class ProductoService implements IProductoService{
         if (model == null || model.getEstado() == Producto.ELIMINADO) {
             throw new IllegalArgumentException("NO SE ENCONTRÓ EL PRODUCTO CON ID '" + id + "'");
         }
-        model.setEstado(Producto.ELIMINADO);
+        model.eliminar();
         modelRepository.save(model);
         return ResponseEntity.ok().build();
     }
@@ -163,6 +163,11 @@ public class ProductoService implements IProductoService{
         model.recuperar();
         modelRepository.save(model);
         return ResponseEntity.ok().build();
+    }
+
+    public List<ProductoResponse> listarParaAuditoria() {
+        List<Producto> productos = modelRepository.findAll();
+        return productos.stream().map(ProductoMapper::toProductoResponse).toList();
     }
 
 }

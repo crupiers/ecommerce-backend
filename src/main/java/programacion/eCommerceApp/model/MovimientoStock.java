@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class MovimientoStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +36,9 @@ public class MovimientoStock {
     @JoinColumn(name = "producto_id")
     private Producto producto;
 
+    @Column(name = "created_by")
+    @CreatedBy
+    private String createdBy;
     @Builder.Default
     private String horaPedido = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
     @Builder.Default

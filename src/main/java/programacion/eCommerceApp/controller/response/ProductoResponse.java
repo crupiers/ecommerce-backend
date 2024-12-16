@@ -14,7 +14,13 @@ public record ProductoResponse(
         String nombreTamanio,
         String nombreColor,
         Integer codigoBarra,
-        List<MovimientoStockResponse>movimientos
+        List<MovimientoStockResponse>movimientos,
+        String createdBy,
+        String createdAt,
+        String updatedBy,
+        String updatedAt,
+        String deletedAt,
+        Integer estado
 ){
 
 }
