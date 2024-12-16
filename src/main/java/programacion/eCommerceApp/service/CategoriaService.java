@@ -30,7 +30,7 @@ public class CategoriaService implements ICategoriaService {
     public ResponseEntity<CategoriaResponse> buscarPorId(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
         if(model == null || model.getEstado() == Categoria.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
         }
         CategoriaResponse categoriaResponse = CategoriaMapper.toCategoriaResponse(model);
         return ResponseEntity.ok(categoriaResponse);
@@ -77,7 +77,7 @@ public class CategoriaService implements ICategoriaService {
     public ResponseEntity<Void> eliminar(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
         if (model == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
         }
         model.eliminar();
         modelRepository.save(model);
@@ -88,7 +88,7 @@ public class CategoriaService implements ICategoriaService {
     public ResponseEntity<Void> recuperar(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
         if (model == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
         }
         model.recuperar();
         modelRepository.save(model);

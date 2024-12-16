@@ -30,7 +30,7 @@ public class MarcaService implements IMarcaService {
     public ResponseEntity<MarcaResponse> buscarPorId(Integer id) {
         Marca model = modelRepository.findById(id).orElse(null);
         if(model == null || model.getEstado() == Marca.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
         }
         MarcaResponse marcaResponse = MarcaMapper.toMarcaResponse(model);
         return ResponseEntity.ok(marcaResponse);
@@ -80,7 +80,7 @@ public class MarcaService implements IMarcaService {
     public ResponseEntity<Void> eliminar(Integer id) {
         Marca model = modelRepository.findById(id).orElse(null);
         if (model == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
         }
         model.eliminar();
         modelRepository.save(model);
@@ -91,7 +91,7 @@ public class MarcaService implements IMarcaService {
     public ResponseEntity<Void> recuperar(Integer id) {
         Marca model = modelRepository.findById(id).orElse(null);
         if (model == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
         }
         model.recuperar();
         modelRepository.save(model);

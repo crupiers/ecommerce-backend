@@ -30,7 +30,7 @@ public class ColorService implements IColorService {
     public ResponseEntity<ColorResponse> buscarPorId(Integer id) {
         Color model = modelRepository.findById(id).orElse(null);
         if(model==null || model.getEstado() == Color.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
         }
         ColorResponse colorResponse = ColorMapper.toColorResponse(model);
         return ResponseEntity.ok(colorResponse);
@@ -40,7 +40,7 @@ public class ColorService implements IColorService {
     public ResponseEntity<ColorResponse> buscarPorNombre(String nombre) {
         Color model = modelRepository.findByNombre(nombre).orElse(null);
         if(model==null || model.getEstado() == Color.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ EL COLOR CON NOMBRE: "+nombre);
+            throw new IllegalArgumentException("NO SE ENCONTRÓ EL COLOR CON NOMBRE: "+nombre);
         }
         ColorResponse colorResponse = ColorMapper.toColorResponse(model);
         return ResponseEntity.ok(colorResponse);
@@ -88,7 +88,7 @@ public class ColorService implements IColorService {
     public ResponseEntity<Void> eliminar(Integer id) {
         Color model = modelRepository.findById(id).orElse(null);
         if(model==null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
         }
         model.eliminar();
         modelRepository.save(model);
@@ -99,7 +99,7 @@ public class ColorService implements IColorService {
     public ResponseEntity<Void> recuperar(Integer id) {
         Color model = modelRepository.findById(id).orElse(null);
         if(model==null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
         }
         model.recuperar();
         modelRepository.save(model);

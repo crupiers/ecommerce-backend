@@ -74,7 +74,7 @@ public class TamanioService implements ITamanioService {
         Tamanio model = modelRepository.findById(id).orElse(null);
         //uso la constante "ELIMINADO" para comparar y no el valor
         if (model == null || model.getEstado() == Tamanio.ELIMINADO) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado + id);
         }
         TamanioResponse tamanioResponse = TamanioMapper.toTamanioResponse(model);
         return ResponseEntity.ok(tamanioResponse);
@@ -84,7 +84,7 @@ public class TamanioService implements ITamanioService {
     public ResponseEntity<Void> eliminar(Integer id) {
         Tamanio model = modelRepository.findById(id).orElse(null);
         if (model == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado + id);
         }
         model.eliminar();
         modelRepository.save(model);
@@ -95,7 +95,7 @@ public class TamanioService implements ITamanioService {
     public ResponseEntity<Void> recuperar(Integer id) {
         Tamanio model = modelRepository.findById(id).orElse(null);
         if (model == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado + id);
         }
         model.recuperar();
         modelRepository.save(model);
