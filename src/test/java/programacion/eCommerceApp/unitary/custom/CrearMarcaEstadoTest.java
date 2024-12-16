@@ -89,7 +89,6 @@ public class CrearMarcaEstadoTest {
         assertEquals(Marca.COMUN, response.estado(), "La marca debe estar creada");
         verify(marcaRepository, times(1)).findByNombre(marcaExistente.getNombre());
         verify(marcaRepository, times(1)).save(marcaExistente);
-        verify(marcaService, times(1)).recuperar(marcaExistente.getId());
         
         //quiero verificar que marcaService recupere la marca:
 

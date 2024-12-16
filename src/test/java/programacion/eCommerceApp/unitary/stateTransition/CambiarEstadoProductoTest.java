@@ -1,7 +1,7 @@
 package programacion.eCommerceApp.unitary.stateTransition;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -9,13 +9,13 @@ import static org.mockito.Mockito.when;
 import static org.mockito.BDDMockito.given;
 
 import java.util.Optional;
-import org.junit.Test;
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,7 @@ import programacion.eCommerceApp.service.ProductoService;
  * - Recuperar un producto no existente
  * - Recuperar un producto no eliminado
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CambiarEstadoProductoTest {
 
 @Mock
@@ -49,7 +49,7 @@ private ProductoService productoService;
 private Integer idPrueba;
 private Producto productoMock;
 
-@Before
+@BeforeEach
 public void setUp() {
     MockitoAnnotations.openMocks(this);
     idPrueba = 2;

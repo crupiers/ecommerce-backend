@@ -49,15 +49,11 @@ public class AuthService implements IAuthService {
     }
 
     public AuthResponse register(NewRegisterRequest newRegisterRequest) {
+        // Verificar si el nombre cumple con los requisitos
         if (usuarioRepository.findByNombre(newRegisterRequest.nombre()).isPresent()) {
-            throw new IllegalArgumentException
-            ("EL NOMBRE DE USUARIO '" + newRegisterRequest.nombre() + "' YA EXISTE");
+            throw new IllegalArgumentException("EL NOMBRE DE USUARIO '" + newRegisterRequest.nombre() + "' YA EXISTE");
         }
-        if (!newRegisterRequest.contrasenia().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?!.*\\s).{8,64}$")) {
-            throw new IllegalArgumentException
-            ("La contraseña del usuario debe tener al menos una mayúscula, una minúscula, un número y no debe tener espacios");
-        }
-
+        
         Usuario usuario = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
         usuario.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));
         usuarioRepository.save(usuario);
@@ -66,9 +62,7 @@ public class AuthService implements IAuthService {
     }
 
     public AuthResponse actualizar(NewRegisterRequest newRegisterRequest, Integer id) {
-        if (newRegisterRequest.contrasenia().length() < 8 || newRegisterRequest.contrasenia().length() > 64) {
-            throw new IllegalArgumentException("La contraseña debe tener entre 8 y 64 caracteres");
-        }
+
         Usuario model = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
 
@@ -83,7 +77,7 @@ public class AuthService implements IAuthService {
         }
 
         if (usuarioRepository.findByNombre(newRegisterRequest.nombre()).isPresent()) {
-            throw new IllegalArgumentException("EL NOMBRE DE USUARIO '"+newRegisterRequest.nombre()+"' YA EXISTE");
+            throw new IllegalArgumentException("EL NOMBRE DE USUARIO '"+newRegisterRequest.nombre()+"' YA EXsISTE");
         }
 
         if (usuarioOptional.get().getEstado() == Usuario.ELIMINADO) {

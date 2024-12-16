@@ -1,33 +1,26 @@
 package programacion.eCommerceApp.unitary.incompletos;
 
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.authentication.AuthenticationManager;
-
 import programacion.eCommerceApp.repository.IUsuarioRepository;
 import programacion.eCommerceApp.service.AuthService;
-import programacion.eCommerceApp.service.JwtService;
-
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import programacion.eCommerceApp.model.Usuario;
-import org.mockito.junit.MockitoJUnitRunner;
-
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class RegistrarUsuarioTest {
 
     @InjectMocks
@@ -42,7 +35,7 @@ public class RegistrarUsuarioTest {
     @Mock
     private Authentication authentication;
 
-    @Before
+    @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         SecurityContextHolder.setContext(securityContext);
