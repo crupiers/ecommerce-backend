@@ -87,7 +87,7 @@ public class ColorService implements IColorService {
     @Override
     public ResponseEntity<Void> eliminar(Integer id) {
         Color model = modelRepository.findById(id).orElse(null);
-        if(model==null){
+        if(model==null || model.getEstado() == Color.ELIMINADO){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         model.eliminar();
@@ -98,7 +98,7 @@ public class ColorService implements IColorService {
     @Override
     public ResponseEntity<Void> recuperar(Integer id) {
         Color model = modelRepository.findById(id).orElse(null);
-        if(model==null){
+        if(model==null || model.getEstado() == Color.COMUN){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         model.recuperar();

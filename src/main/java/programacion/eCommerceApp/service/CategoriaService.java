@@ -76,7 +76,7 @@ public class CategoriaService implements ICategoriaService {
     @Override
     public ResponseEntity<Void> eliminar(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
-        if (model == null){
+        if (model == null || model.getEstado() == Categoria.ELIMINADO) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         model.eliminar();
@@ -87,7 +87,7 @@ public class CategoriaService implements ICategoriaService {
     @Override
     public ResponseEntity<Void> recuperar(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
-        if (model == null) {
+        if (model == null || model.getEstado() == Categoria.COMUN) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         model.recuperar();

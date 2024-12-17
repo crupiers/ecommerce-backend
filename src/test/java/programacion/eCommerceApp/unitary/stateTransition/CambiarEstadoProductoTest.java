@@ -79,7 +79,7 @@ public void eliminarProductoExistente() {
 
     // then
     assertNotNull(response);
-    // assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(Producto.ELIMINADO, productoMock.getEstado());
 
     verify(productoRepository, times(1)).findById(idPrueba);

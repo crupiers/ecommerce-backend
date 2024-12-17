@@ -83,7 +83,7 @@ public class TamanioService implements ITamanioService {
     @Override
     public ResponseEntity<Void> eliminar(Integer id) {
         Tamanio model = modelRepository.findById(id).orElse(null);
-        if (model == null) {
+        if (model == null || model.getEstado() == Tamanio.ELIMINADO) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
         }
         model.eliminar();
@@ -94,7 +94,7 @@ public class TamanioService implements ITamanioService {
     @Override
     public ResponseEntity<Void> recuperar(Integer id) {
         Tamanio model = modelRepository.findById(id).orElse(null);
-        if (model == null) {
+        if (model == null || model.getEstado() == Tamanio.COMUN) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
         }
         model.recuperar();

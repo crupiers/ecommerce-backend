@@ -25,7 +25,7 @@ import programacion.eCommerceApp.service.JwtService;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @ExtendWith(MockitoExtension.class)
-public class ValidarContrasenia {
+public class ValidarContraseniaTest {
         
         @Mock
         AuthService authService;

@@ -20,7 +20,7 @@ import org.springframework.http.MediaType;
 
 public class LongitudNombreColorTest {
     @Mock
-    
+    private IColorService colorService;
     private MockMvc mockMvc;
 
     private ObjectMapper objectMapper;
