@@ -11,6 +11,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -56,6 +58,10 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "idMarca")
     private Marca marca;
+
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MovimientoStock> movimientos = new ArrayList<>();
+
 
     @Column(name = "created_by")
     @CreatedBy

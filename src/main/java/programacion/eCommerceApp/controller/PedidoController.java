@@ -28,6 +28,11 @@ public class PedidoController {
         return pedidosService.listar();
     }
 
+    @GetMapping("/admin/pedidos/auditoria")
+    public List<PedidoResponse> listarParaAuditoria() {
+        return pedidosService.listarParaAuditoria();
+    }
+
     @GetMapping("/pedidos/{id}")
     public ResponseEntity<PedidoResponse> buscarPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(pedidosService.buscarPorId(id));

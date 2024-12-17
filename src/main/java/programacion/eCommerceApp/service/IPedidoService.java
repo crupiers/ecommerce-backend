@@ -11,5 +11,5 @@ public interface IPedidoService {
     PedidoResponse buscarPorId(Integer id);
     List<PedidoResponse> buscarPorUsuario(Integer idUsuario);
     PedidoResponse eliminar(Integer id);
-
+    List<PedidoResponse> listarParaAuditoria();
 }

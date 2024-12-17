@@ -34,7 +34,7 @@ public class MarcaController {
         return service.buscarPorId(id);
     }
     
-    @PostMapping("/marcas")
+    @PostMapping("/admin/marcas")
     public MarcaResponse crear(@RequestBody @Valid NewMarcaRequest newMarcaRequest){
         return service.crear(newMarcaRequest);
     }

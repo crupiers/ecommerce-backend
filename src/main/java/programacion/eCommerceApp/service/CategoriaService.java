@@ -30,7 +30,7 @@ public class CategoriaService implements ICategoriaService {
     public ResponseEntity<CategoriaResponse> buscarPorId(Integer id) {
         Categoria model = modelRepository.findById(id).orElse(null);
         if(model == null || model.getEstado() == Categoria.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
         }
         CategoriaResponse categoriaResponse = CategoriaMapper.toCategoriaResponse(model);
         return ResponseEntity.ok(categoriaResponse);

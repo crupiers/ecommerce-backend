@@ -30,7 +30,7 @@ public class MarcaService implements IMarcaService {
     public ResponseEntity<MarcaResponse> buscarPorId(Integer id) {
         Marca model = modelRepository.findById(id).orElse(null);
         if(model == null || model.getEstado() == Marca.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
         }
         MarcaResponse marcaResponse = MarcaMapper.toMarcaResponse(model);
         return ResponseEntity.ok(marcaResponse);

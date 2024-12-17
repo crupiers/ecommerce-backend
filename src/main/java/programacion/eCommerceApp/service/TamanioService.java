@@ -74,7 +74,7 @@ public class TamanioService implements ITamanioService {
         Tamanio model = modelRepository.findById(id).orElse(null);
         //uso la constante "ELIMINADO" para comparar y no el valor
         if (model == null || model.getEstado() == Tamanio.ELIMINADO) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado + id);
+            throw new IllegalArgumentException(mensajeIdNoEncontrado + id);
         }
         TamanioResponse tamanioResponse = TamanioMapper.toTamanioResponse(model);
         return ResponseEntity.ok(tamanioResponse);

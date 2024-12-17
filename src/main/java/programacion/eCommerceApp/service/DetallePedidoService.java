@@ -34,7 +34,7 @@ public class DetallePedidoService implements IDetallePedidoService {
         detallePedido.setSubtotal(detallePedido.calcularSubtotal());
 
         if (detallePedido.getCantidad() > producto.getStock()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO HAY STOCK SUFICIENTE PARA EL PRODUCTO CON ID: "+producto.getId());
+            throw new IllegalArgumentException("NO HAY STOCK SUFICIENTE PARA EL PRODUCTO CON ID: "+producto.getId());
         }
 
         boolean estabaDebajoDelUmbral = detallePedido.getProducto().getStock() < detallePedido.getProducto().getUmbral();
@@ -60,7 +60,7 @@ public class DetallePedidoService implements IDetallePedidoService {
     public DetallePedidoResponse buscarPorId(Integer id) {
         DetallePedido model = detallePedidoRepository.findById(id).orElse(null);
         if(model == null || model.getEstado() == Categoria.ELIMINADO){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO SE ENCONTRÓ LA CATEGORÍA CON ID: "+id);
+            throw new IllegalArgumentException("NO SE ENCONTRÓ LA CATEGORÍA CON ID: "+id);
         }
         return DetallePedidoMapper.toDetallePedidoResponse(model);
     }

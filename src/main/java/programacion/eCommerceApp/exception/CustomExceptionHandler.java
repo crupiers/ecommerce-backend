@@ -1,5 +1,6 @@
 package programacion.eCommerceApp.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -37,6 +38,17 @@ public class CustomExceptionHandler {
         Map<String, String> response = new HashMap<>();
         response.put("message", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+//    @ExceptionHandler(DataIntegrityViolationException.class)
+//    public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+//        return new ResponseEntity<>("DATOS DUPLICADOS", HttpStatus.CONFLICT);
+//    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        String response = "DATOS DE ENTRADA DUPLICADOS, INTENTE CON OTROS DATOS";
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     //declaro un metodo especifico para una excepcion especifica

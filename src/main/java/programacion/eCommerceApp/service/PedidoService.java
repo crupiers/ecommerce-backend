@@ -1,6 +1,8 @@
 package programacion.eCommerceApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import programacion.eCommerceApp.controller.request.NewPedidoRequest;
 import programacion.eCommerceApp.controller.response.PedidoResponse;
@@ -13,6 +15,7 @@ import programacion.eCommerceApp.repository.IPedidoRepository;
 import programacion.eCommerceApp.repository.IUsuarioRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PedidoService implements IPedidoService {
@@ -64,6 +67,18 @@ public class PedidoService implements IPedidoService {
         Usuario usuario = usuarioRepository.findById(idUsuario)
             .orElseThrow(() -> new IllegalArgumentException("USUARIO NO ENCONTRADO CON ID: " + idUsuario));
         List<Pedido> pedidos = pedidoRepository.findAllByUsuario(usuario);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<Usuario> usuarioLogueado = usuarioRepository.findByNombre(authentication.getName());
+        if(usuarioLogueado.isEmpty()) {
+            throw new IllegalArgumentException("NO SE ENCONTRO EL USUARIO LOGUEADO");
+        }
+
+        if (!idUsuario.equals(usuarioLogueado.get().getId())) {
+            throw new IllegalArgumentException("NO SE PUEDE VER LOS PEDIDOS DE OTRO USUARIO");
+        }
+
         return pedidos.stream().map(PedidoMapper::toPedidoResponse).toList();
     }
 
@@ -84,6 +99,11 @@ public class PedidoService implements IPedidoService {
         model.eliminar();
         return PedidoMapper.toPedidoResponse(pedidoRepository.save(model));
 
+    }
+
+    public List<PedidoResponse> listarParaAuditoria() {
+        List<Pedido> pedidos = pedidoRepository.findAll();
+        return pedidos.stream().map(PedidoMapper::toPedidoResponse).toList();
     }
 
 }

@@ -18,7 +18,7 @@ public class TamanioController {
     @Autowired
     private ITamanioService service;
 
-    @PostMapping("/tamanios")
+    @PostMapping("/admin/tamanios")
     @ResponseStatus(HttpStatus.CREATED)
     public TamanioResponse crear(@RequestBody @Valid NewTamanioRequest newTamanioRequest) {
         return service.crear(newTamanioRequest);
