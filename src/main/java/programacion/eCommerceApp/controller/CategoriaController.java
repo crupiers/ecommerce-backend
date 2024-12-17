@@ -35,7 +35,7 @@ public class CategoriaController {
         return service.buscarPorId(id);
     }
 
-    @PostMapping("/categorias")
+    @PostMapping("/admin/categorias")
     @ResponseStatus(HttpStatus.CREATED)
     public CategoriaResponse crear(@RequestBody @Valid NewCategoriaRequest newCategoriaRequest) {
         return service.crear(newCategoriaRequest);

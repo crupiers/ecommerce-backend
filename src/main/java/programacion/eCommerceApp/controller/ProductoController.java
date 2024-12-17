@@ -20,7 +20,7 @@ public class ProductoController {
     @Autowired
     private IProductoService service;
 
-    @PostMapping("/productos")
+    @PostMapping("/admin/productos")
     public ProductoResponse crear(@RequestBody @Valid NewProductoRequest newProductoRequest) {
         return service.crear(newProductoRequest);
     }

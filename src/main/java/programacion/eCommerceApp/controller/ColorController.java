@@ -39,7 +39,7 @@ public class ColorController {
         return service.buscarPorNombre(nombre);
     }
 
-    @PostMapping("/colores")
+    @PostMapping("/admin/colores")
     @ResponseStatus(HttpStatus.CREATED)
     public ColorResponse crear(@RequestBody @Valid NewColorRequest newColorRequest){
         return service.crear(newColorRequest);

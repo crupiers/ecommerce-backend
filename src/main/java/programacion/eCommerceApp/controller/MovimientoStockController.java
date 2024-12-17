@@ -16,7 +16,7 @@ public class MovimientoStockController {
     @Autowired
     private IMovimientoStockService service;
 
-    @PostMapping("/movimientoStock/{productoId}")
+    @PostMapping("/admin/movimientoStock/{productoId}")
     public MovimientoStockResponse crear(@PathVariable Integer productoId, @RequestBody NewMovimientoStockRequest newMovimientoStockRequest){
         return service.crear(productoId, newMovimientoStockRequest);
     }
