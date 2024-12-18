@@ -38,7 +38,7 @@ public class LongitudNombreColorTest {
     @Test
     public void testCrearColorNombreCorto() throws Exception {
         NewColorRequest request = new NewColorRequest("A", "Electrodomestico");
-        mockMvc.perform(post("/ecommerce/colores") // Corrige la URL
+        mockMvc.perform(post("/ecommerce/admin/colores") // Corrige la URL
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))) // Uso de instancia real
                 .andExpect(status().isBadRequest());
@@ -47,7 +47,7 @@ public class LongitudNombreColorTest {
     public void testCrearColorNombreValidoMinimo() throws Exception {
         NewColorRequest request = new NewColorRequest("ro", "Electrodomestico");
 
-        mockMvc.perform(post("/ecommerce/colores") // Corrige la URL
+        mockMvc.perform(post("/ecommerce/admin/colores") // Corrige la URL
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -57,7 +57,7 @@ public class LongitudNombreColorTest {
     public void testCrearColorNombreValidoEnRango() throws Exception {
         NewColorRequest request = new NewColorRequest("Mediano", "Electrodomestico");
 
-        mockMvc.perform(post("/ecommerce/colores") // Corrige la URL
+        mockMvc.perform(post("/ecommerce/admin/colores") // Corrige la URL
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -66,7 +66,7 @@ public class LongitudNombreColorTest {
     @Test
     public void testCrearColorDescripcionLarga() throws Exception {
         NewColorRequest request = new NewColorRequest("NombreTamañoConMasDe32Caracteres", "a");
-        mockMvc.perform(post("/ecommerce/colores") // Corrige la URL
+        mockMvc.perform(post("/ecommerce/admin/colores") // Corrige la URL
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());

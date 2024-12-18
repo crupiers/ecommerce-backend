@@ -25,9 +25,13 @@ public class MovimientoStockService implements IMovimientoStockService {
         // Buscar el producto asociado al movimiento
         Producto producto = productoRepository.findById(productoId)
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró el producto con ID: " + productoId));
-
+                
+        if (newMovimientoStockRequest.cantidad() <= 0) {
+                throw new IllegalArgumentException("La cantidad de entrada tiene que ser positiva.");
+            }
         // Calcular el nuevo stock basado en el tipo de movimiento
         if (newMovimientoStockRequest.tipoMovimiento().equals(MovimientoStock.entrada)) {
+            
             producto.setStock(producto.getStock() + newMovimientoStockRequest.cantidad());
         } else if (newMovimientoStockRequest.tipoMovimiento().equals(MovimientoStock.salida)) {
             if (producto.getStock() < newMovimientoStockRequest.cantidad()) {

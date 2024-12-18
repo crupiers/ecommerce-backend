@@ -12,12 +12,17 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import programacion.eCommerceApp.controller.ProductoController;
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
+import programacion.eCommerceApp.controller.response.MovimientoStockResponse;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
 import programacion.eCommerceApp.service.ProductoService;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.MediaType;
 
 public class ValidarNombreProductoTest {
@@ -30,6 +35,8 @@ public class ValidarNombreProductoTest {
     @InjectMocks
     private ProductoController productoController;
 
+    private List<MovimientoStockResponse> movimientos;
+
 
     // private NewProductoRequest productoRequest;
 
@@ -38,8 +45,19 @@ public class ValidarNombreProductoTest {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(productoController).build();
         objectMapper = new ObjectMapper(); // Instancia real del ObjectMapper
+        // Crear la lista de MovimientoStockResponse
+        List<MovimientoStockResponse> movimientos = new ArrayList<>();
+        movimientos.add(new MovimientoStockResponse(
+                1,                   // id
+                50,                  // cantidad
+                "Stock inicial",     // motivo
+                "Entrada",           // tipoMovimiento
+                "admin",             // createdBy
+                "2024-12-17",        // fechaMovimiento
+                "10:00 AM"           // horaMovimiento
+        ));
     
-    }
+}
 
     @Test
     public void testCrearProductoNombreMenorLimiteInferior() throws Exception {
@@ -59,7 +77,7 @@ public class ValidarNombreProductoTest {
             
                 );
         
-        mockMvc.perform(post("/ecommerce/productos")
+        mockMvc.perform(post("/ecommerce/admin/productos")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(productoRequest))) // Uso de instancia real
                 .andExpect(status().isBadRequest());
@@ -67,7 +85,8 @@ public class ValidarNombreProductoTest {
     @Test
     public void testCrearProductoNombreLimiteInferior() throws Exception {
         String nombre = "ab";
-
+        
+        
         NewProductoRequest productoRequest = new NewProductoRequest(
                 nombre,
                 "Descripción de prueba",
@@ -92,12 +111,14 @@ public class ValidarNombreProductoTest {
                 "Marca",
                 "Tamanio",
                 "Color",
-                productoRequest.codigoBarra()
+                productoRequest.codigoBarra(),
+                movimientos,
+                nombre, nombre, nombre, nombre, nombre, 1
         );
 
         when(productoService.crear(productoRequest)).thenReturn(productoResponse);
 
-        mockMvc.perform(post("/ecommerce/productos")
+        mockMvc.perform(post("/ecommerce/admin/productos")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(productoRequest)))
                 .andExpect(status().isOk());
@@ -105,7 +126,7 @@ public class ValidarNombreProductoTest {
 
     @Test
     public void testCrearTamanioNombreValidoEnRango() throws Exception {
-        String nombre = "ab";
+        String nombre = "Heladera";
 
         NewProductoRequest productoRequest = new NewProductoRequest(
                 nombre,
@@ -131,11 +152,12 @@ public class ValidarNombreProductoTest {
                 "Marca",
                 "Tamanio",
                 "Color",
-                productoRequest.codigoBarra()
+                productoRequest.codigoBarra(), movimientos,
+                nombre, nombre, nombre, nombre, nombre, null
         );
 
         when(productoService.crear(productoRequest)).thenReturn(productoResponse);
-        mockMvc.perform(post("/ecommerce/productos")
+        mockMvc.perform(post("/ecommerce/admin/productos")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(productoRequest)))
                 .andExpect(status().isOk());
@@ -159,7 +181,7 @@ public class ValidarNombreProductoTest {
             
                 );
         
-        mockMvc.perform(post("/ecommerce/productos")
+        mockMvc.perform(post("/ecommerce/admin/productos")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(productoRequest))) // Uso de instancia real
                 .andExpect(status().isBadRequest());

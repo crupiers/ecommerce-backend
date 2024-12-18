@@ -38,7 +38,7 @@ public class LongitudNombreTamanioTest {
     @Test
     public void testCrearTamanioNombreCorto() throws Exception {
         NewTamanioRequest request = new NewTamanioRequest("A", "Electrodomestico");
-        mockMvc.perform(post("/ecommerce/tamanios")
+        mockMvc.perform(post("/ecommerce/admin/tamanios")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))) // Uso de instancia real
                 .andExpect(status().isBadRequest());
@@ -47,7 +47,7 @@ public class LongitudNombreTamanioTest {
     public void testCrearTamanioNombreValidoMinimo() throws Exception {
         NewTamanioRequest request = new NewTamanioRequest("ro", "Electrodomestico");
 
-        mockMvc.perform(post("/ecommerce/tamanios")
+        mockMvc.perform(post("/ecommerce/admin/tamanios")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -57,7 +57,7 @@ public class LongitudNombreTamanioTest {
     public void testCrearTamanioNombreValidoEnRango() throws Exception {
         NewTamanioRequest request = new NewTamanioRequest("Mediano", "Electrodomestico");
 
-        mockMvc.perform(post("/ecommerce/tamanios")
+        mockMvc.perform(post("/ecommerce/admin/tamanios")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -65,8 +65,8 @@ public class LongitudNombreTamanioTest {
     
     @Test
     public void testCrearTamanioDescripcionLarga() throws Exception {
-        NewTamanioRequest request = new NewTamanioRequest("NombreTamañoConMasDe32Caracteres", "a");
-        mockMvc.perform(post("/ecommerce/tamanios")
+        NewTamanioRequest request = new NewTamanioRequest("NombreTamanioConMásDe32Caracteres", "Electrodomestico");
+        mockMvc.perform(post("/ecommerce/admin/tamanios")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());

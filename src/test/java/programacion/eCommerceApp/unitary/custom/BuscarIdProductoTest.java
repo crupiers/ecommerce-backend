@@ -101,7 +101,7 @@ void testBuscarPorIdEncontradoEliminado() {
     given(productoRepository.findById(idPrueba)).willReturn(Optional.of(productoMock));
 
     // when & then
-    assertThrows(ResponseStatusException.class, () -> {
+    assertThrows(IllegalArgumentException.class, () -> {
         productoService.buscarPorId(idPrueba);
     });
 
@@ -115,7 +115,7 @@ void testBuscarPorIdNoEncontrado() {
     given(productoRepository.findById(idPrueba)).willReturn(Optional.empty());
 
     // when & then
-    assertThrows(ResponseStatusException.class, () -> {
+    assertThrows(IllegalArgumentException.class, () -> {
         productoService.buscarPorId(idPrueba);
     });
     verify(productoRepository, times(1)).findById(idPrueba);

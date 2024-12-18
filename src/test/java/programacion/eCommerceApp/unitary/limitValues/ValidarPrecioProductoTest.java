@@ -37,7 +37,7 @@ import programacion.eCommerceApp.service.ProductoService;
  */
 
 @ExtendWith(MockitoExtension.class)
-public class ValidarPrecioProducto {
+public class ValidarPrecioProductoTest {
     @Mock
     private IProductoRepository productoRepository;
     @Mock

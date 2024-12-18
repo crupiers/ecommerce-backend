@@ -49,7 +49,6 @@ public class PedidoService implements IPedidoService {
 
         return PedidoMapper.toPedidoResponse(pedidoRepository.save(pedido));
     }
-
     public List<PedidoResponse> listar() {
         List<Pedido> pedidos = pedidoRepository.findByEstado(Pedido.COMUN);
         return pedidos.stream().map(PedidoMapper::toPedidoResponse).toList();
