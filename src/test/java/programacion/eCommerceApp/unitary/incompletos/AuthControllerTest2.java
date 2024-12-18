@@ -52,7 +52,7 @@ public class AuthControllerTest {
                 .build();
 
         String jwtToken = "sampleJwtToken"; // Un JWT de ejemplo para el test
-        AuthResponse authResponse = new AuthResponse(jwtToken, usuario.getId(), usuario.getNombre(),usuario.getContrasenia(), usuario.getRol(), usuario.getEstado()); 
+        var authResponse = new AuthResponse(jwtToken, usuario.getId(), usuario.getNombre(),usuario.getContrasenia(), usuario.getRol(), usuario.getEstado()); 
 
         // Configurar el mock para que authService registre el usuario y devuelva el AuthResponse
         when(authService.register(registerRequest)).thenReturn(authResponse);
