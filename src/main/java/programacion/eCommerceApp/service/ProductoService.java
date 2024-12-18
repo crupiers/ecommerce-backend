@@ -58,7 +58,7 @@ public class ProductoService implements IProductoService{
         Marca marca = marcaRepository.findById(newProductoRequest.marcaId())
                 .orElseThrow(() -> new IllegalArgumentException("Marca no encontrada con ID: " + newProductoRequest.marcaId()));
 
-        if (newProductoRequest.stock() < 0 || newProductoRequest.stock() > 1000000) {
+        if (newProductoRequest.stock() <= 0 || newProductoRequest.stock() >= 1000000) {
             throw new IllegalArgumentException("El stock debe estar entre 0 y 1.000.000");
         }
 
