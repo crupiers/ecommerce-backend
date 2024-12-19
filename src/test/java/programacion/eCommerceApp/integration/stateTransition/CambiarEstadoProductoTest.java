@@ -17,7 +17,7 @@ import programacion.eCommerceApp.model.Producto;
 import programacion.eCommerceApp.repository.IProductoRepository;
 
 @Sql("/scripts/base/reset_db.sql")
-@Sql("/scripts/productos/crear_contexto_pedido_all.sql")
+@Sql("/scripts/productos/crear_contexto_producto.sql")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = eCommerceApplication.class)
 @AutoConfigureMockMvc(addFilters = false)
 public class CambiarEstadoProductoTest extends BaseIntegrationTest {
@@ -31,6 +31,21 @@ public class CambiarEstadoProductoTest extends BaseIntegrationTest {
     public void cambiarEstado_DisponibleAEliminado() throws Exception {
         // Given
         Integer productoId = 1;
+        @Sql(statements = {
+            "INSERT INTO producto (id, nombre, descripcion, stock, codigo_barra, precio, umbral, estado, id_color, id_tamanio, id_categoria, id_marca) " +
+            "VALUES (1, 'Samsung Galaxy 11', 'Smartphone de alta gama', 10, 123456789, 799.99, 10, 0, 1, 1, 1, 1)"
+        })
+                Producto producto = Producto.builder()
+                .id(productoId)
+                .nombre("Producto 1")
+                .descripcion("Descripción 1")
+                .stock(10)
+                .codigoBarra(123456789)
+                .precio(50.00)
+                .umbral(5)
+                .estado(0)
+                .build();
+        productoRepository.save(producto);
         // When
         mockMvc.perform(MockMvcRequestBuilders.delete("/ecommerce/productos/" + productoId)
                 .contentType(MediaType.APPLICATION_JSON))
