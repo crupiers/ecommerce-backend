@@ -1,21 +1,15 @@
-DELETE FROM producto;
-
 -- Insertar Color
-DELETE FROM color;
 INSERT INTO color (id, nombre, descripcion, estado)
 VALUES (1, 'Black', 'Color negro', 0);
 -- Insertar Tamanio
-DELETE FROM tamanio;
 INSERT INTO tamanio (id, nombre, descripcion, estado)
 VALUES (1, 'Large', 'Tamanio grande', 0);
 
 -- Insertar Categoria
-DELETE FROM categoria;
 INSERT INTO categoria (id, nombre, descripcion, estado)
 VALUES (1, 'Electronics', 'Categoria de productos electronicos', 0);
 
 -- Insertar Marca
-DELETE FROM marca;
 INSERT INTO marca (id, nombre, descripcion, estado)
 VALUES (1, 'Samsung', 'Marca lider en tecnología de dispositivos moviles', 0);
 

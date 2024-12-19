@@ -1,4 +1,4 @@
-package programacion.eCommerceApp.integration.custom;
+package programacion.eCommerceApp.integration.limitValues;
 
 import java.util.List;
 
@@ -18,11 +18,12 @@ import programacion.eCommerceApp.eCommerceApplication;
 import programacion.eCommerceApp.controller.request.NewDetallePedidoRequest;
 import programacion.eCommerceApp.controller.request.NewPedidoRequest;
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
+
 @Sql("/scripts/base/reset_db.sql")
 @Sql("/scripts/pedidos/crear_contexto_pedido.sql")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = eCommerceApplication.class)
 @AutoConfigureMockMvc(addFilters = false)
-public class TestIntegration extends BaseIntegrationTest {
+public class VerificarStockPedidoTest extends BaseIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
