@@ -49,6 +49,11 @@ public class AuthService implements IAuthService {
     }
 
     public AuthResponse register(NewRegisterRequest newRegisterRequest) {
+        // Verificar si el nombre cumple con los requisitos
+        if (usuarioRepository.findByNombre(newRegisterRequest.nombre()).isPresent()) {
+            throw new IllegalArgumentException("EL NOMBRE DE USUARIO '" + newRegisterRequest.nombre() + "' YA EXISTE");
+        }
+        
         Usuario usuario = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
         usuario.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));
         usuarioRepository.save(usuario);
@@ -72,7 +77,7 @@ public class AuthService implements IAuthService {
         }
 
         if (usuarioRepository.findByNombre(newRegisterRequest.nombre()).isPresent()) {
-            throw new IllegalArgumentException("EL NOMBRE DE USUARIO '"+newRegisterRequest.nombre()+"' YA EXISTE");
+            throw new IllegalArgumentException("EL NOMBRE DE USUARIO '"+newRegisterRequest.nombre()+"' YA EXsISTE");
         }
 
         if (usuarioOptional.get().getEstado() == Usuario.ELIMINADO) {

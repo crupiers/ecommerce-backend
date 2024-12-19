@@ -1,0 +1,15 @@
+{
+  "documentation": "You can find documentation on these configs at https://www.npmjs.com/package/deepunit",
+  "frontendFramework": "",
+  "testSuffix": "test",
+  "testingFramework": "SpringBoot",
+  "ignoredDirectories": "[eCommerce\\src\\main\\java\\programacion\\eCommerceApp\\service]",
+  "ignoredFiles": "[]",
+  "includeFailingTests": false,
+  "defaultBranch": "test",
+  "monorepoDirectory": "",
+  "testCaseGoal": "limit values",
+  "useOpenAI": true,
+  "useTurbo": false,
+  "testingLanguageOverride": ""
+}

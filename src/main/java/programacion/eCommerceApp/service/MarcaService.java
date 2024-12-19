@@ -79,8 +79,8 @@ public class MarcaService implements IMarcaService {
     @Override
     public ResponseEntity<Void> eliminar(Integer id) {
         Marca model = modelRepository.findById(id).orElse(null);
-        if (model == null){
-            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
+        if (model == null || model.getEstado() == Marca.ELIMINADO) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         model.eliminar();
         modelRepository.save(model);
@@ -90,8 +90,8 @@ public class MarcaService implements IMarcaService {
     @Override
     public ResponseEntity<Void> recuperar(Integer id) {
         Marca model = modelRepository.findById(id).orElse(null);
-        if (model == null) {
-            throw new IllegalArgumentException(mensajeIdNoEncontrado+id);
+        if (model == null || model.getEstado() == Marca.COMUN) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, mensajeIdNoEncontrado+id);
         }
         model.recuperar();
         modelRepository.save(model);

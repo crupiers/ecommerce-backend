@@ -25,7 +25,7 @@ public class JwtService implements IJwtService {
     private String getToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts
             .builder()
-            .claims(extraClaims)
+            .addClaims(extraClaims)
             .setSubject(userDetails.getUsername())
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis() + 1000*60*30))
@@ -51,7 +51,6 @@ public class JwtService implements IJwtService {
         return Jwts
             .parser()
             .setSigningKey(getKey())
-            .build()
             .parseClaimsJws(jwt)
             .getBody();
     }

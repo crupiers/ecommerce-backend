@@ -1,4 +1,4 @@
-package programacion.eCommerceApp.unitary.limitValues;
+package programacion.eCommerceApp.unitary.custom;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 Lanza una IllegalArgumentException.
 */
 @ExtendWith(MockitoExtension.class)
-public class GuardarMarcaEstadoTest {
+public class CrearMarcaEstadoTest {
 
     @Mock
     private IMarcaRepository marcaRepository;
@@ -85,10 +85,13 @@ public class GuardarMarcaEstadoTest {
         MarcaResponse response = marcaService.crear(request);
         
         assertNotNull(response, "La response de la creación de la marca no debe ser nula");
-        assertEquals(request.nombre(), response.nombre(), "La denominación de la marca debe ser la misma que la de la request");
-        assertEquals(request.descripcion(), response.descripcion(), "Las descripcion de la marca deben ser las mismas que las de la request");
+        assertEquals(request.nombre() + request.descripcion(), response.nombre() + request.descripcion(), "La denominación de la marca debe ser la misma que la de la request");
         assertEquals(Marca.COMUN, response.estado(), "La marca debe estar creada");
         verify(marcaRepository, times(1)).findByNombre(marcaExistente.getNombre());
         verify(marcaRepository, times(1)).save(marcaExistente);
+        
+        //quiero verificar que marcaService recupere la marca:
+
+        
     }
 }

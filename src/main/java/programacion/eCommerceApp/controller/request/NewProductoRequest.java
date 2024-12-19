@@ -2,6 +2,7 @@ package programacion.eCommerceApp.controller.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 public record NewProductoRequest(
@@ -24,6 +25,7 @@ public record NewProductoRequest(
 
         @NotNull
         //@Pattern(regexp = "^(([0-9]+)|([0-9]+[.][0-9]+))$", message = "SE DEBE INGRESAR UN NÚMERO ENTERO O DECIMAL CON PUNTO Y NO COMA, NO TIENE QUE HABER ESPACIOS")
+        @Positive(message = "EL PRECIO DEBE SER MAYOR A 0")
         Double precio,
 
         @NotNull

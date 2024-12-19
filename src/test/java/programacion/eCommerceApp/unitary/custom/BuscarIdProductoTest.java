@@ -1,5 +1,4 @@
-package programacion.eCommerceApp.unitary.equivalentPartition;
-
+package programacion.eCommerceApp.unitary.custom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -102,7 +101,7 @@ void testBuscarPorIdEncontradoEliminado() {
     given(productoRepository.findById(idPrueba)).willReturn(Optional.of(productoMock));
 
     // when & then
-    assertThrows(ResponseStatusException.class, () -> {
+    assertThrows(IllegalArgumentException.class, () -> {
         productoService.buscarPorId(idPrueba);
     });
 
@@ -116,7 +115,7 @@ void testBuscarPorIdNoEncontrado() {
     given(productoRepository.findById(idPrueba)).willReturn(Optional.empty());
 
     // when & then
-    assertThrows(ResponseStatusException.class, () -> {
+    assertThrows(IllegalArgumentException.class, () -> {
         productoService.buscarPorId(idPrueba);
     });
     verify(productoRepository, times(1)).findById(idPrueba);

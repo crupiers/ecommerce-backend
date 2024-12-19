@@ -62,10 +62,10 @@ public class ProductoService implements IProductoService{
             throw new IllegalArgumentException("El stock debe estar entre 0 y 1.000.000");
         }
 
-        if (newProductoRequest.precio() < 0) {
-            throw new IllegalArgumentException("El precio no puede ser negativo");
+        if (newProductoRequest.precio() < 1 || newProductoRequest.precio() > 100000000.00) {
+            throw new IllegalArgumentException("El precio debe estar entre 1 y 100.000.000");
         }
-
+        
         if (newProductoRequest.codigoBarra() < 0) {
             throw new IllegalArgumentException("El código de barra no puede ser negativo");
         }
