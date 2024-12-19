@@ -1,5 +1,6 @@
 package programacion.eCommerceApp.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import programacion.eCommerceApp.controller.request.NewMovimientoStockRequest;
@@ -17,7 +18,7 @@ public class MovimientoStockController {
     private IMovimientoStockService service;
 
     @PostMapping("/admin/movimientoStock/{productoId}")
-    public MovimientoStockResponse crear(@PathVariable Integer productoId, @RequestBody NewMovimientoStockRequest newMovimientoStockRequest){
+    public MovimientoStockResponse crear(@PathVariable Integer productoId, @RequestBody @Valid NewMovimientoStockRequest newMovimientoStockRequest){
         return service.crear(productoId, newMovimientoStockRequest);
     }
 
