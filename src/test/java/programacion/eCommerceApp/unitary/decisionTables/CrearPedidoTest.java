@@ -1,4 +1,4 @@
-package programacion.eCommerceApp.unitary.equivalentPartition;
+package programacion.eCommerceApp.unitary.decisionTables;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

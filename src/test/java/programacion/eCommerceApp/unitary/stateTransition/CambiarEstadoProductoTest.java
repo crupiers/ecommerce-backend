@@ -91,7 +91,7 @@ public void testEliminarProductoNoExistente() {
     when(productoRepository.findById(idPrueba)).thenReturn(Optional.empty());
 
     // when
-    assertThrows(ResponseStatusException.class, () -> productoService.eliminar(idPrueba));
+    assertThrows(IllegalArgumentException.class, () -> productoService.eliminar(idPrueba));
 }
 @Test
 public void testEliminarProductoEliminado() {
@@ -100,7 +100,7 @@ public void testEliminarProductoEliminado() {
     when(productoRepository.findById(idPrueba)).thenReturn(Optional.of(productoMock));
 
     // when
-    assertThrows(ResponseStatusException.class, () -> productoService.eliminar(idPrueba));
+    assertThrows(IllegalArgumentException.class, () -> productoService.eliminar(idPrueba));
 }
 
 @Test
@@ -125,7 +125,7 @@ public void testRecuperarProductoNoExistente() {
     when(productoRepository.findById(idPrueba)).thenReturn(Optional.empty());
 
     // when
-    assertThrows(ResponseStatusException.class, () -> productoService.recuperar(idPrueba));
+    assertThrows(IllegalArgumentException.class, () -> productoService.recuperar(idPrueba));
 }
 
 @Test
@@ -134,6 +134,6 @@ public void testRecuperarProductoNoEliminado() {
     when(productoRepository.findById(idPrueba)).thenReturn(Optional.of(productoMock));
 
     // when
-    assertThrows(ResponseStatusException.class, () -> productoService.recuperar(idPrueba));
+    assertThrows(IllegalArgumentException.class, () -> productoService.recuperar(idPrueba));
 }
 }

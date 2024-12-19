@@ -60,7 +60,7 @@ public class DetallePedidoService implements IDetallePedidoService {
     public DetallePedidoResponse buscarPorId(Integer id) {
         DetallePedido model = detallePedidoRepository.findById(id).orElse(null);
         if(model == null || model.getEstado() == Categoria.ELIMINADO){
-            throw new IllegalArgumentException("NO SE ENCONTRÓ LA CATEGORÍA CON ID: "+id);
+            throw new IllegalArgumentException("NO SE ENCONTRÓ EL DETALLE PEDIDO CON ID: "+id);
         }
         return DetallePedidoMapper.toDetallePedidoResponse(model);
     }
