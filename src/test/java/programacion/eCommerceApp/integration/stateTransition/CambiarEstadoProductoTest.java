@@ -27,14 +27,15 @@ public class CambiarEstadoProductoTest extends BaseIntegrationTest {
     @Autowired
     private IProductoRepository productoRepository;
 
+    @Sql(statements = {
+            "INSERT INTO producto (id, nombre, descripcion, stock, codigo_barra, precio, umbral, estado, id_color, id_tamanio, id_categoria, id_marca) " +
+                    "VALUES (1, 'Samsung Galaxy 11', 'Smartphone de alta gama', 10, 123456789, 799.99, 10, 0, 1, 1, 1, 1)"
+    })
     @Test
     public void cambiarEstado_DisponibleAEliminado() throws Exception {
         // Given
         Integer productoId = 1;
-        @Sql(statements = {
-            "INSERT INTO producto (id, nombre, descripcion, stock, codigo_barra, precio, umbral, estado, id_color, id_tamanio, id_categoria, id_marca) " +
-            "VALUES (1, 'Samsung Galaxy 11', 'Smartphone de alta gama', 10, 123456789, 799.99, 10, 0, 1, 1, 1, 1)"
-        })
+
                 Producto producto = Producto.builder()
                 .id(productoId)
                 .nombre("Producto 1")
