@@ -1,6 +1,7 @@
 package programacion.eCommerceApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -103,6 +104,15 @@ public class PedidoService implements IPedidoService {
     public List<PedidoResponse> listarParaAuditoria() {
         List<Pedido> pedidos = pedidoRepository.findAll();
         return pedidos.stream().map(PedidoMapper::toPedidoResponse).toList();
+    }
+
+    public PedidoResponse recuperar(Integer id) {
+        Pedido model = pedidoRepository.findById(id).orElse(null);
+        if(model == null || model.getEstado() == Pedido.COMUN){
+            throw new IllegalArgumentException("NO SE ENCONTRO EL PEDIDO CON ID: "+ id);
+        }
+        model.recuperar();
+        return PedidoMapper.toPedidoResponse(pedidoRepository.save(model));
     }
 
 }

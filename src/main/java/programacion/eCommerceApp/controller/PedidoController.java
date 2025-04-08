@@ -47,4 +47,10 @@ public class PedidoController {
     public ResponseEntity<PedidoResponse> eliminar(@PathVariable Integer id) {
         return ResponseEntity.ok(pedidosService.eliminar(id));
     }
+
+    @PutMapping("/pedidos/recuperar/{id}")
+    public ResponseEntity<PedidoResponse> recuperar(@PathVariable Integer id) {
+        return ResponseEntity.ok(pedidosService.recuperar(id));
+    }
+
 }

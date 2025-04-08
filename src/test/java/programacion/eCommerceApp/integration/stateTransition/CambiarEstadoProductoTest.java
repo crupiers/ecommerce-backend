@@ -34,7 +34,7 @@ public class CambiarEstadoProductoTest extends BaseIntegrationTest {
     @Test
     public void cambiarEstado_DisponibleAEliminado() throws Exception {
         // Given
-        Integer productoId = 1;
+        Integer productoId = 90;
 
                 Producto producto = Producto.builder()
                 .id(productoId)
