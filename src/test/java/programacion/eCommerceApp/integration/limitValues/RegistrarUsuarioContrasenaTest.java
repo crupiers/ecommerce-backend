@@ -16,6 +16,8 @@ import programacion.eCommerceApp.repository.IUsuarioRepository;
 import programacion.eCommerceApp.eCommerceApplication;
 import programacion.eCommerceApp.controller.request.NewRegisterRequest;
 
+import java.time.LocalDate;
+
 @Sql("/scripts/base/reset_db.sql")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = eCommerceApplication.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -34,7 +36,8 @@ public class RegistrarUsuarioContrasenaTest extends BaseIntegrationTest {
         String contrasenia = "Juan12345";
         usuarioRequest = new NewRegisterRequest(
                 "usuario", // nombre
-                contrasenia // contrasenia
+                contrasenia,
+                LocalDate.of(2000, 1, 1)// contrasenia
         );
         
         // When
@@ -53,7 +56,8 @@ public class RegistrarUsuarioContrasenaTest extends BaseIntegrationTest {
         String contrasenia = "JUAN12345";
         usuarioRequest = new NewRegisterRequest(
                 "usuario", // nombre
-                contrasenia // contrasenia
+                contrasenia,
+                LocalDate.of(2000, 1, 1)// contrasenia
         );
         
         // When
@@ -73,7 +77,8 @@ public class RegistrarUsuarioContrasenaTest extends BaseIntegrationTest {
         String contrasenia = "juan12345 ";
         usuarioRequest = new NewRegisterRequest(
                 "usuario", // nombre
-                contrasenia // contrasenia
+                contrasenia,
+                LocalDate.of(2000, 1, 1)// contrasenia
         );
         
         // When
@@ -93,7 +98,8 @@ public class RegistrarUsuarioContrasenaTest extends BaseIntegrationTest {
         String contrasenia = "juan12345";
         usuarioRequest = new NewRegisterRequest(
                 "usuario", // nombre
-                contrasenia // contrasenia
+                contrasenia,
+                LocalDate.of(2000, 1, 1)// contrasenia
         );
         
         // When
@@ -113,7 +119,8 @@ public class RegistrarUsuarioContrasenaTest extends BaseIntegrationTest {
         String contrasenia = "JuanPerez";
         usuarioRequest = new NewRegisterRequest(
                 "usuario", // nombre
-                contrasenia // contrasenia
+                contrasenia,
+                LocalDate.of(2000, 1, 1)// contrasenia
         );
         
         // When

@@ -11,6 +11,7 @@ import jakarta.validation.Validator;
 import org.springframework.test.web.servlet.MockMvc;
 import programacion.eCommerceApp.controller.request.NewRegisterRequest;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,7 +27,7 @@ public class ValidarLongitudContrasenia {
 
     @Test
     public void LongitudMinimaValida() { // 8 caracteres
-        NewRegisterRequest request = new NewRegisterRequest("agustin", "Abc12345");
+        NewRegisterRequest request = new NewRegisterRequest("agustin", "Abc12345", LocalDate.of(2000, 1, 1));
 
         Set<ConstraintViolation<NewRegisterRequest>> violations = validator.validate(request);
 
@@ -35,7 +36,7 @@ public class ValidarLongitudContrasenia {
 
     @Test
     public void LongitudMaximaValida() { //64 caracteres
-        NewRegisterRequest request = new NewRegisterRequest("agustin", "Abc1234567111111111111111111111111111111111111111111111111111111");
+        NewRegisterRequest request = new NewRegisterRequest("agustin", "Abc1234567111111111111111111111111111111111111111111111111111111", LocalDate.of(2000, 1, 1));
 
         Set<ConstraintViolation<NewRegisterRequest>> violations = validator.validate(request);
 
@@ -44,7 +45,7 @@ public class ValidarLongitudContrasenia {
 
     @Test
     public void LongitudMinimaInvalida() { //7 caracteres
-        NewRegisterRequest request = new NewRegisterRequest("agustin", "Abc1234");
+        NewRegisterRequest request = new NewRegisterRequest("agustin", "Abc1234",LocalDate.of(2000, 1, 1));
 
         Set<ConstraintViolation<NewRegisterRequest>> violations = validator.validate(request);
 
@@ -53,7 +54,7 @@ public class ValidarLongitudContrasenia {
 
     @Test
     public void LonigudMaximaInvalida() { //65 caracteres
-        NewRegisterRequest request = new NewRegisterRequest("agustin", "1Abc1234567111111111111111111111111111111111111111111111111111111");
+        NewRegisterRequest request = new NewRegisterRequest("agustin", "1Abc1234567111111111111111111111111111111111111111111111111111111",LocalDate.of(2000, 1, 1));
 
         Set<ConstraintViolation<NewRegisterRequest>> violations = validator.validate(request);
 

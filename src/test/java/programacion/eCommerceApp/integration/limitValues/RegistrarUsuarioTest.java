@@ -16,6 +16,8 @@ import programacion.eCommerceApp.repository.IUsuarioRepository;
 import programacion.eCommerceApp.eCommerceApplication;
 import programacion.eCommerceApp.controller.request.NewRegisterRequest;
 
+import java.time.LocalDate;
+
 @Sql("/scripts/base/reset_db.sql")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = eCommerceApplication.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -35,7 +37,8 @@ public class RegistrarUsuarioTest extends BaseIntegrationTest {
         String nombre = "J";
         usuarioRequest = new NewRegisterRequest(
                 nombre, // nombre
-                "Password123" // contrasenia
+                "Password123", // contrasenia
+                LocalDate.of(2000, 1, 1)
         );
         
         // When
@@ -53,7 +56,8 @@ public class RegistrarUsuarioTest extends BaseIntegrationTest {
         String nombre = "Jo";
         usuarioRequest = new NewRegisterRequest(
                 nombre, // nombre
-                "Password123" // contrasenia
+                "Password123", // contrasenia
+                LocalDate.of(2000, 1, 1)
         );
         // When
         mockMvc.perform(MockMvcRequestBuilders.post("/ecommerce/auth/register")
@@ -72,7 +76,8 @@ public class RegistrarUsuarioTest extends BaseIntegrationTest {
           String nombre = "jua";
           usuarioRequest = new NewRegisterRequest(
                   nombre, // nombre
-                  "Password123" // contrasenia
+                  "Password123", // contrasenia
+                  LocalDate.of(2000, 1, 1)
           );
           // When
         // When
@@ -91,8 +96,9 @@ public class RegistrarUsuarioTest extends BaseIntegrationTest {
         String nombre = "j".repeat(31);
         usuarioRequest = new NewRegisterRequest(
                 nombre, // nombre
-                "Password123" // contrasenia
-          );
+                "Password123",// contrasenia
+                LocalDate.of(2000, 1, 1)
+        );
         // When
         mockMvc.perform(MockMvcRequestBuilders.post("/ecommerce/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -110,8 +116,9 @@ public class RegistrarUsuarioTest extends BaseIntegrationTest {
         String nombre = "j".repeat(32);
         usuarioRequest = new NewRegisterRequest(
                 nombre, // nombre
-                "Password123" // contrasenia
-          );
+                "Password123", // contrasenia
+                LocalDate.of(2000, 1, 1)
+        );
         // When
         mockMvc.perform(MockMvcRequestBuilders.post("/ecommerce/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -129,8 +136,9 @@ public class RegistrarUsuarioTest extends BaseIntegrationTest {
         String nombre = "j".repeat(33);
         usuarioRequest = new NewRegisterRequest(
                 nombre, // nombre
-                "Password123" // contrasenia
-          );
+                "Password123", // contrasenia
+                LocalDate.of(2000, 1, 1)
+        );
         // When
         mockMvc.perform(MockMvcRequestBuilders.post("/ecommerce/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)

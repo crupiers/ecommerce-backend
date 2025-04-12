@@ -14,12 +14,13 @@ public class UsuarioMapper {
         return Usuario.builder()
             .nombre(newRegisterRequest.nombre())
             .contrasenia(passwordEncoder.encode(newRegisterRequest.contrasenia()))
+                .fechaNacimiento(newRegisterRequest.fechaNacimiento())
             .rol(Rol.ROLE_USER)
             .build();
     }
 
     public static AuthResponse toAuthResponse(Usuario usuario, String jwt) {
-        return new AuthResponse(jwt, usuario.getId(), usuario.getNombre(), usuario.getContrasenia(), usuario.getRol().name(), usuario.getEstado());
+        return new AuthResponse(jwt, usuario.getId(), usuario.getNombre(), usuario.getContrasenia(), usuario.getRol().name(), usuario.getEstado(), usuario.getFechaNacimiento());
     }
 
 }

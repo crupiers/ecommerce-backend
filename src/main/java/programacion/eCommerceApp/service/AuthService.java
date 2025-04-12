@@ -15,7 +15,10 @@ import programacion.eCommerceApp.controller.response.AuthResponse;
 import programacion.eCommerceApp.mapper.UsuarioMapper;
 import programacion.eCommerceApp.model.Usuario;
 import programacion.eCommerceApp.repository.IUsuarioRepository;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Optional;
@@ -52,6 +55,11 @@ public class AuthService implements IAuthService {
         // Verificar si el nombre cumple con los requisitos
         if (usuarioRepository.findByNombre(newRegisterRequest.nombre()).isPresent()) {
             throw new IllegalArgumentException("EL NOMBRE DE USUARIO '" + newRegisterRequest.nombre() + "' YA EXISTE");
+        }
+
+        //verifico que sea mayor de edad >= 18
+        if(!esMayorDeEdad(newRegisterRequest.fechaNacimiento())){
+            throw new IllegalArgumentException("EL USUARIO DEBE SER MAYOR DE EDAD");
         }
         
         Usuario usuario = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
@@ -134,5 +142,10 @@ public class AuthService implements IAuthService {
         String jwt = jwtService.getToken(usuarioOptional.get());
         Usuario usuario = usuarioOptional.get();
         return UsuarioMapper.toAuthResponse(usuario, jwt);
+    }
+
+    private boolean esMayorDeEdad(LocalDate fechaNacimiento) {
+        int edad = Period.between(fechaNacimiento, LocalDate.now()).getYears();
+        return edad >= 18 && edad <=110;
     }
 }

@@ -16,6 +16,8 @@ import programacion.eCommerceApp.repository.IUsuarioRepository;
 import programacion.eCommerceApp.eCommerceApplication;
 import programacion.eCommerceApp.controller.request.NewRegisterRequest;
 
+import java.time.LocalDate;
+
 @Sql("/scripts/base/reset_db.sql")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = eCommerceApplication.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -34,7 +36,8 @@ public class RegistrarUsuarioCaracterTest extends BaseIntegrationTest {
         String nombre = "juan";
         usuarioRequest = new NewRegisterRequest(
                 nombre, // nombre
-                "Password123" // contrasenia
+                "Password123", // contrasenia
+                LocalDate.of(2005, 1, 1)
         );
         
         // When
@@ -53,7 +56,8 @@ public class RegistrarUsuarioCaracterTest extends BaseIntegrationTest {
         String nombre = "Juan";
         usuarioRequest = new NewRegisterRequest(
                 nombre, // nombre
-                "Password123" // contrasenia
+                "Password123", // contrasenia
+                LocalDate.of(2000, 1, 1)
         );
         
         // When
@@ -73,7 +77,8 @@ public class RegistrarUsuarioCaracterTest extends BaseIntegrationTest {
         String nombre = "12345";
         usuarioRequest = new NewRegisterRequest(
                 nombre, // nombre
-                "Password123" // contrasenia
+                "Password123", // contrasenia
+                LocalDate.of(2000, 1, 1)
         );
         
         // When
@@ -92,7 +97,8 @@ public class RegistrarUsuarioCaracterTest extends BaseIntegrationTest {
         String nombre = "juan perez";
         usuarioRequest = new NewRegisterRequest(
                 nombre, // nombre
-                "Password123" // contrasenia
+                "Password123", // contrasenia
+                LocalDate.of(2000, 1, 1)
         );
         
         // When
@@ -112,7 +118,8 @@ public class RegistrarUsuarioCaracterTest extends BaseIntegrationTest {
         String nombre = "";
         usuarioRequest = new NewRegisterRequest(
                 nombre, // nombre
-                "Password123" // contrasenia
+                "Password123", // contrasenia
+                LocalDate.of(2000, 1, 1)
         );
         
         // When

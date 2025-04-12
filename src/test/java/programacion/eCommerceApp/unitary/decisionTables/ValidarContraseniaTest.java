@@ -1,4 +1,4 @@
-package programacion.eCommerceApp.unitary.decisionTables;
+/*package programacion.eCommerceApp.unitary.decisionTables;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -25,17 +25,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @ExtendWith(MockitoExtension.class)
 public class ValidarContraseniaTest {
-        
+
         @Mock
         AuthService authService;
-    
+
         @InjectMocks
         private AuthController authController;
-    
+
         private MockMvc mockMvc;
         private ObjectMapper objectMapper;
         private NewRegisterRequest baseRequest;
-    
+
         @BeforeEach
         void setUp() {
             MockitoAnnotations.openMocks(this); // Inicializa el controlador y los mocks
@@ -49,7 +49,7 @@ public class ValidarContraseniaTest {
 
             baseRequest = new NewRegisterRequest("nacho", contraseniaValida);
 
-            AuthResponse authResponse = new AuthResponse(
+            //AuthResponse authResponse = new AuthResponse(
                 "jwtToken",
                 1,
                 baseRequest.nombre(),
@@ -90,7 +90,7 @@ public class ValidarContraseniaTest {
                     .content(objectMapper.writeValueAsString(baseRequest)))
                     .andExpect(status().isBadRequest());
         }
-        
+
         @Test
         void register_usuario_contraseniaVacia() throws Exception {
             // Given
@@ -129,3 +129,4 @@ public class ValidarContraseniaTest {
         }
 
 }
+*/

@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
@@ -32,6 +33,7 @@ public class Usuario implements UserDetails {
     private String nombre;
     private String contrasenia;
     private Rol rol;
+    private LocalDate fechaNacimiento;
 
     @Builder.Default
     private Integer estado = 0;
