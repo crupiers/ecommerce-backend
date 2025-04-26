@@ -39,9 +39,7 @@ public class CambiarEstadoCategoriaTest {
     private ICategoriaRepository iCategoriaRepository;
     Categoria categoria;
     @BeforeEach
-    public void setup(
-
-    ){
+    public void setup(){
        iCategoriaRepository.deleteAll(); //limpiar base de datos
 
         categoria = Categoria.builder()
