@@ -80,7 +80,7 @@ public class CambiarEstadoMarcaTest {
         // When
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/ecommerce/marcas/recuperar/" + idMarcaInexistente))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
 
         // Then
         Marca marcaActualizada = iMarcaRepository.findById(idMarcaInexistente).orElse(null);
