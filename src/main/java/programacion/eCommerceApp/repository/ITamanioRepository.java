@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface ITamanioRepository extends JpaRepository<Tamanio, Integer> {
     List<Tamanio> findByEstado(int estado);
     Optional<Tamanio> findByNombre(String nombre);
+    Optional<Tamanio> findById (int id);
 }
