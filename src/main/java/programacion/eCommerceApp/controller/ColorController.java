@@ -14,14 +14,12 @@ import java.util.List;
 
 @RestController 
 @RequestMapping("ecommerce")
-@CrossOrigin(value=" http://localhost:8080")
-
 public class ColorController {
 
     @Autowired
     private IColorService service;
 
-    @GetMapping({"/colores"})
+    @GetMapping("colores")
     public List<ColorResponse> listar(){
         return service.listar();
     }
@@ -39,7 +37,7 @@ public class ColorController {
         return service.buscarPorNombre(nombre);
     }
 
-    @PostMapping("/admin/colores")
+    @PostMapping("admin/colores")
     @ResponseStatus(HttpStatus.CREATED)
     public ColorResponse crear(@RequestBody @Valid NewColorRequest newColorRequest){
         return service.crear(newColorRequest);

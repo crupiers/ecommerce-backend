@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.AntPathMatcher;
 import programacion.eCommerceApp.repository.IUsuarioRepository;
 
 @Configuration
@@ -45,4 +46,8 @@ public class ApplicationConfig {
             .orElseThrow(() -> new UsernameNotFoundException("El nombre de usuario no fue encontrado."));
     }
 
+    @Bean
+    public AntPathMatcher patchMatcher() {
+        return new AntPathMatcher();
+    }
 }
