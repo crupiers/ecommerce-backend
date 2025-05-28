@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import programacion.eCommerceApp.controller.request.NewTamanioRequest;
 import programacion.eCommerceApp.controller.response.TamanioResponse;
 import programacion.eCommerceApp.service.ITamanioService;
+import programacion.eCommerceApp.service.TamanioService;
+
 import java.util.List;
 
 @RestController
@@ -17,6 +19,8 @@ public class TamanioController {
 
     @Autowired
     private ITamanioService service;
+    @Autowired
+    private TamanioService tamanioService;
 
     @PostMapping("/admin/tamanios")
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,12 +50,12 @@ public class TamanioController {
 
     @DeleteMapping("/tamanios/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
-        return service.eliminar(id);
+        return tamanioService.eliminar(id);
     }
 
     @PutMapping("/tamanios/recuperar/{id}")
     public ResponseEntity<Void> recuperar(@PathVariable Integer id) {
-        return service.recuperar(id);
+        return tamanioService.recuperar(id);
     }
 
 }

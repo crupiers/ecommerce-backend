@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import programacion.eCommerceApp.eCommerceApplication;
-import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.integration.Base.BaseIntegrationTest;
 import programacion.eCommerceApp.model.Producto;
 import programacion.eCommerceApp.repository.IProductoRepository;
