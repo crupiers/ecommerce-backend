@@ -13,6 +13,7 @@ import programacion.eCommerceApp.controller.request.NewLoginRequest;
 import programacion.eCommerceApp.controller.request.NewRegisterRequest;
 import programacion.eCommerceApp.controller.response.AuthResponse;
 import programacion.eCommerceApp.mapper.UsuarioMapper;
+import programacion.eCommerceApp.model.Rol;
 import programacion.eCommerceApp.model.Usuario;
 import programacion.eCommerceApp.repository.IUsuarioRepository;
 
@@ -63,7 +64,13 @@ public class AuthService implements IAuthService {
         }
         
         Usuario usuario = UsuarioMapper.toEntity(newRegisterRequest, passwordEncoder);
+
         usuario.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")));
+
+        if (usuario.getNombre().equals("admin")) {
+            usuario.setRol(Rol.ROLE_ADMIN);
+        }
+
         usuarioRepository.save(usuario);
         String jwt = jwtService.getToken(usuario);
         return UsuarioMapper.toAuthResponse(usuario, jwt);
