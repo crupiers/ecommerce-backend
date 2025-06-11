@@ -9,20 +9,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: pa_db
-     # MYSQL_USER: ${DB_USER}
-      #MYSQL_PASSWORD: ${DB_USER_PASSWORD}
-      #cambiar el usuario defaut de admin a root
-      # MYSQL_USER_FILE: /run/secrets/db_user
-      # MYSQL_PASSWORD_FILE: /run/secrets/db_password
-    # secrets:
-      # - db_root_password
-      # - db_password
-      # - db_user
     ports:
       - "3306:3306"
-    volumes: #volúmenes anónimos o bind mount.
-      - ./db:/var/lib/mysql #TENGO QUE CREAR UNA CARPETA "db" para almacenar los volumenes
-    restart: no
+    volumes:
+      - ./db:/var/lib/mysql #los datos de mysql se guardan en la carpta "db"
+    restart: on-failure
     networks:
       red_pa:
         ipv4_address: 192.168.56.100
@@ -36,7 +27,9 @@ services:
       red_pa:
         ipv4_address: 192.168.56.101
     depends_on:
-      - pa_db
+      pa_db:
+        condition: service_started
+    restart: on-failure
 
   ec_fn:
     container_name: ec_fn
@@ -47,7 +40,9 @@ services:
       red_pa:
         ipv4_address: 192.168.56.102
     depends_on:
-      - ec_bk
+      ec_bk:
+        condition: service_started
+    restart: on-failure
 
 networks:
   red_pa:
@@ -56,14 +51,6 @@ networks:
     ipam:
       config:
         - subnet: 192.168.56.0/24
-
-# secrets:
-#   db_root_password:
-#     file: db_root_password.txt
-  # db_password:
-  #   file: db_password.txt
-  # db_user:
-  #   file: db_user.txt
 
 volumes:
   db_data:
