@@ -1,12 +1,16 @@
+#PARA EJECUTAR ESTE COMPOSE SE TIENE QUE CREAR LAS IMAGENES DEL ECOMMERCE, TANTO BACK COMO FRONT
+#docker build -t ec_bk .
+#docker build -t ec_fn .
+
 services:
   pa_db:
     container_name: pa_db
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_USER_PASSWORD}
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: pa_db
+     # MYSQL_USER: ${DB_USER}
+      #MYSQL_PASSWORD: ${DB_USER_PASSWORD}
       #cambiar el usuario defaut de admin a root
       # MYSQL_USER_FILE: /run/secrets/db_user
       # MYSQL_PASSWORD_FILE: /run/secrets/db_password
@@ -14,18 +18,44 @@ services:
       # - db_root_password
       # - db_password
       # - db_user
-
     ports:
       - "3306:3306"
     volumes: #volúmenes anónimos o bind mount.
       - ${PROJECT_PATH}:/var/lib/mysql
-    
     restart: no
     networks:
-      - red-pa
+      red_pa:
+        ipv4_address: 192.168.56.100
+
+  ec_bk:
+    container_name: ec_bk
+    image: ec_bk:latest
+    ports:
+      - "8080:8080"
+    networks:
+      red_pa:
+        ipv4_address: 192.168.56.101
+    depends_on:
+      - pa_db
+
+  ec_fn:
+    container_name: ec_fn
+    image: ec_fn:latest
+    ports:
+      - "5173:5173"
+    networks:
+      red_pa:
+        ipv4_address: 192.168.56.102
+    depends_on:
+      - ec_bk
+
 networks:
-  red-pa:
+  red_pa:
+    name: red_pa
     driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.56.0/24
 
 # secrets:
 #   db_root_password:
@@ -34,5 +64,6 @@ networks:
   #   file: db_password.txt
   # db_user:
   #   file: db_user.txt
+
 volumes:
-    db_data:
+  db_data:
