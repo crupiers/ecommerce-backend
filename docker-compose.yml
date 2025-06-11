@@ -21,7 +21,7 @@ services:
     ports:
       - "3306:3306"
     volumes: #volúmenes anónimos o bind mount.
-      - ${PROJECT_PATH}:/var/lib/mysql
+      - ./db:/var/lib/mysql #TENGO QUE CREAR UNA CARPETA "db" para almacenar los volumenes
     restart: no
     networks:
       red_pa:
