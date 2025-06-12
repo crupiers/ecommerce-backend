@@ -13,7 +13,6 @@ import programacion.eCommerceApp.service.TamanioService;
 import java.util.List;
 
 @RestController
-@CrossOrigin(value="http://localhost:8080")
 @RequestMapping("/ecommerce")
 public class TamanioController {
 

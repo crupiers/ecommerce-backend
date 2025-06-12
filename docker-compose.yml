@@ -1,6 +1,6 @@
 #PARA EJECUTAR ESTE COMPOSE SE TIENE QUE CREAR LAS IMAGENES DEL ECOMMERCE, TANTO BACK COMO FRONT
-#docker build -t ec_bk .
-#docker build -t ec_fn .
+#docker build . -t ec_bk
+#docker build . -t ec_fn
 
 services:
   pa_db:
@@ -22,7 +22,7 @@ services:
     container_name: ec_bk
     image: ec_bk:latest
     ports:
-      - "8080:8080"
+      - "8090:8080"
     networks:
       red_pa:
         ipv4_address: 192.168.56.101
