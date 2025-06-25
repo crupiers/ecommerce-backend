@@ -2,6 +2,7 @@ package programacion.eCommerceApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,16 +40,51 @@ public class AuthService implements IAuthService {
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findByNombre(newLoginRequest.nombre());
 
-        if (usuarioOptional.isPresent() && usuarioOptional.get().getEstado() == Usuario.ELIMINADO) {
-            throw new IllegalArgumentException("EL USUARIO '"+usuarioOptional.get().getNombre()+"' ESTÁ ELIMINADO");
+        Usuario usuario = usuarioOptional.get();
+
+        if(usuario.getEstado() == Usuario.ELIMINADO) {
+            throw new IllegalArgumentException("EL USUARIO '" + usuario.getNombre() + "' ESTÁ ELIMINADO");
         }
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(newLoginRequest.nombre(),newLoginRequest.contrasenia()));
+
+        if (usuario.isBloqueado()) {
+            if (usuario.getUltimoIntentoFallido() != null &&
+                    usuario.getUltimoIntentoFallido().isBefore(LocalDateTime.now().minusMinutes(2))) {
+
+                usuario.setIntentoFallidos(0);
+                usuario.setBloqueado(false);
+                usuarioRepository.save(usuario); // Se desbloquea automáticamente
+            } else {
+                throw new IllegalArgumentException("CUENTA BLOQUEADA TEMPORALMENTE. INTENTE MÁS TARDE.");
+            }
+        }
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(newLoginRequest.nombre(), newLoginRequest.contrasenia())
+            );
+        } catch (BadCredentialsException ex) {
+            // Acá manejás el intento fallido
+            usuario.setIntentoFallidos(usuario.getIntentoFallidos() + 1);
+            usuario.setUltimoIntentoFallido(LocalDateTime.now());
+
+            if (usuario.getIntentoFallidos() >= 5) {
+                usuario.setBloqueado(true);
+            }
+
+            usuarioRepository.save(usuario); // Importante: guardás los cambios
+
+            throw new IllegalArgumentException("CREDENCIALES INCORRECTAS");
+        }
+
+        usuario.setIntentoFallidos(0);
+        usuario.setBloqueado(false);
+        usuarioRepository.save(usuario);
+
         UserDetails userDetails = usuarioRepository.findByNombre(newLoginRequest.nombre()).orElseThrow(
-            () -> new IllegalArgumentException("EL USUARIO '"+newLoginRequest.nombre()+"' NO EXISTE")
+                () -> new IllegalArgumentException("EL USUARIO '" + newLoginRequest.nombre() + "' NO EXISTE")
         );
         String jwt = jwtService.getToken(userDetails);
 
-        Usuario usuario = usuarioOptional.get();
         return UsuarioMapper.toAuthResponse(usuario, jwt);
     }
 
