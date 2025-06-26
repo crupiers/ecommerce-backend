@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ecommerce")
-@CrossOrigin(value=" http://localhost:8080")
 public class ImagenController {
 
     @Autowired

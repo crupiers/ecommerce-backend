@@ -1,9 +1,26 @@
 spring:
   datasource:
+<<<<<<< HEAD
     url: jdbc:mysql://localhost:3306/${DB_NAME:pa_db}?createDatabaseIfNotExist=true
     username: ${DB_ROOT_USER:root}
     password: ${DB_ROOT_PASSWORD:admin}
     driver-class-name: com.mysql.cj.jdbc.Driver
+=======
+    # url: jdbc:mysql://localhost:3306/${DB_NAME:pa_db}?createDatabaseIfNotExist=true
+    # username: ${DB_ROOT_USER:root}
+    # password: ${DB_ROOT_PASSWORD:admin}
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+>>>>>>> d13e2326112971919bfe172f7a4fc21f90d5434e
   jpa:
     hibernate:
       ddl-auto: update
