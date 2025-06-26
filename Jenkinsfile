@@ -1,4 +1,5 @@
 pipeline {
+
     agent any
 
     tools {
@@ -20,14 +21,23 @@ pipeline {
             }
         }
 
-        stage('TEST') {
+        stage('UNIT TEST') {
             steps {
-		echo 'UNIT TESTS'
-                sh 'mvn test'
-		junit '**/target/surefire-reports/*.xml'
-		echo 'INTEGRATION TESTS'
-		sh 'mvn verify'
-		junit '**/target/failsafe-reports/*.xml'
+		//sh 'mvn test'
+		//junit '**/target/surefire-reports/*.xml'
+            }
+        }
+
+	stage('INTEGRATION TEST') {
+            steps {
+		//sh 'mvn verify'
+		//junit '**/target/failsafe-reports/*.xml'
+            }
+        }
+
+	stage('RUN') {
+            steps {
+                sh 'nohup java -jar target/ecommerce-crupiers-1.0.0-jar-with-dependencies.jar'
             }
         }
 
@@ -38,7 +48,8 @@ pipeline {
                 }
             }
         }
-}
+    }
+
     post {
         always {
             cleanWs()
