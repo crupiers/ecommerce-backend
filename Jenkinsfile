@@ -35,11 +35,11 @@ pipeline {
             //}
         //}
 
-	stage('RUN') {
-            steps {
-                sh 'nohup java -jar target/ecommerce-crupiers-1.0.0-jar-with-dependencies.jar > app.log 2>&1 &'
-            }
-        }
+	//stage('RUN') {
+            //steps {
+                //sh 'nohup java -jar target/ecommerce-crupiers-1.0.0-jar-with-dependencies.jar > app.log 2>&1 &'
+            //}
+        //}
 
         stage('DOCKER') {
             steps {
