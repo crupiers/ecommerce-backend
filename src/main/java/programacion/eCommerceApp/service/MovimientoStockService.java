@@ -44,7 +44,7 @@ public class MovimientoStockService implements IMovimientoStockService {
 
             if (producto.getStock() < producto.getUmbral() && !estabaDebajoDelUmbral){
                 emailService.sendEmail(
-                    "moranofrancisco1234@gmail.com",
+                    "ecommerceCrupiers@gmail.com",
                     "Alerta de stock bajo para producto '" + producto.getNombre() + "'",
                     "El stock del producto '" + producto.getNombre() + "' ha alcanzado las '" + producto.getStock() + "' unidades, debajo de su umbral definido de '" + producto.getUmbral() + "'."
                 );

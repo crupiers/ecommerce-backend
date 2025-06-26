@@ -43,7 +43,7 @@ public class DetallePedidoService implements IDetallePedidoService {
 
         if (detallePedido.getProducto().getStock() < detallePedido.getProducto().getUmbral() && !estabaDebajoDelUmbral){
             emailService.sendEmail(
-                "moranofrancisco1234@gmail.com",
+                "ecommerceCrupiers@gmail.com",
                 "Alerta de stock bajo para producto '" + producto.getNombre() + "'",
                 "El stock del producto '" + producto.getNombre() + "' ha alcanzado las '" + producto.getStock() + "' unidades, debajo de su umbral definido de '" + producto.getUmbral() + "'."
                 );
