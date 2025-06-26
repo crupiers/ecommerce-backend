@@ -41,10 +41,10 @@ pipeline {
             //}
         //}
 
-        stage('DOCKER') {
+        stage('PODMAN') {
             steps {
                 script {
-                    sh "docker build . --dns 8.8.8.8 --dns 8.8.4.4 -t ec_bk"
+                    sh "podman build . --dns 8.8.8.8 --dns 8.8.4.4 -t ec_bk"
                 }
             }
         }
