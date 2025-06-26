@@ -1,18 +1,9 @@
-#uso maven para buildear la app
-from maven:latest
+FROM amazoncorretto:21.0.4-alpine3.18
 
-#creo el directorio dentro del contenedor
-workdir /app
+WORKDIR /app
 
-#copio los archivos necesarios para buildear la app
-copy pom.xml .
-copy src ./src
+COPY target/ecommerce-crupiers-1.0.0-jar-with-dependencies.jar app.jar
 
-#buildeo la app con maven sin realizar los tests escritos
-run mvn clean package -DskipTests
+EXPOSE 8080
 
-#expongo el puerto 8080 ya que mi app lo usa
-expose 8080
-
-#corro la app
-entrypoint ["java", "-jar", "./target/ecommerce-crupiers-1.0.0-jar-with-dependencies.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
