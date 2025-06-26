@@ -21,19 +21,19 @@ pipeline {
             }
         }
 
-        stage('UNIT TEST') {
-            steps {
+        //stage('UNIT TEST') {
+            //steps {
 		//sh 'mvn test'
 		//junit '**/target/surefire-reports/*.xml'
-            }
-        }
+            //}
+        //}
 
-	stage('INTEGRATION TEST') {
-            steps {
+	//stage('INTEGRATION TEST') {
+            //steps {
 		//sh 'mvn verify'
 		//junit '**/target/failsafe-reports/*.xml'
-            }
-        }
+            //}
+        //}
 
 	stage('RUN') {
             steps {
