@@ -1,0 +1,14 @@
+src/test/java/programacion/eCommerceApp/integration/custom/eliminarProductoTest.java
+src/test/java/programacion/eCommerceApp/integration/decisionTables/CrearCategoriaTest.java
+src/test/java/programacion/eCommerceApp/integration/decisionTables/CrearColorTest.java
+src/test/java/programacion/eCommerceApp/integration/decisionTables/CrearMarcaTest.java
+src/test/java/programacion/eCommerceApp/integration/decisionTables/CrearPedidoTest.java
+src/test/java/programacion/eCommerceApp/integration/limitValues/RegistrarProductoTest.java
+src/test/java/programacion/eCommerceApp/integration/limitValues/RegistrarUsuarioCaracterTest.java
+src/test/java/programacion/eCommerceApp/integration/limitValues/RegistrarUsuarioContrasenaTest.java
+src/test/java/programacion/eCommerceApp/integration/limitValues/RegistrarUsuarioTest.java
+src/test/java/programacion/eCommerceApp/integration/limitValues/VerificarPrecioProductoTest.java
+src/test/java/programacion/eCommerceApp/integration/limitValues/VerificarStockPedidoTest.java
+src/test/java/programacion/eCommerceApp/integration/stateTransition/CambiarEstadoCategoriaTest.java
+src/test/java/programacion/eCommerceApp/integration/stateTransition/CambiarEstadoColorTest.java
+src/test/java/programacion/eCommerceApp/integration/stateTransition/CambiarEstadoMarcaTest.java

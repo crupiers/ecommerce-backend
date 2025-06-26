@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -19,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import programacion.eCommerceApp.controller.PedidoController;
 import programacion.eCommerceApp.controller.request.NewPedidoRequest;
 import programacion.eCommerceApp.service.PedidoService;
-
+@ActiveProfiles("test")
 public class CrearPedidoTest {
     
     private MockMvc mockMvc;

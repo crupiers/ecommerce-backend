@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import jakarta.validation.Validator;
 import jakarta.validation.Validator;
+
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import programacion.eCommerceApp.controller.request.NewRegisterRequest;
 
@@ -15,7 +17,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@ActiveProfiles("test")
 public class ValidarLongitudContrasenia {
     private Validator validator;
 

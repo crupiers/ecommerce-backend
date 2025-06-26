@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -15,6 +17,8 @@ import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.model.Producto;
 import programacion.eCommerceApp.repository.IProductoRepository;
 
+@ActiveProfiles("test")
+@Sql({"/scripts/base/reset_db.sql", "/scripts/base/test_data.sql"})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = eCommerceApplication.class)
 @AutoConfigureMockMvc(addFilters = false)
 public class eliminarProductoTest {
@@ -50,18 +54,18 @@ public class eliminarProductoTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/ecommerce/admin/productos")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(productoRequest)))
-            .andExpect(MockMvcResultMatchers.status().isOk());
+            .andExpect(MockMvcResultMatchers.status().isCreated()); // Cambiar a isCreated() que es 201
 
         // Retrieve the saved product ID
         Producto producto = productoRepository.findAll().get(0);
-        this.productoId = producto.getId();
+        this.productoId = producto.getId(); 
     }
 
     @Test
     public void eliminarProducto_Exitoso() throws Exception {
         // When
-        mockMvc.perform(MockMvcRequestBuilders.delete("/ecommerce/productos/" + productoId))
-            .andExpect(MockMvcResultMatchers.status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.delete("/ecommerce/admin/productos/" + productoId))
+            .andExpect(MockMvcResultMatchers.status().isOk());      
 
         // Then
         Producto productoActualizado = productoRepository.findById(productoId).get();
@@ -74,7 +78,7 @@ public class eliminarProductoTest {
         Integer productoId = 999;
 
         // When
-        mockMvc.perform(MockMvcRequestBuilders.delete("/ecommerce/productos/" + productoId)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/ecommerce/admin/productos/" + productoId)
                 .contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.status().isBadRequest())
             .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("NO SE ENCONTRÓ EL PRODUCTO CON ID '" + productoId + "'"));
@@ -92,7 +96,7 @@ public class eliminarProductoTest {
         Assertions.assertThat(producto.getEstado()).isEqualTo(Producto.ELIMINADO);
 
         // When
-        mockMvc.perform(MockMvcRequestBuilders.delete("/ecommerce/productos/" + productoId)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/ecommerce/admin/productos/" + productoId)
                 .contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.status().isBadRequest())
             .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("NO SE ENCONTRÓ EL PRODUCTO CON ID '" + productoId + "'"));

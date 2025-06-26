@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ActiveProfiles;
 
 import programacion.eCommerceApp.controller.request.NewDetallePedidoRequest;
 import programacion.eCommerceApp.controller.response.DetallePedidoResponse;
@@ -48,6 +49,7 @@ import programacion.eCommerceApp.service.EmailService;
     Then la operación se rechaza con el mensaje "Error: stock insuficiente"
 
  */
+@ActiveProfiles("test")
 public class ValidarStockProductoEnPedidoTest {
     @Mock
     private IProductoRepository productoRepository;

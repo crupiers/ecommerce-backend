@@ -8,6 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
+
 import programacion.eCommerceApp.controller.request.NewRegisterRequest;
 import programacion.eCommerceApp.repository.IUsuarioRepository;
 import programacion.eCommerceApp.service.AuthService;
@@ -24,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 -edad entre 18 y 110
 -edad > 110
  */
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class ValidarEdadUsuarioTest {
     @Mock

@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.server.ResponseStatusException;
 
 import programacion.eCommerceApp.controller.response.ProductoResponse;
@@ -29,6 +30,7 @@ import static org.mockito.Mockito.verify;
 /*
  Esta clase verifica que cuando se busque un producto por su id, se encuentre y no sea nulo.
  */
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class BuscarIdProductoTest {
 

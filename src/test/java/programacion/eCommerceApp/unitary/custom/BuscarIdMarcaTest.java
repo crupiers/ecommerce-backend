@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
 import programacion.eCommerceApp.controller.response.MarcaResponse;
 import programacion.eCommerceApp.mapper.MarcaMapper;
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class BuscarIdMarcaTest {
 

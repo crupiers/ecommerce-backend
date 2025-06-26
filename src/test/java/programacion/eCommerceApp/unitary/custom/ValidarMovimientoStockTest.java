@@ -16,7 +16,9 @@ import programacion.eCommerceApp.service.MovimientoStockService;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 public class ValidarMovimientoStockTest {
 
     private MockMvc mockMvc;

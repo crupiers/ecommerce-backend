@@ -19,12 +19,15 @@ import org.mockito.MockitoAnnotations;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.server.ResponseStatusException;
 
 import programacion.eCommerceApp.model.Marca;
 import programacion.eCommerceApp.repository.IMarcaRepository;
 import programacion.eCommerceApp.service.MarcaService;
 
+
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class CambiarEstadoMarcaTest {
 

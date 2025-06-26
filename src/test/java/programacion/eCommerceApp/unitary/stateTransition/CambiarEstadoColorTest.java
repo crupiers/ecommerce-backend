@@ -19,12 +19,14 @@ import org.mockito.MockitoAnnotations;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.server.ResponseStatusException;
 
 import programacion.eCommerceApp.model.Color;
 import programacion.eCommerceApp.repository.IColorRepository;
 import programacion.eCommerceApp.service.ColorService;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class CambiarEstadoColorTest {
 

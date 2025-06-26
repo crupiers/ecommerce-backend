@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
@@ -35,7 +36,7 @@ import programacion.eCommerceApp.service.ProductoService;
 /*
  * Esta clase verifica que cuando se cree un producto con precio entre el limite inferior y superior, el precio se guarde correctamente.
  */
-
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class ValidarPrecioProductoTest {
     @Mock

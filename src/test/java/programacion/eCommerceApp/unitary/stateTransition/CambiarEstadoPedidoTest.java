@@ -10,6 +10,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
+
 import programacion.eCommerceApp.controller.response.PedidoResponse;
 import programacion.eCommerceApp.model.Pedido;
 import programacion.eCommerceApp.model.Usuario;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 /*
@@ -29,7 +32,7 @@ SE PRUEBA:
     3-Recuperar pedido disponible
     4-Eliminar pedido eliminadao
 */
-
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class) //para que JUnit5 sepa que debe usar Mockito
 public class CambiarEstadoPedidoTest {
 

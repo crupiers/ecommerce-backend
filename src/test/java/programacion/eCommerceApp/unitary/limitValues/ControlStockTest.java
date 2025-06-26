@@ -16,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import programacion.eCommerceApp.controller.request.NewProductoRequest;
 import programacion.eCommerceApp.controller.response.ProductoResponse;
@@ -36,6 +37,7 @@ import programacion.eCommerceApp.service.ProductoService;
 /*Esta clase verifica que cuando se cree un producto con stock entre el limite inferior y superior, el stock se guarde correctamente.
 y que no se guarde el producto cuando está fuera de los límites. Lanza un IllegalArgumentException.
 */
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class) //para que funcione la inyección de dependencias.
 public class ControlStockTest {
 

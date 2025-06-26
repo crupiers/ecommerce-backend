@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ActiveProfiles;
+
 import programacion.eCommerceApp.controller.request.NewMovimientoStockRequest;
 import programacion.eCommerceApp.controller.response.MovimientoStockResponse;
 import programacion.eCommerceApp.model.MovimientoStock;
@@ -20,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
-
+@ActiveProfiles("test")
 class MovimientoStockServiceTest {
 
     @Mock

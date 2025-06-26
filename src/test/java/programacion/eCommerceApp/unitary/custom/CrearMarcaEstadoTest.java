@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import org.springframework.test.context.ActiveProfiles;
 
 import programacion.eCommerceApp.controller.request.NewMarcaRequest;
 import programacion.eCommerceApp.controller.response.MarcaResponse;
@@ -25,6 +25,7 @@ import static org.mockito.Mockito.*;
 /*esta clase verifica que cuando se cree una marca nueva, se guarde correctamente y que no se guarde si ya existe. 
 Lanza una IllegalArgumentException.
 */
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class CrearMarcaEstadoTest {
 
