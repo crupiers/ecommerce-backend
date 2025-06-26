@@ -44,7 +44,7 @@ pipeline {
         stage('DOCKER') {
             steps {
                 script {
-                    sh "docker build -t ec_bk ."
+                    sh "docker build . --dns 8.8.8.8 --dns 8.8.4.4 -t ec_bk"
                 }
             }
         }
