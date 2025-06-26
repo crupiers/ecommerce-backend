@@ -37,7 +37,7 @@ pipeline {
 
 	stage('RUN') {
             steps {
-                sh 'nohup java -jar target/ecommerce-crupiers-1.0.0-jar-with-dependencies.jar'
+                sh 'nohup java -jar target/ecommerce-crupiers-1.0.0-jar-with-dependencies.jar > app.log 2>&1 &'
             }
         }
 
