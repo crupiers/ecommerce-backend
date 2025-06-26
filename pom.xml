@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>programacion</groupId>
-    <artifactId>eCommerceApp</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>ecommerce-crupiers</artifactId>
+    <version>1.0.0</version>
     <name>eCommerceApp</name>
     <description>eCommerceApp for TPI</description>
     <properties>
@@ -83,7 +83,7 @@
             <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
-            <version>1.17.6</version> <!-- Reemplaza con la última versión -->
+            <version>1.20.4</version> <!-- Reemplaza con la última versión -->
             <scope>test</scope>
         </dependency>
         <!-- Dependencia para el contenedor de base de datos (por ejemplo, MySQL) -->
@@ -98,7 +98,7 @@
             <version>1.20.4</version>
         </dependency>
         <dependency>
-            <groupId>org.testcontainers</groupId>}
+            <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>1.16.0</version>
             <scope>test</scope>
@@ -121,5 +121,39 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>programacion.eCommerceApp.eCommerceApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -56,6 +56,10 @@ public class Usuario implements UserDetails {
     }
     public void recuperar() { this.setEstado(COMUN); }
 
+    private int intentoFallidos;
+    private boolean bloqueado;
+    private LocalDateTime ultimoIntentoFallido;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(rol.name()));

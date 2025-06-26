@@ -16,7 +16,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ecommerce")
-@CrossOrigin(value = " http://localhost:8080")
 @Validated
 public class MovimientoStockController {
     @Autowired
